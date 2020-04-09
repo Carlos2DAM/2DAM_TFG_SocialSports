@@ -10,4 +10,5 @@ El reparto de tareas en el proyecto será el siguiente:
     • Diseño y desarrollo del servidor necesario para el almacenamiento y comunicación con la aplicación, asignado a Laura Patón Campos.
 
 1ª Sesión de control: 08/04/2020
+
 2ª Sesión de control: 21/04/2020
