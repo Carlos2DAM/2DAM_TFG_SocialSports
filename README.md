@@ -1,5 +1,7 @@
 # 2DAM_TFG_SocialSports
-Trabajo final de grado de 2º de DAM para crear eventos deportivos.
+Trabajo final de Ciclo Formativo de Grado Superior, 2º de DAM.
+
+Aplicación Android para crear eventos deportivos.
 
 El reparto de tareas en el proyecto será el siguiente:
 
