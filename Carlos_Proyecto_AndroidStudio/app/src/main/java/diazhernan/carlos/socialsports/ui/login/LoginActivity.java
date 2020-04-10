@@ -109,12 +109,34 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        usernameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                cambiarColoresTexto((EditText) v);
+            }
+        });
+
+        passwordEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                cambiarColoresTexto((EditText) v);
+            }
+        });
+
+        loginButton.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                cambiarColoresBoton((Button) v);
+            }
+        });
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cambiarColoresBoton((Button) v);/*
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                        passwordEditText.getText().toString());*/
             }
         });
     }
@@ -127,5 +149,25 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    private void cambiarColoresTexto(EditText et){
+        if (et.isFocused()) {
+            et.setTextColor(getResources().getColor(R.color.colorAccent));
+            et.getBackground().setTint(getResources().getColor(R.color.colorAccent));
+        }
+        else {
+            et.setTextColor(getResources().getColor(R.color.colorElements));
+            et.getBackground().setTint(getResources().getColor(R.color.colorElements));
+        }
+    }
+
+    private void cambiarColoresBoton(Button button){
+        if (button.isFocused()) {
+            button.setTextColor(getResources().getColor(R.color.colorAccent));
+        }
+        else {
+            button.setTextColor(getResources().getColor(R.color.colorElements));
+        }
     }
 }
