@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_new_ev"
+        android:icon="@android:drawable/ic_input_add"
+        android:title="@string/nav_new_event" />
+    <item
+        android:id="@+id/nav_search_ev"
+        android:icon="@android:drawable/ic_search_category_default"
+        android:title="@string/nav_search_event" />
+    <item
+        android:id="@+id/nav_my_events"
+        android:title="@string/nav_my_events" />
+</menu>
