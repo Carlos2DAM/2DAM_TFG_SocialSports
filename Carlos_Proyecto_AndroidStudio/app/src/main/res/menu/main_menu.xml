@@ -2,14 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/nav_new_ev"
+        android:id="@+id/menu_new_event"
         android:icon="@android:drawable/ic_input_add"
         android:title="@string/nav_new_event" />
     <item
-        android:id="@+id/nav_search_ev"
+        android:id="@+id/menu_search_event"
         android:icon="@android:drawable/ic_search_category_default"
         android:title="@string/nav_search_event" />
     <item
-        android:id="@+id/nav_my_events"
+        android:id="@+id/menu_my_events"
+        android:icon="@android:drawable/btn_star_big_on"
         android:title="@string/nav_my_events" />
+    <item
+        android:id="@+id/menu_user"
+        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:title="@string/nav_user" />
 </menu>

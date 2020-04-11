@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@+id/newEvent">
+    app:startDestination="@id/newEvent">
 
     <fragment
         android:id="@+id/newEvent"
@@ -15,4 +15,14 @@
         android:name="diazhernan.carlos.socialsports.SearchEvent"
         android:label="fragment_search_event"
         tools:layout="@layout/fragment_search_event" />
+    <fragment
+        android:id="@+id/myEvents"
+        android:name="diazhernan.carlos.socialsports.MyEvents"
+        android:label="fragment_my_events"
+        tools:layout="@layout/fragment_my_events" />
+    <fragment
+        android:id="@+id/userConfig"
+        android:name="diazhernan.carlos.socialsports.UserConfig"
+        android:label="fragment_user_config"
+        tools:layout="@layout/fragment_user_config" />
 </navigation>
