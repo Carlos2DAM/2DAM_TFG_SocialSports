@@ -100,11 +100,11 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {/*
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     loginViewModel.login(usernameEditText.getText().toString(),
                             passwordEditText.getText().toString());
-                }
+                }*/
                 return false;
             }
         });
@@ -165,9 +165,11 @@ public class LoginActivity extends AppCompatActivity {
     private void cambiarColoresBoton(Button button){
         if (button.isFocused()) {
             button.setTextColor(getResources().getColor(R.color.colorAccent));
+            button.setBackground(getResources().getDrawable(R.drawable.boton1_selected));
         }
         else {
             button.setTextColor(getResources().getColor(R.color.colorElements));
+            button.setBackground(getResources().getDrawable(R.drawable.boton1));
         }
     }
 }

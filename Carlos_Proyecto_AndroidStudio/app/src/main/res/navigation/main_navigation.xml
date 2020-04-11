@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@+id/newEvent">
+
+    <fragment
+        android:id="@+id/newEvent"
+        android:name="diazhernan.carlos.socialsports.NewEvent"
+        android:label="fragment_new_event"
+        tools:layout="@layout/fragment_new_event" />
+    <fragment
+        android:id="@+id/searchEvent"
+        android:name="diazhernan.carlos.socialsports.SearchEvent"
+        android:label="fragment_search_event"
+        tools:layout="@layout/fragment_search_event" />
+</navigation>
