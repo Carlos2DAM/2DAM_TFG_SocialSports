@@ -12,9 +12,10 @@
     <string name="login_failed">"Login failed"</string>
 
     <!-- Strings related to main menu -->
-    <string name="nav_new_event">"Create New Ev."</string>
-    <string name="nav_search_event">"Search Ev."</string>
+    <string name="nav_new_event">Create New Ev.</string>
+    <string name="nav_search_event">Search Event</string>
     <string name="nav_my_events">My Events</string>
     <string name="nav_user">User</string>
+    <string name="nav_home">Home</string>
 
 </resources>
