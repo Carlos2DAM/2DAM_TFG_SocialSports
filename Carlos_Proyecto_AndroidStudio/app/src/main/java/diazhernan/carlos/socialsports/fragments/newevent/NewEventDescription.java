@@ -1,4 +1,4 @@
-package diazhernan.carlos.socialsports.fragments;
+package diazhernan.carlos.socialsports.fragments.newevent;
 
 
 import android.os.Bundle;
@@ -14,10 +14,10 @@ import diazhernan.carlos.socialsports.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Home extends Fragment {
+public class NewEventDescription extends Fragment {
 
 
-    public Home() {
+    public NewEventDescription() {
         // Required empty public constructor
     }
 
@@ -26,7 +26,7 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_new_event_description, container, false);
     }
 
 }

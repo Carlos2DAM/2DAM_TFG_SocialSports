@@ -5,16 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
 
-import diazhernan.carlos.socialsports.fragments.Home;
-import diazhernan.carlos.socialsports.fragments.MyEvents;
-import diazhernan.carlos.socialsports.fragments.NewEvent;
-import diazhernan.carlos.socialsports.fragments.SearchEvent;
-import diazhernan.carlos.socialsports.fragments.UserConfig;
+import diazhernan.carlos.socialsports.fragments.home.Home;
+import diazhernan.carlos.socialsports.fragments.myevents.MyEvents;
+import diazhernan.carlos.socialsports.fragments.newevent.NewEvent;
+import diazhernan.carlos.socialsports.fragments.newevent.NewEventDescription;
+import diazhernan.carlos.socialsports.fragments.searchevent.SearchEvent;
+import diazhernan.carlos.socialsports.fragments.userconfig.UserConfig;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         navigationView = (BottomNavigationView)findViewById(R.id.menu_nav_main);
         showSelectedFragment(home);
@@ -58,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //Metodo para elegir el fragment.
+    //Metodo para elegir que fragment mostrar en pantalla.
     private void showSelectedFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();

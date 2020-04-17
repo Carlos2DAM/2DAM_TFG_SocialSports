@@ -1,4 +1,4 @@
-package diazhernan.carlos.socialsports.fragments;
+package diazhernan.carlos.socialsports.fragments.searchevent;
 
 
 import android.os.Bundle;
@@ -14,10 +14,10 @@ import diazhernan.carlos.socialsports.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UserConfig extends Fragment {
+public class SearchEvent extends Fragment {
 
 
-    public UserConfig() {
+    public SearchEvent() {
         // Required empty public constructor
     }
 
@@ -26,7 +26,7 @@ public class UserConfig extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_config, container, false);
+        return inflater.inflate(R.layout.fragment_search_event, container, false);
     }
 
 }
