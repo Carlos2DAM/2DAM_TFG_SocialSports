@@ -14,4 +14,23 @@
     <string name="nav_user">User</string>
     <string name="nav_home">Home</string>
 
+    <!-- Strings related to fragmet_new_event -->
+    <string name="tab_description">Description</string>
+    <string name="tab_specify">Specify</string>
+    <string name="tab_requirements">Requirements</string>
+    <string name="tab_invite">Invite</string>
+
+    <!-- Strings related to fragmet_new_event_description -->
+    <string name="description_description">The following fields are required to initially create an event.</string><!--Los siguientes  campos son obligatorios para crear inicialmente un evento.-->
+    <string name="description_sport">Sport</string>
+    <string name="description_loction">Location</string>
+
+    <!-- Strings related to fragmet_new_event_specify -->
+    <string name="specify_description">Campos específicos</string>
+
+    <!-- Strings related to fragmet_new_event_requirements -->
+    <string name="requirements_description">Requisitos</string>
+
+    <!-- Strings related to fragmet_new_event_invite -->
+    <string name="invite_description">Invitar amigos</string>
 </resources>
