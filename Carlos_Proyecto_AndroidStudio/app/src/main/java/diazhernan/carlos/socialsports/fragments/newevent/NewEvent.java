@@ -21,6 +21,12 @@ import diazhernan.carlos.socialsports.R;
  */
 public class NewEvent extends Fragment {
 
+    private NewEventDescription newEventDescription = new NewEventDescription();
+    private NewEventSpecify newEventSpecify = new NewEventSpecify();
+    private NewEventRequirements newEventRequirements = new NewEventRequirements();
+    private NewEventInvite newEventInvite =new NewEventInvite();
+    private TabLayout tabLayout;
+
     public NewEvent() {
     }
 
@@ -32,19 +38,19 @@ public class NewEvent extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        final TabLayout tabLayout = getActivity().findViewById(R.id.tabs);
-        showSelectedFragment(new NewEventDescription());
+        tabLayout = getActivity().findViewById(R.id.tabs);
+        showSelectedFragment(newEventDescription);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getText().toString().equals(getResources().getString(R.string.tab_description)))
-                    showSelectedFragment(new NewEventDescription());
+                    showSelectedFragment(newEventDescription);
                 else if (tab.getText().toString().equals(getResources().getString(R.string.tab_specify)))
-                    showSelectedFragment(new NewEventSpecify());
+                    showSelectedFragment(newEventSpecify);
                 else if (tab.getText().toString().equals(getResources().getString(R.string.tab_requirements)))
-                    showSelectedFragment(new NewEventRequirements());
+                    showSelectedFragment(newEventRequirements);
                 else if (tab.getText().toString().equals(getResources().getString(R.string.tab_invite)))
-                    showSelectedFragment(new NewEventInvite());
+                    showSelectedFragment(newEventInvite);
             }
 
             @Override
