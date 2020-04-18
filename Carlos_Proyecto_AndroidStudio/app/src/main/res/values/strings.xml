@@ -19,6 +19,9 @@
     <string name="tab_specify">Specify</string>
     <string name="tab_requirements">Requirements</string>
     <string name="tab_invite">Invite</string>
+    <string name="button_next">NEXT >></string>
+    <string name="button_previous">&lt;&lt; PREVIOUS</string>
+    <string name="button_create_event">Create Event</string>
 
     <!-- Strings related to fragmet_new_event_description -->
     <string name="description_description">The following fields are required to initially create an event.</string><!--Los siguientes  campos son obligatorios para crear inicialmente un evento.-->
@@ -27,6 +30,8 @@
 
     <!-- Strings related to fragmet_new_event_specify -->
     <string name="specify_description">Campos específicos</string>
+    <string name="specify_date">Event date:</string>
+    <string name="specify_time">Start time</string>
 
     <!-- Strings related to fragmet_new_event_requirements -->
     <string name="requirements_description">Requisitos</string>
