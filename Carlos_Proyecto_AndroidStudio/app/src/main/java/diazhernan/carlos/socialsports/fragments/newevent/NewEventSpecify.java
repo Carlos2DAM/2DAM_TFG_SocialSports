@@ -1,6 +1,5 @@
 package diazhernan.carlos.socialsports.fragments.newevent;
 
-
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,9 +10,6 @@ import android.view.ViewGroup;
 
 import diazhernan.carlos.socialsports.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class NewEventSpecify extends Fragment {
 
 

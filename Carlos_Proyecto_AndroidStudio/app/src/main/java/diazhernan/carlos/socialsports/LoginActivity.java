@@ -1,8 +1,6 @@
 package diazhernan.carlos.socialsports;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,10 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import diazhernan.carlos.socialsports.MainActivity;
-import diazhernan.carlos.socialsports.R;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -29,7 +23,6 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
@@ -39,14 +32,14 @@ public class LoginActivity extends AppCompatActivity {
         usernameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                cambiarColoresTexto((EditText) v);
+                Funcionalidades.cambiarColoresTexto((EditText) v, getApplication());
             }
         });
 
         passwordEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                cambiarColoresTexto((EditText) v);
+                Funcionalidades.cambiarColoresTexto((EditText) v, getApplication());
             }
         });
 
@@ -63,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                cambiarColoresBoton((Button) v);
+                Funcionalidades.cambiarColoresBoton((Button) v, getApplication());
             }
         });
 
@@ -75,28 +68,6 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.GONE);
             }
         });
-    }
-
-    private void cambiarColoresTexto(EditText et){
-        if (et.isFocused()) {
-            et.setTextColor(getResources().getColor(R.color.colorAccent));
-            et.getBackground().setTint(getResources().getColor(R.color.colorAccent));
-        }
-        else {
-            et.setTextColor(getResources().getColor(R.color.colorElements));
-            et.getBackground().setTint(getResources().getColor(R.color.colorElements));
-        }
-    }
-
-    private void cambiarColoresBoton(Button button){
-        if (button.isFocused()) {
-            button.setTextColor(getResources().getColor(R.color.colorAccent));
-            button.setBackground(getResources().getDrawable(R.drawable.boton1_selected));
-        }
-        else {
-            button.setTextColor(getResources().getColor(R.color.colorElements));
-            button.setBackground(getResources().getDrawable(R.drawable.boton1));
-        }
     }
 
     private boolean comprobarDatosLoginCorrectos(){
@@ -112,8 +83,4 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    public static void mostrarMensaje(String mensaje, Context context){
-        Toast toast = Toast.makeText(context,mensaje,Toast.LENGTH_LONG);
-        toast.show();
-    }
 }
