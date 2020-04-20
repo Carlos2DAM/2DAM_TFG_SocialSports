@@ -23,7 +23,7 @@
                 android:text="@string/specify_description" />
 
             <TextView
-                android:id="@+id/textNewEventDate"
+                android:id="@+id/textSpecifyDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -32,35 +32,164 @@
                 android:textColor="@color/colorElements" />
 
             <CalendarView
-                android:id="@+id/calendarView"
+                android:id="@+id/calendarSpecifyDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:theme="@style/CalenderViewCustom"
                 android:background="@color/colorPrimary" />
 
-            <EditText
-                android:id="@+id/editText2"
-                android:layout_width="wrap_content"
+            <TableRow
+                android:id="@+id/rowSpecifyTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textSpecifyTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:text="@string/specify_time"
+                    android:textColor="@color/colorElements" />
+
+                <EditText
+                    android:id="@+id/editSpecifyHuor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorElements"
+                    android:ems="2"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorElements"
+                    android:textColorHint="@color/colorElementsDark" />
+
+                <TextView
+                    android:id="@+id/textSpecifyHourSeparator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hour_separator"
+                    android:textColor="@color/colorElements" />
+
+                <EditText
+                    android:id="@+id/editSpecifyMinutes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorElements"
+                    android:ems="2"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorElements"
+                    android:textColorHint="@color/colorElementsDark" />
+            </TableRow>
+
+            <TextView
+                android:id="@+id/textSpecifyAddress"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="5"
-                android:inputType="time"
-                android:maxLength="5"
+                android:layout_weight="0.5"
+                android:text="@string/specify_address"
                 android:textColor="@color/colorElements"
-                android:backgroundTint="@color/colorElements"
-                android:textColorHint="@color/colorElementsDark"
-                android:hint="@string/specify_time"/>
+                android:layout_marginTop="@dimen/activity_vertical_margin"/>
 
             <EditText
+                android:id="@+id/editSpecifyAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorElements"
+                android:ems="10"
+                android:hint="@string/specify_hint_address"
+                android:inputType="textPostalAddress"
+                android:maxLength="80"
+                android:selectAllOnFocus="true"
+                android:textColor="@color/colorElements"
+                android:textColorHint="@color/colorElementsDark" />
+
+            <CheckBox
+                android:id="@+id/checkSpecifyReserved"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="@string/specify_chek_reserved"
+                android:textColor="@color/colorElements"
+                android:theme="@style/checkBoxCustom" />
+
+            <TableRow
+                android:id="@+id/rowSpecifyCost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textSpecifyCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:text="@string/specify_cost"
+                    android:textColor="@color/colorElements" />
+
+                <EditText
+                    android:id="@+id/editSpecifyCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorElements"
+                    android:ems="5"
+                    android:inputType="numberDecimal"
+                    android:maxLength="7"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorElements"
+                    android:textColorHint="@color/colorElementsDark" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/rowSpecifyPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textSpecifyPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:text="@string/specify_price"
+                    android:textColor="@color/colorElements" />
+
+                <EditText
+                    android:id="@+id/editSpecifyPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorElements"
+                    android:ems="5"
+                    android:inputType="numberDecimal"
+                    android:maxLength="7"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorElements"
+                    android:textColorHint="@color/colorElementsDark" />
+
+            </TableRow>
+
+            <TextView
+                android:id="@+id/textSpecifyComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="@string/specify_coments"
+                android:textColor="@color/colorElements"
+                android:layout_marginTop="@dimen/activity_vertical_margin"/>
+
+            <EditText
+                android:id="@+id/editSpecifyComments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                android:selectAllOnFocus="true"
+                android:maxLength="300"
                 android:textColor="@color/colorElements"
-                android:backgroundTint="@color/colorElements"
-                android:textColorHint="@color/colorElementsDark"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:hint="@string/description_sport"
-                android:selectAllOnFocus="true"/>
+                android:backgroundTint="@color/colorElements"/>
 
         </LinearLayout>
     </ScrollView>
+
 </FrameLayout>

@@ -12,6 +12,15 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:minHeight="54dp"
+            app:title="@string/nav_new_event"
+            app:titleTextColor="@color/colorAccent" />
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
