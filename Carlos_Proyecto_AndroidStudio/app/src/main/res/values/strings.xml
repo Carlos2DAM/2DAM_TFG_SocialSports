@@ -8,7 +8,7 @@
     <string name="action_sign_in_short">Sign in</string>
 
     <!-- Strings related to main menu -->
-    <string name="nav_new_event">Create New Ev.</string>
+    <string name="nav_new_event">Create New Event</string>
     <string name="nav_search_event">Search Event</string>
     <string name="nav_my_events">My Events</string>
     <string name="nav_user">User</string>
@@ -29,9 +29,16 @@
     <string name="description_loction">Location</string>
 
     <!-- Strings related to fragmet_new_event_specify -->
-    <string name="specify_description">Campos específicos</string>
+    <string name="specify_description">Optional fields to specify the event data.</string><!--Campos opcionales para concretar los datos del evento.-->
     <string name="specify_date">Event date:</string>
-    <string name="specify_time">Start time</string>
+    <string name="specify_time">Event time:</string>
+    <string name="hour_separator">:</string>
+    <string name="specify_address">Sports center address:</string>
+    <string name="specify_hint_address">Address</string>
+    <string name="specify_chek_reserved">Facilities reserved</string>
+    <string name="specify_cost">Reservation cost:</string>
+    <string name="specify_price">Individual contribution:</string>
+    <string name="specify_coments">Specific comments (max 300 characters):</string>
 
     <!-- Strings related to fragmet_new_event_requirements -->
     <string name="requirements_description">Requisitos</string>
