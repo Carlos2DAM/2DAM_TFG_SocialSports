@@ -12,3 +12,5 @@ El reparto de tareas en el proyecto será el siguiente:
 1ª Sesión de control: 08/04/2020
 
 2ª Sesión de control: 21/04/2020
+
+3ª Sesión de control: --
