@@ -22,32 +22,35 @@
                 android:textColor="@color/colorElements"
                 android:text="@string/specify_description" />
 
-            <TextView
-                android:id="@+id/textSpecifyDate"
+            <Button
+                android:id="@+id/buttonSpecifyDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/specify_date"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:textColor="@color/colorElements" />
+                android:background="@drawable/boton1"
+                android:textColor="@color/colorElements"
+                tools:text="@string/specify_date" />
 
             <CalendarView
                 android:id="@+id/calendarSpecifyDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
                 android:theme="@style/CalenderViewCustom"
-                android:background="@color/colorPrimary" />
+                android:visibility="visible" />
 
             <TableRow
                 android:id="@+id/rowSpecifyTime"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin">
 
                 <TextView
                     android:id="@+id/textSpecifyTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/views_horizontal_margin"
                     android:text="@string/specify_time"
                     android:textColor="@color/colorElements" />
 
@@ -59,7 +62,10 @@
                     android:ems="2"
                     android:inputType="number"
                     android:maxLength="2"
+                    android:hint="12"
+                    android:selectAllOnFocus="true"
                     android:textAlignment="center"
+                    android:nextFocusDown="@id/editSpecifyMinutes"
                     android:textColor="@color/colorElements"
                     android:textColorHint="@color/colorElementsDark" />
 
@@ -78,21 +84,43 @@
                     android:ems="2"
                     android:inputType="number"
                     android:maxLength="2"
+                    android:hint="00"
+                    android:selectAllOnFocus="true"
                     android:textAlignment="center"
                     android:textColor="@color/colorElements"
                     android:textColorHint="@color/colorElementsDark" />
             </TableRow>
 
-            <TextView
-                android:id="@+id/textSpecifyAddress"
+            <TableRow
+                android:id="@+id/rowSpecifyParticipants"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/specify_address"
-                android:textColor="@color/colorElements"
-                android:layout_marginTop="@dimen/activity_vertical_margin"/>
+                android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:id="@+id/textSpecifyParticipants"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/views_horizontal_margin"
+                    android:text="@string/specify_participants"
+                    android:textColor="@color/colorElements" />
+
+                <EditText
+                    android:id="@+id/editSpecifyParticipants"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorElements"
+                    android:ems="4"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:textAlignment="center"
+                    android:selectAllOnFocus="true"
+                    android:textColor="@color/colorElements"
+                    android:textColorHint="@color/colorElementsDark" />
+            </TableRow>
 
             <EditText
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:id="@+id/editSpecifyAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,27 +133,20 @@
                 android:textColor="@color/colorElements"
                 android:textColorHint="@color/colorElementsDark" />
 
-            <CheckBox
-                android:id="@+id/checkSpecifyReserved"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/specify_chek_reserved"
-                android:textColor="@color/colorElements"
-                android:theme="@style/checkBoxCustom" />
-
             <TableRow
                 android:id="@+id/rowSpecifyCost"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin">
 
-                <TextView
-                    android:id="@+id/textSpecifyCost"
+                <CheckBox
+                    android:id="@+id/checkSpecifyReserved"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:text="@string/specify_cost"
-                    android:textColor="@color/colorElements" />
+                    android:text="@string/specify_chek_reserved"
+                    android:textColor="@color/colorElements"
+                    android:theme="@style/checkBoxCustom"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
                 <EditText
                     android:id="@+id/editSpecifyCost"
@@ -133,9 +154,11 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorElements"
                     android:ems="5"
+                    android:hint="@string/specify_cost"
                     android:inputType="numberDecimal"
                     android:maxLength="7"
                     android:textAlignment="center"
+                    android:visibility="gone"
                     android:textColor="@color/colorElements"
                     android:textColorHint="@color/colorElementsDark" />
 
@@ -144,13 +167,14 @@
             <TableRow
                 android:id="@+id/rowSpecifyPrice"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin">
 
                 <TextView
                     android:id="@+id/textSpecifyPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/views_horizontal_margin"
                     android:text="@string/specify_price"
                     android:textColor="@color/colorElements" />
 
@@ -163,6 +187,7 @@
                     android:inputType="numberDecimal"
                     android:maxLength="7"
                     android:textAlignment="center"
+                    android:hint="@string/specify_hint_price"
                     android:textColor="@color/colorElements"
                     android:textColorHint="@color/colorElementsDark" />
 
