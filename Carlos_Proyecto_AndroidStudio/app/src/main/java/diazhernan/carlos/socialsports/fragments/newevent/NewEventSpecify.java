@@ -2,27 +2,148 @@ package diazhernan.carlos.socialsports.fragments.newevent;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CalendarView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 
+import java.util.Date;
+
+import diazhernan.carlos.socialsports.Funcionalidades;
 import diazhernan.carlos.socialsports.R;
 
 public class NewEventSpecify extends Fragment {
 
+    private Button btnFecha;
+    private CalendarView calendario;
+    private EditText hora;
+    private EditText minutos;
+    private EditText participantes;
+    private EditText direccion;
+    private CheckBox reserva;
+    private EditText coste;
+    private EditText precio;
+    private EditText comentarios;
+    private long fecha = 0;
+    private int dia;
+    private int mes;
+    private int anio;
 
-    public NewEventSpecify() {
-        // Required empty public constructor
-    }
+    public NewEventSpecify() {    }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_new_event_specify, container, false);
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        btnFecha = getActivity().findViewById(R.id.buttonSpecifyDate);
+        calendario = getActivity().findViewById(R.id.calendarSpecifyDate);
+        hora = getActivity().findViewById(R.id.editSpecifyHuor);
+        minutos = getActivity().findViewById(R.id.editSpecifyMinutes);
+        participantes = getActivity().findViewById(R.id.editSpecifyParticipants);
+        direccion = getActivity().findViewById(R.id.editSpecifyAddress);
+        reserva = getActivity().findViewById(R.id.checkSpecifyReserved);
+        coste = getActivity().findViewById(R.id.editSpecifyCost);
+        precio = getActivity().findViewById(R.id.editSpecifyPrice);
+        comentarios = getActivity().findViewById(R.id.editSpecifyComments);
+        fecha = calendario.getDate();
+        calendario.setVisibility(View.GONE);
+
+        btnFecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calendario.setVisibility(View.VISIBLE);
+                v.setVisibility(View.GONE);
+            }
+        });
+        calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                fecha = view.getDate();
+                dia = dayOfMonth;
+                mes = month;
+                anio = year;
+                btnFecha.setVisibility(View.VISIBLE);
+                mostrarFechaSeleccionada(Integer.toString(dia)+"/"+Integer.toString(mes)+"/"+Integer.toString(anio));
+                view.setVisibility(View.GONE);
+            }
+        });
+        hora.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Funcionalidades.cambiarColoresTexto((EditText)v,getActivity().getApplication());
+            }
+        });
+        minutos.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Funcionalidades.cambiarColoresTexto((EditText)v,getActivity().getApplication());
+            }
+        });
+        participantes.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Funcionalidades.cambiarColoresTexto((EditText)v,getActivity().getApplication());
+            }
+        });
+        direccion.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Funcionalidades.cambiarColoresTexto((EditText)v,getActivity().getApplication());
+            }
+        });
+        coste.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Funcionalidades.cambiarColoresTexto((EditText)v,getActivity().getApplication());
+            }
+        });
+        precio.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Funcionalidades.cambiarColoresTexto((EditText)v,getActivity().getApplication());
+            }
+        });
+        comentarios.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Funcionalidades.cambiarColoresTexto((EditText)v,getActivity().getApplication());
+            }
+        });
+        reserva.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    coste.setVisibility(View.VISIBLE);
+                else
+                    coste.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (fecha != 0)
+            mostrarFechaSeleccionada(Integer.toString(dia)+"/"+Integer.toString(mes)+"/"+Integer.toString(anio));
+        else
+            mostrarFechaSeleccionada(new Date().toString());
+    }
+
+    private void mostrarFechaSeleccionada(String cadena) {
+        btnFecha.setText(getActivity().getResources().getString(R.string.specify_date)+"   "+cadena);
+    }
 }
