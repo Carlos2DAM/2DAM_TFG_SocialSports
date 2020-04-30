@@ -34,7 +34,7 @@
     <string name="specify_time">Event time:</string>
     <string name="hour_separator">:</string>
     <string name="specify_address">Address:</string>
-    <string name="specify_hint_address">Address</string>
+    <string name="specify_hint_address">Event address</string>
     <string name="specify_chek_reserved">Facilities reserved</string>
     <string name="specify_cost">Cost</string>
     <string name="specify_price">Individual contribution:</string>
