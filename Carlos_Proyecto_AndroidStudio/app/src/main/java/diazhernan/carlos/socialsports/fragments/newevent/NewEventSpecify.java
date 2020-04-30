@@ -85,12 +85,24 @@ public class NewEventSpecify extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 Funcionalidades.cambiarColoresTexto((EditText)v,getActivity().getApplication());
+                if (hora.getText().length()>0) {
+                    if (Integer.parseInt(hora.getText().toString())>23)
+                        hora.setText("23");
+                    else if (hora.getText().length()<2)
+                        hora.setText("0"+hora.getText().toString());
+                }
             }
         });
         minutos.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 Funcionalidades.cambiarColoresTexto((EditText)v,getActivity().getApplication());
+                if (minutos.getText().length()>0) {
+                    if (Integer.parseInt(minutos.getText().toString())>59)
+                        minutos.setText("59");
+                    else if (minutos.getText().length()<2)
+                        minutos.setText("0"+minutos.getText().toString());
+                }
             }
         });
         participantes.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -129,7 +141,7 @@ public class NewEventSpecify extends Fragment {
                 if (isChecked)
                     coste.setVisibility(View.VISIBLE);
                 else
-                    coste.setVisibility(View.GONE);
+                    coste.setVisibility(View.INVISIBLE);
             }
         });
     }

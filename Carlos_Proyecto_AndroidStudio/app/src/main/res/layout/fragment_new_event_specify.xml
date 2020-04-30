@@ -60,12 +60,12 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorElements"
                     android:ems="2"
+                    android:hint="00"
                     android:inputType="number"
                     android:maxLength="2"
-                    android:hint="12"
+                    android:nextFocusDown="@id/editSpecifyMinutes"
                     android:selectAllOnFocus="true"
                     android:textAlignment="center"
-                    android:nextFocusDown="@id/editSpecifyMinutes"
                     android:textColor="@color/colorElements"
                     android:textColorHint="@color/colorElementsDark" />
 
@@ -158,9 +158,9 @@
                     android:inputType="numberDecimal"
                     android:maxLength="7"
                     android:textAlignment="center"
-                    android:visibility="gone"
                     android:textColor="@color/colorElements"
-                    android:textColorHint="@color/colorElementsDark" />
+                    android:textColorHint="@color/colorElementsDark"
+                    android:visibility="invisible" />
 
             </TableRow>
 
