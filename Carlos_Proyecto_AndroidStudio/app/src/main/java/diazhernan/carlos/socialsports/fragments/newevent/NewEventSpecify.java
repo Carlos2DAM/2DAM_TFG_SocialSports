@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import diazhernan.carlos.socialsports.Funcionalidades;
@@ -32,10 +33,7 @@ public class NewEventSpecify extends Fragment {
     private EditText coste;
     private EditText precio;
     private EditText comentarios;
-    private long fecha = 0;
-    private int dia;
-    private int mes;
-    private int anio;
+    private Date date = new Date();
 
     public NewEventSpecify() {    }
 
@@ -59,7 +57,6 @@ public class NewEventSpecify extends Fragment {
         coste = getActivity().findViewById(R.id.editSpecifyCost);
         precio = getActivity().findViewById(R.id.editSpecifyPrice);
         comentarios = getActivity().findViewById(R.id.editSpecifyComments);
-        fecha = calendario.getDate();
         calendario.setVisibility(View.GONE);
 
         btnFecha.setOnClickListener(new View.OnClickListener() {
@@ -72,12 +69,9 @@ public class NewEventSpecify extends Fragment {
         calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                fecha = view.getDate();
-                dia = dayOfMonth;
-                mes = month;
-                anio = year;
+                date = new Date((year-1900),month,dayOfMonth);
                 btnFecha.setVisibility(View.VISIBLE);
-                mostrarFechaSeleccionada(Integer.toString(dia)+"/"+Integer.toString(mes)+"/"+Integer.toString(anio));
+                mostrarFechaSeleccionada(date);
                 view.setVisibility(View.GONE);
             }
         });
@@ -149,13 +143,16 @@ public class NewEventSpecify extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (fecha != 0)
-            mostrarFechaSeleccionada(Integer.toString(dia)+"/"+Integer.toString(mes)+"/"+Integer.toString(anio));
+        calendario.setVisibility(View.GONE);
+        btnFecha.setVisibility(View.VISIBLE);
+        if (date != null)
+            mostrarFechaSeleccionada(date);
         else
-            mostrarFechaSeleccionada(new Date().toString());
+            mostrarFechaSeleccionada(new Date());
     }
 
-    private void mostrarFechaSeleccionada(String cadena) {
-        btnFecha.setText(getActivity().getResources().getString(R.string.specify_date)+"   "+cadena);
+    private void mostrarFechaSeleccionada(Date fecha) {
+        SimpleDateFormat formato = new SimpleDateFormat("E dd MMM yyyy");
+        btnFecha.setText(getActivity().getResources().getString(R.string.specify_date)+"   "+formato.format(fecha));
     }
 }

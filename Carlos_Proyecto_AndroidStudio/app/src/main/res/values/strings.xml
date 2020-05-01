@@ -43,7 +43,13 @@
     <string name="specify_participants">Participants required:</string>
 
     <!-- Strings related to fragmet_new_event_requirements -->
-    <string name="requirements_description">Requisitos</string>
+    <string name="requirements_description">Participants requirements. (optional)</string>
+    <string name="requirements_gender">Gender:</string>
+    <string name="requirements_min_age">Min Age:</string>
+    <string name="requirements_max_age">Max Age:</string>
+    <string name="requirements_reputation">Reputation as Participants:</string>
+    <string name="requirements_male">Male</string>
+    <string name="requirements_female">Female</string>
 
     <!-- Strings related to fragmet_new_event_invite -->
     <string name="invite_description">Invitar amigos</string>
