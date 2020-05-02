@@ -38,7 +38,7 @@ public class NewEvent extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Funcionalidades.showSelectedFragment(R.id.newEventContainer,getActivity().getSupportFragmentManager(),newEventDescription);
-        createButton = getActivity().findViewById(R.id.createtNewEventButton);
+        createButton = getActivity().findViewById(R.id.createNewEventButton);
         nextButton = getActivity().findViewById(R.id.buttonNext);
         previousButton = getActivity().findViewById(R.id.buttonPrevious);
         tabLayout = getActivity().findViewById(R.id.tabs);

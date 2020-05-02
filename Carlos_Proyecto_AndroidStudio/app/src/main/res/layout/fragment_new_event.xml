@@ -116,7 +116,7 @@
             </TableRow>
 
             <Button
-                android:id="@+id/createtNewEventButton"
+                android:id="@+id/createNewEventButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"

@@ -4,4 +4,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".fragments.newevent.NewEventInvite"/>
+    tools:context=".fragments.newevent.NewEventInvite">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/viewListaAmigos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textInviteDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/invite_description"
+                android:textColor="@color/colorElements" />
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="@dimen/views_vertical_margin">
+
+                <Button
+                    android:id="@+id/buttonInviteAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/boton1"
+                    android:text="@string/invite_btn_all"
+                    android:textColor="@color/colorElements"
+                    android:layout_marginHorizontal="@dimen/views_horizontal_margin"/>
+
+                <Button
+                    android:id="@+id/buttonInviteNobody"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/boton1"
+                    android:text="@string/invite_btn_nobody"
+                    android:textColor="@color/colorElements"
+                    android:layout_marginHorizontal="@dimen/views_horizontal_margin"/>
+            </TableRow>
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
