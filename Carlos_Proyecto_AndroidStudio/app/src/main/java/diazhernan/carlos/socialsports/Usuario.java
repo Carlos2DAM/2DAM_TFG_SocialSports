@@ -1,5 +1,6 @@
 package diazhernan.carlos.socialsports;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Usuario {
@@ -15,13 +16,16 @@ public class Usuario {
     private double reputacionParticipanteUsuario;
     private double reputacionOrganizadorUsuario;
     private String fotoPerfilUsuario;
+    private ArrayList<Usuario> listaAmigos = new ArrayList<>();
+    private ArrayList<Usuario> listaBloqueados = new ArrayList<>();
 
     public Usuario() {
     }
 
-    public Usuario(long idUsuario, String emailUsuario, String nombreUsuario, String generoUsuario, String direccionUsuario, Date fechaNacimientoUsuario, Date fechaAltaUsuario, double reputacionParticipanteUsuario, double reputacionOrganizadorUsuario, String fotoPerfilUsuario) {
+    public Usuario(long idUsuario, String emailUsuario, String paswordUsuario, String nombreUsuario, String generoUsuario, String direccionUsuario, Date fechaNacimientoUsuario, Date fechaAltaUsuario, double reputacionParticipanteUsuario, double reputacionOrganizadorUsuario, String fotoPerfilUsuario) {
         this.idUsuario = idUsuario;
         this.emailUsuario = emailUsuario;
+        this.paswordUsuario = paswordUsuario;
         this.nombreUsuario = nombreUsuario;
         this.generoUsuario = generoUsuario;
         this.direccionUsuario = direccionUsuario;
@@ -118,5 +122,21 @@ public class Usuario {
 
     public void setFotoPerfilUsuario(String fotoPerfilUsuario) {
         this.fotoPerfilUsuario = fotoPerfilUsuario;
+    }
+
+    public ArrayList<Usuario> getListaAmigos() {
+        return listaAmigos;
+    }
+
+    public void setListaAmigos(ArrayList<Usuario> listaAmigos) {
+        this.listaAmigos = listaAmigos;
+    }
+
+    public ArrayList<Usuario> getListaBloqueados() {
+        return listaBloqueados;
+    }
+
+    public void setListaBloqueados(ArrayList<Usuario> listaBloqueados) {
+        this.listaBloqueados = listaBloqueados;
     }
 }

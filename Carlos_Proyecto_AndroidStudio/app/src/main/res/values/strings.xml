@@ -52,5 +52,7 @@
     <string name="requirements_female">Female</string>
 
     <!-- Strings related to fragmet_new_event_invite -->
-    <string name="invite_description">Invitar amigos</string>
+    <string name="invite_description">Invite friends to this event:</string>
+    <string name="invite_btn_all">All</string>
+    <string name="invite_btn_nobody">Nobody</string>
 </resources>
