@@ -9,6 +9,7 @@ public class Usuario {
     private String emailUsuario;
     private String paswordUsuario;
     private String nombreUsuario;
+    private String apellidosUsuario;
     private String generoUsuario;
     private String direccionUsuario;
     private Date fechaNacimientoUsuario;
@@ -34,6 +35,23 @@ public class Usuario {
         this.reputacionParticipanteUsuario = reputacionParticipanteUsuario;
         this.reputacionOrganizadorUsuario = reputacionOrganizadorUsuario;
         this.fotoPerfilUsuario = fotoPerfilUsuario;
+    }
+
+    public Usuario(long idUsuario, String emailUsuario, String paswordUsuario, String nombreUsuario, String apellidosUsuario, String generoUsuario, String direccionUsuario, Date fechaNacimientoUsuario, Date fechaAltaUsuario, double reputacionParticipanteUsuario, double reputacionOrganizadorUsuario, String fotoPerfilUsuario, ArrayList<Usuario> listaAmigos, ArrayList<Usuario> listaBloqueados) {
+        this.idUsuario = idUsuario;
+        this.emailUsuario = emailUsuario;
+        this.paswordUsuario = paswordUsuario;
+        this.nombreUsuario = nombreUsuario;
+        this.apellidosUsuario = apellidosUsuario;
+        this.generoUsuario = generoUsuario;
+        this.direccionUsuario = direccionUsuario;
+        this.fechaNacimientoUsuario = fechaNacimientoUsuario;
+        this.fechaAltaUsuario = fechaAltaUsuario;
+        this.reputacionParticipanteUsuario = reputacionParticipanteUsuario;
+        this.reputacionOrganizadorUsuario = reputacionOrganizadorUsuario;
+        this.fotoPerfilUsuario = fotoPerfilUsuario;
+        this.listaAmigos = listaAmigos;
+        this.listaBloqueados = listaBloqueados;
     }
 
     public long getIdUsuario() {
@@ -66,6 +84,14 @@ public class Usuario {
 
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getApellidosUsuario() {
+        return apellidosUsuario;
+    }
+
+    public void setApellidosUsuario(String apellidosUsuario) {
+        this.apellidosUsuario = apellidosUsuario;
     }
 
     public String getGeneroUsuario() {

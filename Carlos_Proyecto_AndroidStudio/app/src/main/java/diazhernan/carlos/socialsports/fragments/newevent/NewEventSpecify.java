@@ -14,6 +14,7 @@ import android.widget.CalendarView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,6 +24,7 @@ import diazhernan.carlos.socialsports.R;
 
 public class NewEventSpecify extends Fragment {
 
+    private TextView textDescrip;
     private Button btnFecha;
     private CalendarView calendario;
     private EditText hora;
@@ -32,6 +34,7 @@ public class NewEventSpecify extends Fragment {
     private CheckBox reserva;
     private EditText coste;
     private EditText precio;
+    private CheckBox notParticipant;
     private EditText comentarios;
     private Date date = new Date();
 
@@ -47,6 +50,7 @@ public class NewEventSpecify extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        textDescrip = getActivity().findViewById(R.id.textSpecifyDescription);
         btnFecha = getActivity().findViewById(R.id.buttonSpecifyDate);
         calendario = getActivity().findViewById(R.id.calendarSpecifyDate);
         hora = getActivity().findViewById(R.id.editSpecifyHuor);
@@ -56,6 +60,7 @@ public class NewEventSpecify extends Fragment {
         reserva = getActivity().findViewById(R.id.checkSpecifyReserved);
         coste = getActivity().findViewById(R.id.editSpecifyCost);
         precio = getActivity().findViewById(R.id.editSpecifyPrice);
+        notParticipant = getActivity().findViewById(R.id.checkSpecifyNoParticipant);
         comentarios = getActivity().findViewById(R.id.editSpecifyComments);
         calendario.setVisibility(View.GONE);
 
@@ -149,10 +154,82 @@ public class NewEventSpecify extends Fragment {
             mostrarFechaSeleccionada(date);
         else
             mostrarFechaSeleccionada(new Date());
+
+        textDescrip.setFocusable(true);
+        textDescrip.setFocusableInTouchMode(true);
+        textDescrip.requestFocus();
+        textDescrip.setFocusable(false);
+        textDescrip.setFocusableInTouchMode(false);
     }
 
     private void mostrarFechaSeleccionada(Date fecha) {
         SimpleDateFormat formato = new SimpleDateFormat("E dd MMM yyyy");
         btnFecha.setText(getActivity().getResources().getString(R.string.specify_date)+"   "+formato.format(fecha));
+    }
+
+    //Devuelve la fecha seleccionada, siempre que ésta sea una fecha futura.
+    public Date getFechaEvento() {
+        date.setMinutes(0);
+        date.setHours(0);
+        date.setSeconds(0);
+        if (hora.length()>0) {
+            date.setHours(Integer.parseInt(hora.getText().toString()));
+            if (minutos.length()>0)
+                date.setMinutes(Integer.parseInt(minutos.getText().toString()));
+        }
+        if (date.after(new Date()))
+            return date;
+        return null;
+    }
+
+    public String getHoraEvento() {
+        if (hora.length()>0) {
+            if (minutos.length()>0)
+                return (hora.getText().toString()+":"+minutos.getText().toString());
+            return (hora.getText().toString()+":00");
+        }
+        return null;
+    }
+
+    public int getNumParticipantes() {
+        if (participantes.length()>0)
+            return Integer.parseInt(participantes.getText().toString());
+        return -1;
+    }
+
+    public String getDireccion() {
+        if (direccion.length()>0)
+            return direccion.getText().toString();
+        return null;
+    }
+
+    public boolean getResevaRealizada() {
+        if (reserva.isChecked())
+            return true;
+        return false;
+    }
+
+    public float getCosteReserva() {
+        if (reserva.isChecked()) {
+            if (coste.length()>0)
+                return Float.parseFloat(coste.getText().toString());
+        }
+        return -1;
+    }
+
+    public float getPrecioIndividual() {
+        if (precio.length()>0)
+            return Float.parseFloat(precio.getText().toString());
+        return -1;
+    }
+
+    public String getComentarios() {
+        if (comentarios.length()>0)
+            return comentarios.getText().toString();
+        return null;
+    }
+
+    public boolean getElOrganizadorEsParticipante() {
+        return (!notParticipant.isChecked());
     }
 }

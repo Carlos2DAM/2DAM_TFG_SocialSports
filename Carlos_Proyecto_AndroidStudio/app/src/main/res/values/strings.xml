@@ -39,6 +39,7 @@
     <string name="specify_cost">Cost</string>
     <string name="specify_price">Individual contribution:</string>
     <string name="specify_hint_price">Price</string>
+    <string name="specify_not_participant">The organizer will not be a participant.</string>
     <string name="specify_coments">Comments (max 300 characters):</string>
     <string name="specify_participants">Participants required:</string>
 

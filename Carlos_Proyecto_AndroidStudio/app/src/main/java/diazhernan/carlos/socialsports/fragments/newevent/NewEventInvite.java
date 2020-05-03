@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ import diazhernan.carlos.socialsports.R;
 public class NewEventInvite extends Fragment {
 
     private ArrayList<String> listaInvitarAmigos;
+    private TextView textDescrip;
     private LinearLayout viewListaAmigos;
     private Button buttonAll;
     private Button buttonNobody;
@@ -39,6 +41,7 @@ public class NewEventInvite extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         listaInvitarAmigos = new ArrayList<>();
+        textDescrip = getActivity().findViewById(R.id.textInviteDescription);
         viewListaAmigos = getActivity().findViewById(R.id.viewListaAmigos);
         buttonAll = getActivity().findViewById(R.id.buttonInviteAll);
         buttonNobody = getActivity().findViewById(R.id.buttonInviteNobody);
@@ -81,6 +84,16 @@ public class NewEventInvite extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        textDescrip.setFocusable(true);
+        textDescrip.setFocusableInTouchMode(true);
+        textDescrip.requestFocus();
+        textDescrip.setFocusable(false);
+        textDescrip.setFocusableInTouchMode(false);
+    }
+
     public void seleccionarTodosAmigos(boolean selec) {
         for (int i=0; i<MainActivity.listaAmigos.size(); i++) {
             CheckBox checkBox = getActivity().findViewById((int)MainActivity.listaAmigos.get(i).getIdUsuario());
@@ -90,5 +103,10 @@ public class NewEventInvite extends Fragment {
             else
                 checkBox.setButtonTintList(getResources().getColorStateList(R.color.colorElements));
         }
+    }
+
+    //Devuelve la lista de los email pertenecientes a los amigos seleccionados para invitar al evento.
+    public ArrayList<String> getListaInvitarAmigos() {
+        return listaInvitarAmigos;
     }
 }

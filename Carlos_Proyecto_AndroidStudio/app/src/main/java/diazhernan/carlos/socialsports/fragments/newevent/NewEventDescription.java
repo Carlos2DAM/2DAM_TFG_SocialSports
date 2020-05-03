@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import diazhernan.carlos.socialsports.Funcionalidades;
 import diazhernan.carlos.socialsports.R;
@@ -16,6 +17,7 @@ import diazhernan.carlos.socialsports.R;
 
 public class NewEventDescription extends Fragment {
 
+    private TextView textDescrip;
     private EditText editSport;
     private EditText editLocation;
 
@@ -31,8 +33,9 @@ public class NewEventDescription extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        editSport = getActivity().findViewById(R.id.editSport);
-        editLocation = getActivity().findViewById(R.id.editLocation);
+        textDescrip = getActivity().findViewById(R.id.textDescriptionDescription);
+        editSport = getActivity().findViewById(R.id.editDescriptionSport);
+        editLocation = getActivity().findViewById(R.id.editDescriptionLocation);
 
         editSport.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -46,5 +49,27 @@ public class NewEventDescription extends Fragment {
                 Funcionalidades.cambiarColoresTexto((EditText)v,getActivity().getApplication());
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        textDescrip.setFocusable(true);
+        textDescrip.setFocusableInTouchMode(true);
+        textDescrip.requestFocus();
+        textDescrip.setFocusable(false);
+        textDescrip.setFocusableInTouchMode(false);
+    }
+
+    public String getDeporte() {
+        if (editSport.length()>0)
+            return editSport.getText().toString();
+        return null;
+    }
+
+    public String getLocalidad() {
+        if (editLocation.length()>0)
+            return editLocation.getText().toString();
+        return null;
     }
 }
