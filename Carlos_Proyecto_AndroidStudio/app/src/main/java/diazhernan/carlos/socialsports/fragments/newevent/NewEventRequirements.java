@@ -22,6 +22,7 @@ import diazhernan.carlos.socialsports.R;
 
 public class NewEventRequirements extends Fragment {
 
+    private TextView textDescrip;
     private CheckBox checkBoxMinAge;
     private CheckBox checkBoxMaxAge;
     private CheckBox checkBoxGender;
@@ -52,6 +53,7 @@ public class NewEventRequirements extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        textDescrip = getActivity().findViewById(R.id.textRequirementsDescription);
         checkBoxMinAge = getActivity().findViewById(R.id.checkRequirementsMinAge);
         checkBoxMaxAge = getActivity().findViewById(R.id.checkRequirementsMaxAge);
         checkBoxGender = getActivity().findViewById(R.id.checkRequirementsGender);
@@ -160,5 +162,43 @@ public class NewEventRequirements extends Fragment {
                 textReputation.setText(Float.toString(ratingBar.getRating()));
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        textDescrip.setFocusable(true);
+        textDescrip.setFocusableInTouchMode(true);
+        textDescrip.requestFocus();
+        textDescrip.setFocusable(false);
+        textDescrip.setFocusableInTouchMode(false);
+    }
+
+    public int getEdadMinima() {
+        if (checkBoxMinAge.isChecked())
+            return barMinAge.getProgress();
+        return -1;
+    }
+
+    public int getEdadMaxima() {
+        if (checkBoxMaxAge.isChecked())
+            return barMaxAge.getProgress();
+        return -1;
+    }
+
+    public String getGenero() {
+        if (checkBoxGender.isChecked()) {
+            if (radioMale.isChecked())
+                return ("Male");
+            if (radioFemale.isChecked())
+                return ("Female");
+        }
+        return null;
+    }
+
+    public float getReputacion() {
+        if (checkBoxReputation.isChecked())
+            return ratingReputation.getRating();
+        return -1;
     }
 }

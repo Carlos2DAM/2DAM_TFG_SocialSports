@@ -193,6 +193,15 @@
 
             </TableRow>
 
+            <CheckBox
+                android:id="@+id/checkSpecifyNoParticipant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/specify_not_participant"
+                android:textColor="@color/colorElements"
+                android:theme="@style/checkBoxCustom"
+                android:layout_marginTop="@dimen/activity_vertical_margin"/>
+
             <TextView
                 android:id="@+id/textSpecifyComments"
                 android:layout_width="match_parent"

@@ -12,12 +12,15 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.Date;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText usernameEditText;
     private EditText passwordEditText;
     private Button loginButton;
     private ProgressBar loadingProgressBar;
+    public static Usuario usuario = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,9 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loginButton.setFocusableInTouchMode(true);
+                loginButton.requestFocus();
+                loginButton.setFocusableInTouchMode(false);
                 if (comprobarDatosLoginCorrectos())
                     cargarAplicacionUsuario();
                 loadingProgressBar.setVisibility(View.GONE);
@@ -72,15 +78,18 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean comprobarDatosLoginCorrectos(){
         loadingProgressBar.setVisibility(View.VISIBLE);
+
+        usuario = new Usuario(21,"carlos@mail.es","carlos",
+                "Carlos","Diaz Hernan","Male",
+                "calle Oviedo 37", new Date(83,11,21),
+                new Date(),4.5, 5,
+                "carlos.jpg",null,null);
+
         return true;
     }
 
     private void cargarAplicacionUsuario(){
-        loginButton.setFocusableInTouchMode(true);
-        loginButton.requestFocus();
-        loginButton.setFocusableInTouchMode(false);
         Intent i = new Intent(getBaseContext(), MainActivity.class);
         startActivity(i);
     }
-
 }
