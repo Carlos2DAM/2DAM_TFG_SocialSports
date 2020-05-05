@@ -1,22 +1,26 @@
 package diazhernan.carlos.socialsports.fragments.newevent;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import diazhernan.carlos.socialsports.Funcionalidades;
@@ -25,10 +29,8 @@ import diazhernan.carlos.socialsports.R;
 public class NewEventSpecify extends Fragment {
 
     private TextView textDescrip;
-    private Button btnFecha;
-    private CalendarView calendario;
-    private EditText hora;
-    private EditText minutos;
+    private EditText editFecha;
+    private EditText editHora;
     private EditText participantes;
     private EditText direccion;
     private CheckBox reserva;
@@ -36,7 +38,16 @@ public class NewEventSpecify extends Fragment {
     private EditText precio;
     private CheckBox notParticipant;
     private EditText comentarios;
-    private Date date = new Date();
+    private Date date = null;
+    private Calendar newCalendar;
+    private DatePickerDialog dialogoCalendario;
+    private TimePickerDialog dialogoTime;
+    private Time newTime = null;
+    private int anio;
+    private int mes;
+    private int dia;
+    private int hora;
+    private int minutos;
 
     public NewEventSpecify() {    }
 
@@ -51,10 +62,8 @@ public class NewEventSpecify extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         textDescrip = getActivity().findViewById(R.id.textSpecifyDescription);
-        btnFecha = getActivity().findViewById(R.id.buttonSpecifyDate);
-        calendario = getActivity().findViewById(R.id.calendarSpecifyDate);
-        hora = getActivity().findViewById(R.id.editSpecifyHuor);
-        minutos = getActivity().findViewById(R.id.editSpecifyMinutes);
+        editFecha = getActivity().findViewById(R.id.editSpecifyDate);
+        editHora = getActivity().findViewById(R.id.editSpecifyTime);
         participantes = getActivity().findViewById(R.id.editSpecifyParticipants);
         direccion = getActivity().findViewById(R.id.editSpecifyAddress);
         reserva = getActivity().findViewById(R.id.checkSpecifyReserved);
@@ -62,46 +71,41 @@ public class NewEventSpecify extends Fragment {
         precio = getActivity().findViewById(R.id.editSpecifyPrice);
         notParticipant = getActivity().findViewById(R.id.checkSpecifyNoParticipant);
         comentarios = getActivity().findViewById(R.id.editSpecifyComments);
-        calendario.setVisibility(View.GONE);
 
-        btnFecha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                calendario.setVisibility(View.VISIBLE);
-                v.setVisibility(View.GONE);
-            }
-        });
-        calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                date = new Date((year-1900),month,dayOfMonth);
-                btnFecha.setVisibility(View.VISIBLE);
+        newCalendar = Calendar.getInstance();
+        dialogoCalendario = new DatePickerDialog(getContext(), R.style.calenderDialogCustom, new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                anio = year;
+                mes = monthOfYear;
+                dia = dayOfMonth;
+                newCalendar.set(year,monthOfYear,dayOfMonth,0,0,0);
+                date = newCalendar.getTime();
                 mostrarFechaSeleccionada(date);
-                view.setVisibility(View.GONE);
+            }
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+        dialogoTime = new TimePickerDialog(getContext(), R.style.timerDialogCustom, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                hora = hourOfDay;
+                minutos = minute;
+                newTime = new Time(0);
+                mostrarHoraSeleccionada();
+            }
+        }, newCalendar.get(Calendar.HOUR_OF_DAY),newCalendar.get(Calendar.MINUTE),true);
+
+        editFecha.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                dialogoCalendario.show();
+                return true;
             }
         });
-        hora.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        editHora.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                Funcionalidades.cambiarColoresTexto((EditText)v,getActivity().getApplication());
-                if (hora.getText().length()>0) {
-                    if (Integer.parseInt(hora.getText().toString())>23)
-                        hora.setText("23");
-                    else if (hora.getText().length()<2)
-                        hora.setText("0"+hora.getText().toString());
-                }
-            }
-        });
-        minutos.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                Funcionalidades.cambiarColoresTexto((EditText)v,getActivity().getApplication());
-                if (minutos.getText().length()>0) {
-                    if (Integer.parseInt(minutos.getText().toString())>59)
-                        minutos.setText("59");
-                    else if (minutos.getText().length()<2)
-                        minutos.setText("0"+minutos.getText().toString());
-                }
+            public boolean onTouch(View v, MotionEvent event) {
+                dialogoTime.show();
+                return true;
             }
         });
         participantes.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -148,13 +152,6 @@ public class NewEventSpecify extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        calendario.setVisibility(View.GONE);
-        btnFecha.setVisibility(View.VISIBLE);
-        if (date != null)
-            mostrarFechaSeleccionada(date);
-        else
-            mostrarFechaSeleccionada(new Date());
-
         textDescrip.setFocusable(true);
         textDescrip.setFocusableInTouchMode(true);
         textDescrip.requestFocus();
@@ -164,31 +161,44 @@ public class NewEventSpecify extends Fragment {
 
     private void mostrarFechaSeleccionada(Date fecha) {
         SimpleDateFormat formato = new SimpleDateFormat("E dd MMM yyyy");
-        btnFecha.setText(getActivity().getResources().getString(R.string.specify_date)+"   "+formato.format(fecha));
+        if (fecha!=null)
+            editFecha.setText("    "+formato.format(fecha)+"    ");
+    }
+
+    private void mostrarHoraSeleccionada() {
+        String cadHora = Integer.toString(hora);
+        String cadMin = Integer.toString(minutos);
+        if (cadHora.length()==1)
+            cadHora="0"+cadHora;
+        if (cadMin.length()==1)
+            cadMin="0"+cadMin;
+        editHora.setText(cadHora+":"+cadMin);
     }
 
     //Devuelve la fecha seleccionada, siempre que ésta sea una fecha futura.
     public Date getFechaEvento() {
-        date.setMinutes(0);
-        date.setHours(0);
-        date.setSeconds(0);
-        if (hora.length()>0) {
-            date.setHours(Integer.parseInt(hora.getText().toString()));
-            if (minutos.length()>0)
-                date.setMinutes(Integer.parseInt(minutos.getText().toString()));
+        if (date!=null) {
+            newCalendar.set(anio,mes,dia,0,0,0);
+            if (newTime!=null) {
+                    newCalendar.set(anio,mes,dia,hora,minutos);
+            }
+            date = newCalendar.getTime();
+            if (date.after(new Date()))
+                return date;
         }
-        if (date.after(new Date()))
-            return date;
         return null;
     }
 
-    public String getHoraEvento() {
-        if (hora.length()>0) {
-            if (minutos.length()>0)
-                return (hora.getText().toString()+":"+minutos.getText().toString());
-            return (hora.getText().toString()+":00");
-        }
-        return null;
+    public int getHoraEvento() {
+        if (newTime!=null)
+            return hora;
+        return -1;
+    }
+
+    public int getMinutoEvento() {
+        if (newTime!=null)
+            return minutos;
+        return -1;
     }
 
     public int getNumParticipantes() {

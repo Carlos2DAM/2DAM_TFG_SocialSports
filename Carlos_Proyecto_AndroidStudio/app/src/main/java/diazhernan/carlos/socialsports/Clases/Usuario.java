@@ -1,4 +1,4 @@
-package diazhernan.carlos.socialsports;
+package diazhernan.carlos.socialsports.Clases;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -6,24 +6,24 @@ import java.util.Date;
 public class Usuario {
 
     private long idUsuario;
-    private String emailUsuario;
-    private String paswordUsuario;
-    private String nombreUsuario;
-    private String apellidosUsuario;
-    private String generoUsuario;
-    private String direccionUsuario;
+    private String emailUsuario;        //50 caracteres
+    private String paswordUsuario;      //30 caracteres
+    private String nombreUsuario;       //50 caracteres
+    private String apellidosUsuario;    //50 caracteres
+    private String generoUsuario;       //6 caracteres (Male o Female)
+    private String direccionUsuario;    //60 caracteres
     private Date fechaNacimientoUsuario;
     private Date fechaAltaUsuario;
-    private double reputacionParticipanteUsuario;
-    private double reputacionOrganizadorUsuario;
-    private String fotoPerfilUsuario;
+    private float reputacionParticipanteUsuario;
+    private float reputacionOrganizadorUsuario;
+    private String fotoPerfilUsuario;               //80 caracteres
     private ArrayList<Usuario> listaAmigos = new ArrayList<>();
     private ArrayList<Usuario> listaBloqueados = new ArrayList<>();
 
     public Usuario() {
     }
 
-    public Usuario(long idUsuario, String emailUsuario, String paswordUsuario, String nombreUsuario, String generoUsuario, String direccionUsuario, Date fechaNacimientoUsuario, Date fechaAltaUsuario, double reputacionParticipanteUsuario, double reputacionOrganizadorUsuario, String fotoPerfilUsuario) {
+    public Usuario(long idUsuario, String emailUsuario, String paswordUsuario, String nombreUsuario, String generoUsuario, String direccionUsuario, Date fechaNacimientoUsuario, Date fechaAltaUsuario, float reputacionParticipanteUsuario, float reputacionOrganizadorUsuario, String fotoPerfilUsuario) {
         this.idUsuario = idUsuario;
         this.emailUsuario = emailUsuario;
         this.paswordUsuario = paswordUsuario;
@@ -37,7 +37,7 @@ public class Usuario {
         this.fotoPerfilUsuario = fotoPerfilUsuario;
     }
 
-    public Usuario(long idUsuario, String emailUsuario, String paswordUsuario, String nombreUsuario, String apellidosUsuario, String generoUsuario, String direccionUsuario, Date fechaNacimientoUsuario, Date fechaAltaUsuario, double reputacionParticipanteUsuario, double reputacionOrganizadorUsuario, String fotoPerfilUsuario, ArrayList<Usuario> listaAmigos, ArrayList<Usuario> listaBloqueados) {
+    public Usuario(long idUsuario, String emailUsuario, String paswordUsuario, String nombreUsuario, String apellidosUsuario, String generoUsuario, String direccionUsuario, Date fechaNacimientoUsuario, Date fechaAltaUsuario, float reputacionParticipanteUsuario, float reputacionOrganizadorUsuario, String fotoPerfilUsuario, ArrayList<Usuario> listaAmigos, ArrayList<Usuario> listaBloqueados) {
         this.idUsuario = idUsuario;
         this.emailUsuario = emailUsuario;
         this.paswordUsuario = paswordUsuario;
@@ -126,19 +126,19 @@ public class Usuario {
         this.fechaAltaUsuario = fechaAltaUsuario;
     }
 
-    public double getReputacionParticipanteUsuario() {
+    public float getReputacionParticipanteUsuario() {
         return reputacionParticipanteUsuario;
     }
 
-    public void setReputacionParticipanteUsuario(double reputacionParticipanteUsuario) {
+    public void setReputacionParticipanteUsuario(float reputacionParticipanteUsuario) {
         this.reputacionParticipanteUsuario = reputacionParticipanteUsuario;
     }
 
-    public double getReputacionOrganizadorUsuario() {
+    public float getReputacionOrganizadorUsuario() {
         return reputacionOrganizadorUsuario;
     }
 
-    public void setReputacionOrganizadorUsuario(double reputacionOrganizadorUsuario) {
+    public void setReputacionOrganizadorUsuario(float reputacionOrganizadorUsuario) {
         this.reputacionOrganizadorUsuario = reputacionOrganizadorUsuario;
     }
 
