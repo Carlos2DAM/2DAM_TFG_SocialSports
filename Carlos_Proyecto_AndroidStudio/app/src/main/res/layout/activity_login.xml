@@ -19,7 +19,7 @@
         android:backgroundTint="@color/colorElements"
         android:hint="@string/prompt_email"
         android:inputType="textEmailAddress"
-        android:maxLength="40"
+        android:maxLength="50"
         android:selectAllOnFocus="true"
         android:textAlignment="center"
         android:textColor="@color/colorElements"

@@ -22,23 +22,35 @@
                 android:textColor="@color/colorElements"
                 android:text="@string/specify_description" />
 
-            <Button
-                android:id="@+id/buttonSpecifyDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:background="@drawable/boton1"
-                android:textColor="@color/colorElements"
-                tools:text="@string/specify_date" />
-
-            <CalendarView
-                android:id="@+id/calendarSpecifyDate"
+            <TableRow
+                android:id="@+id/rowSpecifyDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:theme="@style/CalenderViewCustom"
-                android:visibility="visible" />
+                android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:id="@+id/textSpecifyDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/specify_date"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorElements" />
+
+                <EditText
+                    android:id="@+id/editSpecifyDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorElements"
+                    android:ems="10"
+                    android:hint="00/00/00"
+                    android:inputType="date"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:layout_marginHorizontal="@dimen/views_horizontal_margin"
+                    android:textColor="@color/colorElements"
+                    android:textColorHint="@color/colorElementsDark" />
+
+            </TableRow>
 
             <TableRow
                 android:id="@+id/rowSpecifyTime"
@@ -55,40 +67,17 @@
                     android:textColor="@color/colorElements" />
 
                 <EditText
-                    android:id="@+id/editSpecifyHuor"
+                    android:id="@+id/editSpecifyTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorElements"
-                    android:ems="2"
-                    android:hint="00"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editSpecifyMinutes"
-                    android:selectAllOnFocus="true"
+                    android:ems="6"
+                    android:hint="00:00"
+                    android:inputType="time"
                     android:textAlignment="center"
                     android:textColor="@color/colorElements"
                     android:textColorHint="@color/colorElementsDark" />
 
-                <TextView
-                    android:id="@+id/textSpecifyHourSeparator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/hour_separator"
-                    android:textColor="@color/colorElements" />
-
-                <EditText
-                    android:id="@+id/editSpecifyMinutes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorElements"
-                    android:ems="2"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:hint="00"
-                    android:selectAllOnFocus="true"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorElements"
-                    android:textColorHint="@color/colorElementsDark" />
             </TableRow>
 
             <TableRow
@@ -128,7 +117,7 @@
                 android:ems="10"
                 android:hint="@string/specify_hint_address"
                 android:inputType="textPostalAddress"
-                android:maxLength="80"
+                android:maxLength="60"
                 android:selectAllOnFocus="true"
                 android:textColor="@color/colorElements"
                 android:textColorHint="@color/colorElementsDark" />
