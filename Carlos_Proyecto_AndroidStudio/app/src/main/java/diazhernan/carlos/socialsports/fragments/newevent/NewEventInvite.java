@@ -27,7 +27,9 @@ public class NewEventInvite extends Fragment {
     private Button buttonAll;
     private Button buttonNobody;
 
-    public NewEventInvite() { }
+    public NewEventInvite() {
+        listaInvitarAmigos = new ArrayList<>();
+    }
 
 
     @Override
@@ -40,7 +42,6 @@ public class NewEventInvite extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        listaInvitarAmigos = new ArrayList<>();
         textDescrip = getActivity().findViewById(R.id.textInviteDescription);
         viewListaAmigos = getActivity().findViewById(R.id.viewListaAmigos);
         buttonAll = getActivity().findViewById(R.id.buttonInviteAll);
@@ -59,7 +60,7 @@ public class NewEventInvite extends Fragment {
         });
         for (int i=0; i<MainActivity.listaAmigos.size(); i++) {
             CheckBox checkBox = new CheckBox(getContext());
-            checkBox.setId((int)MainActivity.listaAmigos.get(i).getIdUsuario());
+            checkBox.setId(i);
             checkBox.setText(MainActivity.listaAmigos.get(i).getNombreUsuario());
             checkBox.setHint(MainActivity.listaAmigos.get(i).getEmailUsuario());
             checkBox.setTextColor(getResources().getColor(R.color.colorElements));
@@ -96,7 +97,7 @@ public class NewEventInvite extends Fragment {
 
     public void seleccionarTodosAmigos(boolean selec) {
         for (int i=0; i<MainActivity.listaAmigos.size(); i++) {
-            CheckBox checkBox = getActivity().findViewById((int)MainActivity.listaAmigos.get(i).getIdUsuario());
+            CheckBox checkBox = getActivity().findViewById(i);
             checkBox.setChecked(selec);
             if (selec)
                 checkBox.setButtonTintList(getResources().getColorStateList(R.color.colorAccent));

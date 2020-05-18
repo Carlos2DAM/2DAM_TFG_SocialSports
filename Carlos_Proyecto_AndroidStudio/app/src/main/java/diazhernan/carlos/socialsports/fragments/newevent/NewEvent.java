@@ -12,7 +12,15 @@ import android.widget.Button;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
+import java.util.Date;
+
+import diazhernan.carlos.socialsports.Clases.Evento;
+import diazhernan.carlos.socialsports.Clases.Requisitos;
+import diazhernan.carlos.socialsports.Clases.Usuario;
 import diazhernan.carlos.socialsports.Funcionalidades;
+import diazhernan.carlos.socialsports.LoginActivity;
+import diazhernan.carlos.socialsports.MainActivity;
 import diazhernan.carlos.socialsports.R;
 
 public class NewEvent extends Fragment {
@@ -20,11 +28,12 @@ public class NewEvent extends Fragment {
     private NewEventDescription newEventDescription = new NewEventDescription();
     private NewEventSpecify newEventSpecify = new NewEventSpecify();
     private NewEventRequirements newEventRequirements = new NewEventRequirements();
-    private NewEventInvite newEventInvite =new NewEventInvite();
+    private NewEventInvite newEventInvite = new NewEventInvite();
     private TabLayout tabLayout;
     private Button createButton;
     private Button nextButton;
     private Button previousButton;
+    private Evento eventoCreado = null;
 
     public NewEvent() {
     }
@@ -37,12 +46,13 @@ public class NewEvent extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Funcionalidades.showSelectedFragment(R.id.newEventContainer,getActivity().getSupportFragmentManager(),newEventDescription);
         createButton = getActivity().findViewById(R.id.createNewEventButton);
         nextButton = getActivity().findViewById(R.id.buttonNext);
         previousButton = getActivity().findViewById(R.id.buttonPrevious);
         tabLayout = getActivity().findViewById(R.id.tabs);
-        activarBotonNext();
+        Funcionalidades.showSelectedFragment(R.id.newEventContainer, getActivity().getSupportFragmentManager(), newEventSpecify);
+        Funcionalidades.showSelectedFragment(R.id.newEventContainer, getActivity().getSupportFragmentManager(), newEventRequirements);
+        Funcionalidades.showSelectedFragment(R.id.newEventContainer, getActivity().getSupportFragmentManager(), newEventInvite);
 
         createButton.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -55,7 +65,12 @@ public class NewEvent extends Fragment {
             public void onClick(View v) {
                 v.setFocusableInTouchMode(true);
                 v.requestFocus();
+                Funcionalidades.esconderTeclado(getActivity(),getContext(),v);
                 v.setFocusableInTouchMode(false);
+                if (obtenerParametrosIntroducidos())
+                    crearEvento();
+                else
+                    Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_incomplete_data), getContext());
             }
         });
 
@@ -70,6 +85,7 @@ public class NewEvent extends Fragment {
             public void onClick(View v) {
                 v.setFocusableInTouchMode(true);
                 v.requestFocus();
+                Funcionalidades.esconderTeclado(getActivity(),getContext(),v);
                 v.setFocusableInTouchMode(false);
                 tabLayout.getTabAt(tabLayout.getSelectedTabPosition()+1).select();
             }
@@ -86,6 +102,7 @@ public class NewEvent extends Fragment {
             public void onClick(View v) {
                 v.setFocusableInTouchMode(true);
                 v.requestFocus();
+                Funcionalidades.esconderTeclado(getActivity(),getContext(),v);
                 v.setFocusableInTouchMode(false);
                 tabLayout.getTabAt(tabLayout.getSelectedTabPosition()-1).select();
             }
@@ -94,6 +111,7 @@ public class NewEvent extends Fragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                Funcionalidades.esconderTeclado(getActivity(),getContext(),getView());
                 if (tab.getText().toString().equals(getResources().getString(R.string.tab_description))) {
                     Funcionalidades.showSelectedFragment(R.id.newEventContainer,getActivity().getSupportFragmentManager(),newEventDescription);
                     activarBotonNext();
@@ -116,8 +134,12 @@ public class NewEvent extends Fragment {
             public void onTabUnselected(TabLayout.Tab tab) {}
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {}
+            public void onTabReselected(TabLayout.Tab tab) {
+                onTabSelected(tab);
+            }
         });
+        Funcionalidades.showSelectedFragment(R.id.newEventContainer, getActivity().getSupportFragmentManager(), newEventDescription);
+        activarBotonNext();
     }
 
     private void activarBotonNext(){
@@ -131,5 +153,59 @@ public class NewEvent extends Fragment {
     private void activarBotonNextPrevious(){
         nextButton.setVisibility(View.VISIBLE);
         previousButton.setVisibility(View.VISIBLE);
+    }
+
+    private boolean obtenerParametrosIntroducidos() {
+        String idEv,deporte,localidad,direccion,horaEv,comments;
+        deporte = newEventDescription.getDeporte();
+        if (deporte.equals(""))
+            return false;
+        localidad = newEventDescription.getLocalidad();
+        if (localidad.equals(""))
+            return false;
+        Date fechaEv,fechaCreado=new Date();
+        int maxParticipantes;
+        boolean reserva;
+        Requisitos requisitos = new Requisitos();
+        float coste,precio;
+        direccion = newEventSpecify.getDireccion();
+        fechaEv = newEventSpecify.getFechaEvento();
+        horaEv = newEventSpecify.getHoraEvento();
+        maxParticipantes = newEventSpecify.getNumParticipantes();
+        reserva = newEventSpecify.getResevaRealizada();
+        coste = newEventSpecify.getCosteReserva();
+        precio = newEventSpecify.getPrecioIndividual();
+        comments = newEventSpecify.getComentarios();
+        requisitos.setEdadMinima(newEventRequirements.getEdadMinima());
+        requisitos.setEdadMaxima(newEventRequirements.getEdadMaxima());
+        requisitos.setRequisitoDeGenero(newEventRequirements.getGenero());
+        requisitos.setReputacionNecesaria(newEventRequirements.getReputacion());
+        idEv = LoginActivity.usuario.getEmailUsuario()+"__"+fechaCreado.toString();
+        ArrayList<Usuario> listaP = new ArrayList<>();
+        if (newEventSpecify.getElOrganizadorEsParticipante())
+            listaP.add(LoginActivity.usuario);
+        eventoCreado = new Evento(idEv,LoginActivity.usuario,deporte,localidad,direccion,fechaEv,
+                horaEv,fechaCreado,maxParticipantes,reserva,coste,precio,comments,requisitos,
+                false,new ArrayList<Usuario>(),new ArrayList<Usuario>(),listaP);
+        Funcionalidades.enviarInvitaciones(eventoCreado,newEventInvite.getListaInvitarAmigos());
+        return true;
+    }
+
+    private void crearEvento() {
+        if (Funcionalidades.guardarEvento(eventoCreado)) {
+            Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_evento_creado),getContext());
+            MainActivity.listaEventos.add(eventoCreado);
+            newEventDescription = new NewEventDescription();
+            newEventSpecify = new NewEventSpecify();
+            newEventRequirements = new NewEventRequirements();
+            newEventInvite = new NewEventInvite();
+            eventoCreado = null;
+            Funcionalidades.showSelectedFragment(R.id.newEventContainer, getActivity().getSupportFragmentManager(), newEventSpecify);
+            Funcionalidades.showSelectedFragment(R.id.newEventContainer, getActivity().getSupportFragmentManager(), newEventRequirements);
+            Funcionalidades.showSelectedFragment(R.id.newEventContainer, getActivity().getSupportFragmentManager(), newEventInvite);
+            tabLayout.getTabAt(0).select();
+        }
+        else
+            Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_error_evento_creado),getContext());
     }
 }

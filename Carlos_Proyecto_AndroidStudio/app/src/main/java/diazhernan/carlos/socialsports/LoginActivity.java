@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import diazhernan.carlos.socialsports.Clases.Usuario;
@@ -81,16 +82,21 @@ public class LoginActivity extends AppCompatActivity {
     private boolean comprobarDatosLoginCorrectos(){
         loadingProgressBar.setVisibility(View.VISIBLE);
 
-        usuario = new Usuario(21,"carlos@mail.es","carlos",
+        usuario = new Usuario("carlos@mail.es","carlos",
                 "Carlos","Diaz Hernan","Male",
                 "calle Oviedo 37", new Date(83,11,21),
                 new Date(),4.5f, 5f,
-                "carlos.jpg",null,null);
+                "carlos.jpg",true,new ArrayList<Usuario>(),
+                new ArrayList<Usuario>());
 
         return true;
     }
 
     private void cargarAplicacionUsuario(){
+        Funcionalidades.cargarEventos();
+        Funcionalidades.cargarAmigos();
+        usuario.setOnlineNow(true);
+        Funcionalidades.guardarUsuarioOnlineNow(true);
         Intent i = new Intent(getBaseContext(), MainActivity.class);
         startActivity(i);
     }

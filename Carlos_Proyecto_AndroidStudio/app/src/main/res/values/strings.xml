@@ -22,6 +22,9 @@
     <string name="button_next">NEXT >></string>
     <string name="button_previous">&lt;&lt; PREVIOUS</string>
     <string name="button_create_event">Create Event</string>
+    <string name="mensaje_incomplete_data">Please, enter Sport and Location.</string>
+    <string name="mensaje_evento_creado">Event Created.</string>
+    <string name="mensaje_error_evento_creado">Error. The event could not be created.</string>
 
     <!-- Strings related to fragmet_new_event_description -->
     <string name="description_description">The following fields are required to initially create an event.</string><!--Los siguientes  campos son obligatorios para crear inicialmente un evento.-->
@@ -30,18 +33,16 @@
 
     <!-- Strings related to fragmet_new_event_specify -->
     <string name="specify_description">Optional fields to specify the event data.</string><!--Campos opcionales para concretar los datos del evento.-->
-    <string name="specify_date">Event date:</string>
-    <string name="specify_time">Event time:</string>
-    <string name="hour_separator">:</string>
-    <string name="specify_address">Address:</string>
+    <string name="specify_date">Event date</string>
+    <string name="specify_time">Event time</string>
     <string name="specify_hint_address">Event address</string>
     <string name="specify_chek_reserved">Facilities reserved</string>
     <string name="specify_cost">Cost</string>
     <string name="specify_price">Individual contribution:</string>
     <string name="specify_hint_price">Price</string>
-    <string name="specify_not_participant">The organizer will not be a participant.</string>
-    <string name="specify_coments">Comments (max 300 characters):</string>
-    <string name="specify_participants">Participants required:</string>
+    <string name="specify_not_participant">The organizer is not a participant.</string>
+    <string name="specify_coments">Comments (max 300 characters)</string>
+    <string name="specify_participants">Participants Required:</string>
 
     <!-- Strings related to fragmet_new_event_requirements -->
     <string name="requirements_description">Participants requirements. (optional)</string>
@@ -56,4 +57,27 @@
     <string name="invite_description">Invite friends to this event:</string>
     <string name="invite_btn_all">All</string>
     <string name="invite_btn_nobody">Nobody</string>
+
+    <!-- Strings related to AdaptadorListaEventos -->
+    <string name="sin_fecha">NO DATE</string>
+    <string name="reserved">RESERVED</string>
+    <string name="no_reserved">NOT RESERVED</string>
+    <string name="moneda">€</string>
+    <string name="organizer">Organizer:</string>
+    <string name="me">Me</string>
+    <string name="state">State:</string>
+    <string name="full">Full</string>
+    <string name="vacancies">Vacancies</string>
+    <string name="rate_participants">Rate participants</string>
+
+    <!-- Strings related to fragmet_my_events -->
+    <string name="toolBar_my_events">My Events</string>
+    <string name="tab_my_events_pend">Pending</string>
+    <string name="tab_my_events_final">Finished</string>
+
+    <!-- Strings related to fragmet_search_events -->
+    <string name="toolBar_search_events">Search Events</string>
+    <string name="tab_search_events_filters">Filters</string>
+    <string name="tab_search_events_results">Results</string>
+    <string name="button_filter">Filter</string>
 </resources>
