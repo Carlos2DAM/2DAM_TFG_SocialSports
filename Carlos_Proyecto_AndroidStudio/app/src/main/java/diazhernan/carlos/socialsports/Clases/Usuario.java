@@ -5,7 +5,6 @@ import java.util.Date;
 
 public class Usuario {
 
-    private long idUsuario;
     private String emailUsuario;        //50 caracteres
     private String paswordUsuario;      //30 caracteres
     private String nombreUsuario;       //50 caracteres
@@ -17,17 +16,32 @@ public class Usuario {
     private float reputacionParticipanteUsuario;
     private float reputacionOrganizadorUsuario;
     private String fotoPerfilUsuario;               //80 caracteres
-    private ArrayList<Usuario> listaAmigos = new ArrayList<>();
-    private ArrayList<Usuario> listaBloqueados = new ArrayList<>();
+    private boolean isOnlineNow;
+    private ArrayList<Usuario> listaAmigos;
+    private ArrayList<Usuario> listaBloqueados;
 
     public Usuario() {
+        emailUsuario = "";
+        paswordUsuario = "";
+        nombreUsuario = "";
+        apellidosUsuario = "";
+        generoUsuario = "";
+        direccionUsuario = "";
+        fechaNacimientoUsuario = new Date();
+        fechaAltaUsuario = new Date();
+        reputacionParticipanteUsuario = -1;
+        reputacionOrganizadorUsuario = -1;
+        fotoPerfilUsuario = "";
+        isOnlineNow = false;
+        listaAmigos = new ArrayList<>();
+        listaBloqueados = new ArrayList<>();
     }
 
-    public Usuario(long idUsuario, String emailUsuario, String paswordUsuario, String nombreUsuario, String generoUsuario, String direccionUsuario, Date fechaNacimientoUsuario, Date fechaAltaUsuario, float reputacionParticipanteUsuario, float reputacionOrganizadorUsuario, String fotoPerfilUsuario) {
-        this.idUsuario = idUsuario;
+    public Usuario(String emailUsuario, String paswordUsuario, String nombreUsuario, String generoUsuario, String direccionUsuario, Date fechaNacimientoUsuario, Date fechaAltaUsuario, float reputacionParticipanteUsuario, float reputacionOrganizadorUsuario, String fotoPerfilUsuario) {
         this.emailUsuario = emailUsuario;
         this.paswordUsuario = paswordUsuario;
         this.nombreUsuario = nombreUsuario;
+        this.apellidosUsuario = "";
         this.generoUsuario = generoUsuario;
         this.direccionUsuario = direccionUsuario;
         this.fechaNacimientoUsuario = fechaNacimientoUsuario;
@@ -35,10 +49,12 @@ public class Usuario {
         this.reputacionParticipanteUsuario = reputacionParticipanteUsuario;
         this.reputacionOrganizadorUsuario = reputacionOrganizadorUsuario;
         this.fotoPerfilUsuario = fotoPerfilUsuario;
+        this.isOnlineNow = false;
+        listaAmigos = new ArrayList<>();
+        listaBloqueados = new ArrayList<>();
     }
 
-    public Usuario(long idUsuario, String emailUsuario, String paswordUsuario, String nombreUsuario, String apellidosUsuario, String generoUsuario, String direccionUsuario, Date fechaNacimientoUsuario, Date fechaAltaUsuario, float reputacionParticipanteUsuario, float reputacionOrganizadorUsuario, String fotoPerfilUsuario, ArrayList<Usuario> listaAmigos, ArrayList<Usuario> listaBloqueados) {
-        this.idUsuario = idUsuario;
+    public Usuario(String emailUsuario, String paswordUsuario, String nombreUsuario, String apellidosUsuario, String generoUsuario, String direccionUsuario, Date fechaNacimientoUsuario, Date fechaAltaUsuario, float reputacionParticipanteUsuario, float reputacionOrganizadorUsuario, String fotoPerfilUsuario, boolean isOnlineNow, ArrayList<Usuario> listaAmigos, ArrayList<Usuario> listaBloqueados) {
         this.emailUsuario = emailUsuario;
         this.paswordUsuario = paswordUsuario;
         this.nombreUsuario = nombreUsuario;
@@ -50,16 +66,9 @@ public class Usuario {
         this.reputacionParticipanteUsuario = reputacionParticipanteUsuario;
         this.reputacionOrganizadorUsuario = reputacionOrganizadorUsuario;
         this.fotoPerfilUsuario = fotoPerfilUsuario;
+        this.isOnlineNow = isOnlineNow;
         this.listaAmigos = listaAmigos;
         this.listaBloqueados = listaBloqueados;
-    }
-
-    public long getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(long idUsuario) {
-        this.idUsuario = idUsuario;
     }
 
     public String getEmailUsuario() {
@@ -150,6 +159,14 @@ public class Usuario {
         this.fotoPerfilUsuario = fotoPerfilUsuario;
     }
 
+    public boolean isOnlineNow() {
+        return isOnlineNow;
+    }
+
+    public void setOnlineNow(boolean onlineNow) {
+        isOnlineNow = onlineNow;
+    }
+
     public ArrayList<Usuario> getListaAmigos() {
         return listaAmigos;
     }
@@ -164,5 +181,16 @@ public class Usuario {
 
     public void setListaBloqueados(ArrayList<Usuario> listaBloqueados) {
         this.listaBloqueados = listaBloqueados;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "emailUsuario='" + emailUsuario + '\'' +
+                ", nombreUsuario='" + nombreUsuario + '\'' +
+                ", apellidosUsuario='" + apellidosUsuario + '\'' +
+                ", generoUsuario='" + generoUsuario + '\'' +
+                ", reputacionParticipanteUsuario=" + reputacionParticipanteUsuario +
+                '}';
     }
 }

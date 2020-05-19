@@ -41,7 +41,8 @@ public class NewEventRequirements extends Fragment {
     public static final int MinAge = 1;
     public static final int MaxAge = 100;
 
-    public NewEventRequirements() {    }
+    public NewEventRequirements() {
+    }
 
 
     @Override
@@ -189,9 +190,9 @@ public class NewEventRequirements extends Fragment {
     public String getGenero() {
         if (checkBoxGender.isChecked()) {
             if (radioMale.isChecked())
-                return ("Male");
+                return ("Male").toUpperCase();
             if (radioFemale.isChecked())
-                return ("Female");
+                return ("Female").toUpperCase();
         }
         return null;
     }

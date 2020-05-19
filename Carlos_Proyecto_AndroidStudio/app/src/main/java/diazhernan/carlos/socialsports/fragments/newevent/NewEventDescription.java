@@ -62,14 +62,10 @@ public class NewEventDescription extends Fragment {
     }
 
     public String getDeporte() {
-        if (editSport.length()>0)
-            return editSport.getText().toString();
-        return null;
+        return editSport.getText().toString().toUpperCase();
     }
 
     public String getLocalidad() {
-        if (editLocation.length()>0)
-            return editLocation.getText().toString();
-        return null;
+        return editLocation.getText().toString().toUpperCase();
     }
 }

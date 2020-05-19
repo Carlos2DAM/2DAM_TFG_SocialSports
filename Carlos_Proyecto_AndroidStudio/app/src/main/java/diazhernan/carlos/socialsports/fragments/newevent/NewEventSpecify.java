@@ -8,7 +8,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -19,7 +18,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -49,8 +47,8 @@ public class NewEventSpecify extends Fragment {
     private int hora;
     private int minutos;
 
-    public NewEventSpecify() {    }
-
+    public NewEventSpecify() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,12 +73,19 @@ public class NewEventSpecify extends Fragment {
         newCalendar = Calendar.getInstance();
         dialogoCalendario = new DatePickerDialog(getContext(), R.style.calenderDialogCustom, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                newCalendar.set(year, monthOfYear, dayOfMonth, 22, 0, 0);
+                date = newCalendar.getTime();
                 anio = year;
                 mes = monthOfYear;
                 dia = dayOfMonth;
-                newCalendar.set(year,monthOfYear,dayOfMonth,0,0,0);
-                date = newCalendar.getTime();
-                mostrarFechaSeleccionada(date);
+                if ((fechaCorrecta(newCalendar.getTime()) && newTime == null) || getFechaEvento() != null) {
+                    editFecha.setText(Funcionalidades.dateToString(date));
+                }
+                else {
+                    Funcionalidades.mostrarMensaje("Fecha errónea.", getContext());
+                    date = null;
+                    editFecha.setText("");
+                }
             }
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
@@ -90,22 +95,29 @@ public class NewEventSpecify extends Fragment {
                 hora = hourOfDay;
                 minutos = minute;
                 newTime = new Time(0);
-                mostrarHoraSeleccionada();
+                if (date == null || (date != null && getFechaEvento() != null)) {
+                    mostrarHoraSeleccionada();
+                }
+                else {
+                    Funcionalidades.mostrarMensaje("Hora errónea.", getContext());
+                    newTime = null;
+                    editHora.setText("");
+                }
             }
         }, newCalendar.get(Calendar.HOUR_OF_DAY),newCalendar.get(Calendar.MINUTE),true);
 
-        editFecha.setOnTouchListener(new View.OnTouchListener() {
+        editFecha.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public void onClick(View v) {
                 dialogoCalendario.show();
-                return true;
+                Funcionalidades.esconderTeclado(getActivity(),getContext(),v);
             }
         });
-        editHora.setOnTouchListener(new View.OnTouchListener() {
+        editHora.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public void onClick(View v) {
                 dialogoTime.show();
-                return true;
+                Funcionalidades.esconderTeclado(getActivity(),getContext(),v);
             }
         });
         participantes.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -141,10 +153,17 @@ public class NewEventSpecify extends Fragment {
         reserva.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Funcionalidades.esconderTeclado(getActivity(),getContext(),getView());
                 if (isChecked)
                     coste.setVisibility(View.VISIBLE);
                 else
                     coste.setVisibility(View.INVISIBLE);
+            }
+        });
+        notParticipant.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Funcionalidades.esconderTeclado(getActivity(),getContext(),getView());
             }
         });
     }
@@ -159,12 +178,6 @@ public class NewEventSpecify extends Fragment {
         textDescrip.setFocusableInTouchMode(false);
     }
 
-    private void mostrarFechaSeleccionada(Date fecha) {
-        SimpleDateFormat formato = new SimpleDateFormat("E dd MMM yyyy");
-        if (fecha!=null)
-            editFecha.setText("    "+formato.format(fecha)+"    ");
-    }
-
     private void mostrarHoraSeleccionada() {
         String cadHora = Integer.toString(hora);
         String cadMin = Integer.toString(minutos);
@@ -173,6 +186,10 @@ public class NewEventSpecify extends Fragment {
         if (cadMin.length()==1)
             cadMin="0"+cadMin;
         editHora.setText(cadHora+":"+cadMin);
+    }
+
+    private boolean fechaCorrecta(Date fecha) {
+        return fecha.after(new Date());
     }
 
     //Devuelve la fecha seleccionada, siempre que ésta sea una fecha futura.
@@ -189,16 +206,8 @@ public class NewEventSpecify extends Fragment {
         return null;
     }
 
-    public int getHoraEvento() {
-        if (newTime!=null)
-            return hora;
-        return -1;
-    }
-
-    public int getMinutoEvento() {
-        if (newTime!=null)
-            return minutos;
-        return -1;
+    public String getHoraEvento() {
+        return editHora.getText().toString().toUpperCase();
     }
 
     public int getNumParticipantes() {
@@ -208,15 +217,11 @@ public class NewEventSpecify extends Fragment {
     }
 
     public String getDireccion() {
-        if (direccion.length()>0)
-            return direccion.getText().toString();
-        return null;
+        return direccion.getText().toString().toUpperCase();
     }
 
     public boolean getResevaRealizada() {
-        if (reserva.isChecked())
-            return true;
-        return false;
+        return reserva.isChecked();
     }
 
     public float getCosteReserva() {
@@ -234,9 +239,7 @@ public class NewEventSpecify extends Fragment {
     }
 
     public String getComentarios() {
-        if (comentarios.length()>0)
-            return comentarios.getText().toString();
-        return null;
+        return comentarios.getText().toString().toUpperCase();
     }
 
     public boolean getElOrganizadorEsParticipante() {

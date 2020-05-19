@@ -14,6 +14,7 @@
         <item name="colorPrimary">@color/colorElements</item>
         <item name="colorPrimaryDark">@color/colorElementsDark</item>
         <item name="android:background">@color/dialogo</item>
+        <item name="android:backgroundTint">@color/dialogo</item>
     </style>
     <style name="timerDialogCustom" parent="Theme.AppCompat.Dialog">
         <item name="colorAccent">@color/colorAccent</item>
