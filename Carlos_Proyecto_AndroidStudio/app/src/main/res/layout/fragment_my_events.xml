@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:minHeight="54dp"
-            app:title="@string/toolBar_my_events"
+            app:title="@string/nav_my_events"
             app:titleTextColor="@color/colorAccent" />
 
         <com.google.android.material.tabs.TabLayout

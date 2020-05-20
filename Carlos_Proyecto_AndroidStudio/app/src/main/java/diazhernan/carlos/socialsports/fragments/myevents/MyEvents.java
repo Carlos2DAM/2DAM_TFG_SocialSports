@@ -64,12 +64,6 @@ public class MyEvents extends Fragment {
         tabLayout.getTabAt(0).select();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).select();
-    }
-
     private void mostrarListaEventos(ArrayList<Evento> arrayList)
     {
         AdaptadorListaEventos adapter = new AdaptadorListaEventos(getContext(), R.layout.item_lista_eventos,

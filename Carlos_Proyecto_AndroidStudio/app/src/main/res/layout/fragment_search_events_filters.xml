@@ -82,145 +82,29 @@
                 android:textColor="@color/colorElements"
                 android:theme="@style/checkBoxCustom" />
 
-            <EditText
-                android:id="@+id/editFilterPrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorElements"
-                android:hint="@string/specify_hint_price"
-                android:inputType="numberDecimal"
-                android:maxLength="7"
-                android:textAlignment="center"
-                android:textColor="@color/colorElements"
-                android:textColorHint="@color/colorElementsDark" />
-
-            <CheckBox
-                android:id="@+id/checkRequirementsMinAge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/requirements_min_age"
-                android:theme="@style/checkBoxCustom"
-                android:textColor="@color/colorElements"
-                android:layout_marginTop="@dimen/activity_vertical_margin"/>
-
             <TableRow
-                android:id="@+id/rowRequirementsMinAge"
+                android:id="@+id/rowFilterReputation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/views_vertical_margin">
 
-                <TextView
-                    android:id="@+id/textRequirementsMinAge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/views_horizontal_margin"
-                    android:textColor="@color/colorElements" />
-
-                <SeekBar
-                    android:id="@+id/seekBarRequirementsMinAge"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:max="100"
-                    android:min="1"
-                    android:layout_gravity="center"
-                    android:progress="1"
-                    android:theme="@style/checkBoxCustom"/>
-
-            </TableRow>
-
-            <CheckBox
-                android:id="@+id/checkRequirementsMaxAge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/requirements_max_age"
-                android:theme="@style/checkBoxCustom"
-                android:textColor="@color/colorElements"
-                android:layout_marginTop="@dimen/activity_vertical_margin"/>
-
-            <TableRow
-                android:id="@+id/rowRequirementsMaxAge"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/views_vertical_margin">
-
-                <TextView
-                    android:id="@+id/textRequirementsMaxAge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/views_horizontal_margin"
-                    android:textColor="@color/colorElements" />
-
-                <SeekBar
-                    android:id="@+id/seekBarRequirementsMaxAge"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:max="100"
-                    android:min="1"
-                    android:layout_gravity="center"
-                    android:progress="100"
-                    android:theme="@style/checkBoxCustom"/>
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/rowRequirementsGender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin">
-
                 <CheckBox
-                    android:id="@+id/checkRequirementsGender"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorElements"
-                    android:theme="@style/checkBoxCustom"
-                    android:text="@string/requirements_gender" />
-
-                <RadioGroup
-                    android:id="@+id/groupRequirementsGender"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <RadioButton
-                        android:id="@+id/radioRequirementsMale"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/requirements_male"
-                        android:theme="@style/checkBoxCustom"
-                        android:layout_marginLeft="@dimen/views_horizontal_margin"/>
-
-                    <RadioButton
-                        android:id="@+id/radioRequirementsFemale"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/requirements_female"
-                        android:theme="@style/checkBoxCustom"
-                        android:layout_marginLeft="@dimen/views_horizontal_margin"/>
-                </RadioGroup>
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/rowRequirementsReputation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin">
-
-                <CheckBox
-                    android:id="@+id/checkRequirementsReputation"
+                    android:id="@+id/checkFilterReputation"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:textColor="@color/colorElements"
-                    android:text="@string/requirements_reputation"
+                    android:text="@string/organizer_reputation"
                     android:theme="@style/checkBoxCustom"/>
 
                 <TextView
-                    android:id="@+id/textRequirementsReputation"
+                    android:id="@+id/textFilterReputation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorElements"
                     android:layout_marginLeft="@dimen/activity_vertical_margin"/>
             </TableRow>
             <RatingBar
-                android:id="@+id/ratingRequirementsReputation"
+                android:id="@+id/ratingFilterReputation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:numStars="5"

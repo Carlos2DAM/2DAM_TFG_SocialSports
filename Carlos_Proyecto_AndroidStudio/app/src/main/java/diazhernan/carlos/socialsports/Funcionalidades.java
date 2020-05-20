@@ -69,7 +69,7 @@ public class Funcionalidades extends AppCompatActivity {
 
     public static void cargarEventos() {
         MainActivity.listaEventos = new ArrayList<>();
-        //TODO cargar eventos de la vase de datos.
+        //TODO cargar eventos de la base de datos.
     }
 
     public static void cargarAmigos() {

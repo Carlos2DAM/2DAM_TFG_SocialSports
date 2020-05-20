@@ -71,13 +71,16 @@
     <string name="rate_participants">Rate participants</string>
 
     <!-- Strings related to fragmet_my_events -->
-    <string name="toolBar_my_events">My Events</string>
     <string name="tab_my_events_pend">Pending</string>
     <string name="tab_my_events_final">Finished</string>
 
     <!-- Strings related to fragmet_search_events -->
-    <string name="toolBar_search_events">Search Events</string>
     <string name="tab_search_events_filters">Filters</string>
     <string name="tab_search_events_results">Results</string>
-    <string name="button_filter">Filter</string>
+    <string name="button_filter_search">Search</string>
+    <string name="button_filter_clean">Clean</string>
+    <string name="organizer_reputation">Organizer Reputation:</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:minHeight="54dp"
-            app:title="@string/toolBar_search_events"
+            app:title="@string/nav_search_event"
             app:titleTextColor="@color/colorAccent" />
 
         <com.google.android.material.tabs.TabLayout
@@ -47,15 +47,35 @@
         </com.google.android.material.tabs.TabLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <Button
-        android:id="@+id/buttonFilter"
+    <TableRow
+        android:id="@+id/rowSearchButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/views_vertical_margin"
-        android:background="@drawable/boton1"
-        android:textColor="@color/colorElements"
-        android:textAllCaps="true"
-        android:text="@string/button_filter" />
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/views_vertical_margin">
+
+        <Button
+            android:id="@+id/buttonFilterClean"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/boton1"
+            android:text="@string/button_filter_clean"
+            android:textAllCaps="true"
+            android:layout_weight="0.5"
+            android:textColor="@color/colorElements"
+            android:layout_marginRight="@dimen/views_horizontal_margin"/>
+
+        <Button
+            android:id="@+id/buttonFilterSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/boton1"
+            android:text="@string/button_filter_search"
+            android:textAllCaps="true"
+            android:layout_weight="0.5"
+            android:textColor="@color/colorElements"
+            android:layout_marginLeft="@dimen/views_horizontal_margin"/>
+    </TableRow>
 
     <FrameLayout
         android:id="@+id/contenedorSearchEvent"
