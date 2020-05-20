@@ -60,10 +60,9 @@ public class AdaptadorListaEventos extends ArrayAdapter<Evento> {
             else
                 reserva.setText(context.getResources().getString(R.string.no_reserved));
             if (evento.getPrecioPorParticipante() > -1)
-                precio.setText(Float.toString(evento.getPrecioPorParticipante()));
+                precio.setText(Float.toString(evento.getPrecioPorParticipante())+" "+context.getResources().getString(R.string.moneda));
             else
-                precio.setText("0.0");
-            precio.append(" "+context.getResources().getString(R.string.moneda));
+                precio.setText("0.0 "+context.getResources().getString(R.string.moneda));
             if (evento.getOrganizadorEvento().getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario()))
                 organizador.setText(context.getResources().getString(R.string.organizer)+" "+context.getResources().getString(R.string.me));
             else

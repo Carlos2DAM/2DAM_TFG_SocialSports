@@ -24,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView navigationView;
     private Home home = new Home();
     private NewEvent newEvent;
-    private SearchEvent searchEvent = new SearchEvent();
-    private MyEvents myEvents = new MyEvents();
-    private UserConfig userConfig = new UserConfig();
+    private SearchEvent searchEvent;
+    private MyEvents myEvents;
+    private UserConfig userConfig;
     public static ArrayList<Usuario> listaAmigos;
     public static ArrayList<Evento> listaEventos;
 
@@ -52,12 +52,15 @@ public class MainActivity extends AppCompatActivity {
                         Funcionalidades.showSelectedFragment(R.id.container,getSupportFragmentManager(),newEvent);
                         break;
                     case (R.id.menu_search_event):
+                        searchEvent = new SearchEvent();
                         Funcionalidades.showSelectedFragment(R.id.container,getSupportFragmentManager(),searchEvent);
                         break;
                     case (R.id.menu_my_events):
+                        myEvents = new MyEvents();
                         Funcionalidades.showSelectedFragment(R.id.container,getSupportFragmentManager(),myEvents);
                         break;
                     case (R.id.menu_user):
+                        userConfig = new UserConfig();
                         Funcionalidades.showSelectedFragment(R.id.container,getSupportFragmentManager(),userConfig);
                         break;
                 }
