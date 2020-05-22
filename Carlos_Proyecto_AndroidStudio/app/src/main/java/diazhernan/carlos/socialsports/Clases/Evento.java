@@ -1,9 +1,10 @@
 package diazhernan.carlos.socialsports.Clases;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Evento {
+public class Evento implements Serializable {
 
     private String idEvento;    //100 caracteres
     private Usuario organizadorEvento;
