@@ -1,9 +1,10 @@
 package diazhernan.carlos.socialsports.Clases;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Usuario {
+public class Usuario implements Serializable {
 
     private String emailUsuario;        //50 caracteres
     private String paswordUsuario;      //30 caracteres

@@ -1,6 +1,8 @@
 package diazhernan.carlos.socialsports.Clases;
 
-public class Requisitos {
+import java.io.Serializable;
+
+public class Requisitos implements Serializable {
 
     private int edadMinima;
     private int edadMaxima;

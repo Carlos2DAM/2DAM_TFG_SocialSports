@@ -68,10 +68,10 @@ public class AdaptadorListaEventos extends ArrayAdapter<Evento> {
             else
                 organizador.setText(context.getResources().getString(R.string.organizer)+" "+evento.getOrganizadorEvento().getNombreUsuario());
             if (evento.getMaximoParticipantes() > 0 && evento.getMaximoParticipantes() == evento.getListaParticipantes().size()) {
-                estado.setText(context.getResources().getString(R.string.state) + " " + context.getResources().getString(R.string.full));
+                estado.setText(context.getResources().getString(R.string.full));
                 estado.setTextColor(context.getResources().getColor(R.color.full));
             } else {
-                estado.setText(context.getResources().getString(R.string.state) + " " + context.getResources().getString(R.string.vacancies));
+                estado.setText(context.getResources().getString(R.string.vacancies));
                 estado.setTextColor(context.getResources().getColor(R.color.vacancies));
             }
         }
