@@ -67,6 +67,11 @@ public class Funcionalidades extends AppCompatActivity {
         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
+    public static void esconderTeclado(Object object, View v) {
+        InputMethodManager imm = (InputMethodManager)object;
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
+
     public static void cargarEventos() {
         MainActivity.listaEventos = new ArrayList<>();
         //TODO cargar eventos de la base de datos.
