@@ -89,8 +89,7 @@ public class SearchEvent extends Fragment {
                 Funcionalidades.esconderTeclado(getActivity(),getContext(),v);
                 v.setFocusableInTouchMode(false);
                 buscarEventosFiltrados();
-                searchEventsResults = new SearchEventsResults();
-                searchEventsResults.setListaEventosFiltrados(listaEventosFiltrados);
+                searchEventsResults = new SearchEventsResults(listaEventosFiltrados);
                 tabLayout.getTabAt(1).select();
             }
         });

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import diazhernan.carlos.socialsports.Clases.AdaptadorListaEventos;
 import diazhernan.carlos.socialsports.Clases.Evento;
+import diazhernan.carlos.socialsports.EventRate;
 import diazhernan.carlos.socialsports.EventSettings;
 import diazhernan.carlos.socialsports.Funcionalidades;
 import diazhernan.carlos.socialsports.MainActivity;
@@ -26,7 +27,8 @@ import diazhernan.carlos.socialsports.R;
 public class MyEvents extends Fragment {
 
     private TabLayout tabLayout;
-    private ListView listaEventos;
+    private ListView listViewEventos;
+    private ArrayList<Evento> listaDeEventos = new ArrayList<>();
 
     public MyEvents() {
     }
@@ -42,7 +44,7 @@ public class MyEvents extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         tabLayout = getActivity().findViewById(R.id.tabsMyEvents);
-        listaEventos = getActivity().findViewById(R.id.myEventsListView);
+        listViewEventos = getActivity().findViewById(R.id.myEventsListView);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -66,18 +68,28 @@ public class MyEvents extends Fragment {
         tabLayout.getTabAt(0).select();
     }
 
-    private void mostrarListaEventos(final ArrayList<Evento> arrayList)
+    @Override
+    public void onResume() {
+        super.onResume();
+        tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).select();
+    }
+
+    private void mostrarListaEventos(ArrayList<Evento> arrayList)
     {
         AdaptadorListaEventos adapter = new AdaptadorListaEventos(getContext(), R.layout.item_lista_eventos,
                 R.id.textItemEventoDeporte, arrayList);
-        listaEventos.setAdapter(adapter);
-        listaEventos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listaDeEventos = arrayList;
+        listViewEventos.setAdapter(adapter);
+        listViewEventos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Evento evento = arrayList.get(position);
-                //if (!evento.isTerminado())
-                Intent intent = new Intent(getContext(), EventSettings.class);
-                intent.putExtra("eventoSet",evento);
+                Evento evento = listaDeEventos.get(position);
+                Intent intent = null;
+                if (!evento.isTerminado())
+                    intent = new Intent(getContext(), EventSettings.class);
+                else
+                    intent = new Intent(getContext(), EventRate.class);
+                Funcionalidades.eventoSeleccionado = evento;
                 startActivity(intent);
             }
         });
