@@ -19,8 +19,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import diazhernan.carlos.socialsports.Clases.Evento;
+import diazhernan.carlos.socialsports.Clases.Usuario;
 
 public class Funcionalidades extends AppCompatActivity {
+
+    public static Evento eventoSeleccionado;
 
     public static void cambiarColoresTexto(EditText et, Application application){
         if (et.isFocused()) {
@@ -116,7 +119,7 @@ public class Funcionalidades extends AppCompatActivity {
         }
         return pendientes;
     }
-    //TODO poner un boton finalizar evento, para poder finalizar un evento manualmente.
+
     public static ArrayList<Evento> eventosFinalizados(ArrayList<Evento> arrayList) {
         ArrayList<Evento> finalizados = new ArrayList<>();
         for (int i = 0; i < arrayList.size(); i++) {
@@ -129,5 +132,36 @@ public class Funcionalidades extends AppCompatActivity {
             }
         }
         return finalizados;
+    }
+
+    public static boolean suscrito(Evento ev,Context c) {
+        for (Usuario usuario: ev.getListaSolicitantes()) {
+            if (usuario.getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario()))
+                return true;
+        }
+        return false;
+    }
+
+    public static boolean participante(Evento ev,Context c) {
+        for (Usuario usuario: ev.getListaParticipantes()) {
+            if (usuario.getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario()))
+                return true;
+        }
+        return false;
+    }
+
+    public static boolean baneado(Evento ev,Context c) {
+        for (Usuario usuario: ev.getListaDescartados()) {
+            if (usuario.getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario())) {
+                mostrarMensaje(c.getResources().getString(R.string.has_been_baned),c);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void eliminarEvento(Evento evento, Context context) {
+        Funcionalidades.mostrarMensaje("Implementar Borrado",context);
+        //TODO eliminar evento de la BBDD y de mi lista
     }
 }

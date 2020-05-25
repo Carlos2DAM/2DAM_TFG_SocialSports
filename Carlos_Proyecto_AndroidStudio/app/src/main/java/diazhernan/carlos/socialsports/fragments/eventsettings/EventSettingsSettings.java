@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
@@ -28,6 +29,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import diazhernan.carlos.socialsports.Clases.Evento;
+import diazhernan.carlos.socialsports.Clases.Usuario;
 import diazhernan.carlos.socialsports.Funcionalidades;
 import diazhernan.carlos.socialsports.LoginActivity;
 import diazhernan.carlos.socialsports.R;
@@ -35,7 +37,8 @@ import diazhernan.carlos.socialsports.fragments.newevent.NewEventRequirements;
 
 public class EventSettingsSettings extends Fragment {
 
-    private Evento evento;
+    private LinearLayout rowOrganizerReputation;
+    private RatingBar ratingBarOrganizer;
     private EditText editFecha;
     private EditText editHora;
     private EditText participantes;
@@ -72,11 +75,7 @@ public class EventSettingsSettings extends Fragment {
     private RatingBar ratingReputation;
 
     public EventSettingsSettings() {
-        evento = new Evento();
-    }
 
-    public EventSettingsSettings(Evento evento) {
-        this.evento = evento;
     }
 
     @Override
@@ -88,6 +87,8 @@ public class EventSettingsSettings extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        rowOrganizerReputation = getActivity().findViewById(R.id.rowEventSettingsStars);
+        ratingBarOrganizer = getActivity().findViewById(R.id.ratingSettingsOrganizerReputation);
         editFecha = getActivity().findViewById(R.id.editSettingsDate);
         editHora = getActivity().findViewById(R.id.editSettingsTime);
         participantes = getActivity().findViewById(R.id.editSettingsParticipants);
@@ -159,7 +160,7 @@ public class EventSettingsSettings extends Fragment {
         editFecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (evento.getOrganizadorEvento().getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario()))
+                if (Funcionalidades.eventoSeleccionado.getOrganizadorEvento().getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario()))
                     dialogoCalendario.show();
                 Funcionalidades.esconderTeclado(getActivity(),getContext(),v);
             }
@@ -167,7 +168,7 @@ public class EventSettingsSettings extends Fragment {
         editHora.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (evento.getOrganizadorEvento().getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario()))
+                if (Funcionalidades.eventoSeleccionado.getOrganizadorEvento().getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario()))
                     dialogoTime.show();
                 Funcionalidades.esconderTeclado(getActivity(),getContext(),v);
             }
@@ -406,35 +407,58 @@ public class EventSettingsSettings extends Fragment {
     }
 
     private void cargarDatosEvento() {
-        if (!evento.getOrganizadorEvento().getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario())) {
-            editFecha.setClickable(false);
-            editHora.setClickable(false);
-            participantes.setClickable(false);
+        if (!Funcionalidades.eventoSeleccionado.getOrganizadorEvento().getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario())) {
             participantes.setFocusable(false);
-            direccion.setClickable(false);
             direccion.setFocusable(false);
             reserva.setClickable(false);
-            coste.setClickable(false);
             coste.setFocusable(false);
-            precio.setClickable(false);
             precio.setFocusable(false);
             notParticipant.setClickable(false);
-            comentarios.setClickable(false);
             comentarios.setFocusable(false);
             checkBoxMinAge.setClickable(false);
             checkBoxMaxAge.setClickable(false);
             checkBoxGender.setClickable(false);
             checkBoxReputation.setClickable(false);
-            barMinAge.setClickable(false);
             barMinAge.setEnabled(false);
-            barMaxAge.setClickable(false);
             barMaxAge.setEnabled(false);
-            radioMale.setClickable(false);
             radioMale.setEnabled(false);
-            radioFemale.setClickable(false);
             radioFemale.setEnabled(false);
-            ratingReputation.setClickable(false);
-            ratingReputation.setEnabled(false);
+            ratingReputation.setIsIndicator(true);
+            ratingBarOrganizer.setRating(Funcionalidades.eventoSeleccionado.getOrganizadorEvento().getReputacionOrganizadorUsuario());
+        }else
+            rowOrganizerReputation.setVisibility(View.GONE);
+
+        if (Funcionalidades.eventoSeleccionado.getFechaEvento() != null)
+            editFecha.setText(Funcionalidades.dateToString(Funcionalidades.eventoSeleccionado.getFechaEvento()).toUpperCase());
+        editHora.setText(Funcionalidades.eventoSeleccionado.getHoraEvento());
+        if (Funcionalidades.eventoSeleccionado.getMaximoParticipantes() > -1)
+            participantes.setText(Integer.toString(Funcionalidades.eventoSeleccionado.getMaximoParticipantes()));
+        direccion.setText(Funcionalidades.eventoSeleccionado.getDireccion());
+        reserva.setChecked(Funcionalidades.eventoSeleccionado.isInstalacionesReservadas());
+        if (Funcionalidades.eventoSeleccionado.getCosteEvento() > -1)
+            coste.setText(Float.toString(Funcionalidades.eventoSeleccionado.getCosteEvento()));
+        if (Funcionalidades.eventoSeleccionado.getPrecioPorParticipante() > -1)
+            precio.setText(Float.toString(Funcionalidades.eventoSeleccionado.getPrecioPorParticipante()));
+        notParticipant.setChecked(!Funcionalidades.eventoSeleccionado.getListaParticipantes().contains(Funcionalidades.eventoSeleccionado.getOrganizadorEvento()));
+        comentarios.setText(Funcionalidades.eventoSeleccionado.getComentarios());
+        if (Funcionalidades.eventoSeleccionado.getRequisitos().getEdadMinima() > NewEventRequirements.MinAge) {
+            checkBoxMinAge.setChecked(true);
+            barMinAge.setProgress(Funcionalidades.eventoSeleccionado.getRequisitos().getEdadMinima());
+        }
+        if (Funcionalidades.eventoSeleccionado.getRequisitos().getEdadMaxima() != -1 && Funcionalidades.eventoSeleccionado.getRequisitos().getEdadMaxima() < NewEventRequirements.MaxAge) {
+            checkBoxMaxAge.setChecked(true);
+            barMaxAge.setProgress(Funcionalidades.eventoSeleccionado.getRequisitos().getEdadMaxima());
+        }
+        if (Funcionalidades.eventoSeleccionado.getRequisitos().getRequisitoDeGenero() != null) {
+            checkBoxGender.setChecked(true);
+            if (Funcionalidades.eventoSeleccionado.getRequisitos().getRequisitoDeGenero().toUpperCase().equals("MALE"))
+                radioMale.setChecked(true);
+            else
+                radioFemale.setChecked(true);
+        }
+        if (Funcionalidades.eventoSeleccionado.getRequisitos().getReputacionNecesaria() > 0) {
+            checkBoxReputation.setChecked(true);
+            ratingReputation.setRating(Funcionalidades.eventoSeleccionado.getRequisitos().getReputacionNecesaria());
         }
     }
 }

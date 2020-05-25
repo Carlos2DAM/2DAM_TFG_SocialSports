@@ -1,5 +1,6 @@
 package diazhernan.carlos.socialsports.fragments.searchevent;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 
 import diazhernan.carlos.socialsports.Clases.AdaptadorListaEventos;
 import diazhernan.carlos.socialsports.Clases.Evento;
+import diazhernan.carlos.socialsports.EventSettings;
+import diazhernan.carlos.socialsports.Funcionalidades;
 import diazhernan.carlos.socialsports.R;
 
 public class SearchEventsResults extends Fragment {
@@ -26,6 +29,9 @@ public class SearchEventsResults extends Fragment {
         listaEventosFiltrados = new ArrayList<>();
     }
 
+    public SearchEventsResults(ArrayList<Evento> arrayList) {
+        listaEventosFiltrados = arrayList;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,7 +52,7 @@ public class SearchEventsResults extends Fragment {
         mostrarListaEventos(listaEventosFiltrados);
     }
 
-    private void mostrarListaEventos(ArrayList<Evento> arrayList)
+    private void mostrarListaEventos(final ArrayList<Evento> arrayList)
     {
         AdaptadorListaEventos adapter = new AdaptadorListaEventos(getContext(), R.layout.item_lista_eventos,
                 R.id.textItemEventoDeporte, arrayList);
@@ -54,12 +60,11 @@ public class SearchEventsResults extends Fragment {
         listViewEventos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Evento evento = listaEventosFiltrados.get(position);
+                Intent intent = new Intent(getContext(), EventSettings.class);
+                Funcionalidades.eventoSeleccionado = evento;
+                startActivity(intent);
             }
         });
-    }
-
-    public void setListaEventosFiltrados(ArrayList<Evento> listaEventosFiltrados) {
-        this.listaEventosFiltrados = listaEventosFiltrados;
     }
 }
