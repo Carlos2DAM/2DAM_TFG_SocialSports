@@ -1,9 +1,12 @@
 package diazhernan.carlos.socialsports;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -18,6 +21,7 @@ import diazhernan.carlos.socialsports.Clases.Usuario;
 
 public class EventRate extends AppCompatActivity {
 
+    private Usuario usuarioSeleccionado;
     private ListView listViewParticipants;
     private RatingBar ratingBarOrganizer;
     private TextView textOrganizer;
@@ -26,12 +30,18 @@ public class EventRate extends AppCompatActivity {
     private Button buttonSubmit;
     private boolean haSidoPuntuado;
     public static ArrayList<PuntuacionParticipante> listaPuntuaciones;
+    private ArrayList<Usuario> listaParticipantes;
+    private AlertDialog.Builder menuOpciones;
+    private String[] opcionesOrganizador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_rate);
         listaPuntuaciones = new ArrayList<>();
+        listaParticipantes = new ArrayList<>();
+        opcionesOrganizador = new String[]{getResources().getString(R.string.opcion_bloqueo_permanente)
+                ,getResources().getString(R.string.opcion_solicitud_de_amistad)};
         listViewParticipants = findViewById(R.id.listRateParticipants);
         ratingBarOrganizer = findViewById(R.id.ratingRateOrganizer);
         textOrganizer = findViewById(R.id.textRateOrganizer);
@@ -63,7 +73,22 @@ public class EventRate extends AppCompatActivity {
         haSidoPuntuado = eventoHasidoPuntuado();
         if (haSidoPuntuado)
             deshabilitarPuntuar();
-        mostrarListaParticipantes(Funcionalidades.eventoSeleccionado.getListaParticipantes());
+        menuOpciones = new AlertDialog.Builder(this);
+        menuOpciones.setItems(opcionesOrganizador, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        bloquearSolicitantePermanentemente();
+                        break;
+                    case 1:
+                        agregarAmigo();
+                        break;
+                }
+            }
+        });
+        listaParticipantes = Funcionalidades.eventoSeleccionado.getListaParticipantes();
+        mostrarListaParticipantes(listaParticipantes);
     }
 
     private void mostrarListaParticipantes(ArrayList<Usuario> arrayList)
@@ -71,6 +96,19 @@ public class EventRate extends AppCompatActivity {
         AdaptadorListaUsuarios adapter = new AdaptadorListaUsuarios(this, R.layout.item_lista_usuarios,
                 R.id.textItemEventoDeporte, arrayList, haSidoPuntuado);
         listViewParticipants.setAdapter(adapter);
+        if (haSidoPuntuado) {
+            listViewParticipants.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    usuarioSeleccionado = listaParticipantes.get(position);
+                    if (!Funcionalidades.soyYo(usuarioSeleccionado)) {
+                        menuOpciones.setTitle(usuarioSeleccionado.getNombreUsuario() +
+                                " " + usuarioSeleccionado.getApellidosUsuario());
+                        menuOpciones.show();
+                    }
+                }
+            });
+        }
     }
 
     private boolean eventoHasidoPuntuado() {
@@ -86,12 +124,22 @@ public class EventRate extends AppCompatActivity {
         }
         haSidoPuntuado = true;
         deshabilitarPuntuar();
-        mostrarListaParticipantes(Funcionalidades.eventoSeleccionado.getListaParticipantes());
+        mostrarListaParticipantes(listaParticipantes);
     }
 
     private void deshabilitarPuntuar() {
         buttonSubmit.setVisibility(View.GONE);
         textOrganizer.setText(getResources().getString(R.string.organizer_has_been_rated));
         textParticipants.setText(getResources().getString(R.string.participants_has_been_rated));
+    }
+
+    private void bloquearSolicitantePermanentemente() {
+        Funcionalidades.bloquearUsuarioPermanentemente(usuarioSeleccionado);
+        Funcionalidades.eliminarAmigo(usuarioSeleccionado);
+    }
+
+    private void agregarAmigo() {
+        Funcionalidades.eliminarBloqueoPermanentemente(usuarioSeleccionado);
+        Funcionalidades.insertarAmigo(usuarioSeleccionado);
     }
 }

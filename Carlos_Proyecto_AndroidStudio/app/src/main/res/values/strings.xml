@@ -92,7 +92,7 @@
     <string name="button_delete_event">Delete event</string>
     <string name="button_finalize_event">Finish event</string>
     <string name="button_subscribe">Send Request</string>
-    <string name="button_delete_request">Delete participant request</string>
+    <string name="button_delete_request">Cancel participation</string>
     <string name="text_rating_organizer">Reputation as Organizer</string>
     <string name="messaje_request_sent">Request Sent.</string>
 
@@ -106,4 +106,12 @@
     <string name="button_send_rate">Submit Ratings</string>
     <string name="organizer_has_been_rated">The organizer has been rated</string>
     <string name="participants_has_been_rated">Participants have been rated</string>
+
+    <!-- Strings related to opcionesOrganizador -->
+    <string name="opcion_aceptar_solicitud">Accept Request</string>
+    <string name="opcion_rechazar_solicitud">Reject Request</string>
+    <string name="opcion_bloqueo_de_evento">Banned to Event</string>
+    <string name="opcion_bloqueo_permanente">Banned Forever</string>
+    <string name="opcion_solicitud_de_amistad">Friend Request</string>
+    <string name="opcion_eliminar_participante">Remove Participant</string>
 </resources>

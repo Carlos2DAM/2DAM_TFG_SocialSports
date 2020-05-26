@@ -81,7 +81,7 @@ public class Funcionalidades extends AppCompatActivity {
     }
 
     public static void cargarAmigos() {
-        MainActivity.listaAmigos = new ArrayList<>();
+        LoginActivity.usuario.setListaAmigos(new ArrayList<Usuario>());
         //TODO cargar amigos de la vase de datos.
     }
 
@@ -134,7 +134,7 @@ public class Funcionalidades extends AppCompatActivity {
         return finalizados;
     }
 
-    public static boolean suscrito(Evento ev,Context c) {
+    public static boolean eresSolicitante(Evento ev) {
         for (Usuario usuario: ev.getListaSolicitantes()) {
             if (usuario.getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario()))
                 return true;
@@ -142,7 +142,7 @@ public class Funcionalidades extends AppCompatActivity {
         return false;
     }
 
-    public static boolean participante(Evento ev,Context c) {
+    public static boolean eresParticipante(Evento ev) {
         for (Usuario usuario: ev.getListaParticipantes()) {
             if (usuario.getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario()))
                 return true;
@@ -150,7 +150,7 @@ public class Funcionalidades extends AppCompatActivity {
         return false;
     }
 
-    public static boolean baneado(Evento ev,Context c) {
+    public static boolean estasBaneado(Evento ev,Context c) {
         for (Usuario usuario: ev.getListaDescartados()) {
             if (usuario.getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario())) {
                 mostrarMensaje(c.getResources().getString(R.string.has_been_baned),c);
@@ -160,8 +160,70 @@ public class Funcionalidades extends AppCompatActivity {
         return false;
     }
 
+    public static boolean eresOrganizador(Evento ev) {
+        return LoginActivity.usuario.getEmailUsuario().equals(ev.getOrganizadorEvento().getEmailUsuario());
+    }
+
+    public static boolean soyYo(Usuario usuario) {
+        return LoginActivity.usuario.getEmailUsuario().equals(usuario.getEmailUsuario());
+    }
+
     public static void eliminarEvento(Evento evento, Context context) {
         Funcionalidades.mostrarMensaje("Implementar Borrado",context);
         //TODO eliminar evento de la BBDD y de mi lista
+    }
+
+    public static void eliminarSolicitante(Evento evento,Usuario usuario) {
+        //TODO eliminar usuario de la lista de solicitantes del evento.
+        if (evento.getListaSolicitantes().contains(usuario))
+            evento.getListaSolicitantes().remove(usuario);
+    }
+
+    public static void insertarSolicitante(Evento evento,Usuario usuario) {
+        //TODO insertar usuario de la lista de solicitantes del evento.
+        if (!evento.getListaSolicitantes().contains(usuario))
+            evento.getListaSolicitantes().add(usuario);
+    }
+
+    public static void insertarParticipante(Evento evento,Usuario usuario) {
+        //TODO insertar un usuario en la lista de participantes del evento.
+        if (!evento.getListaParticipantes().contains(usuario))
+            evento.getListaParticipantes().add(usuario);
+    }
+
+    public static void eliminarParticipante(Evento evento,Usuario usuario) {
+        //TODO eliminar un usuario de la lista de participantes del evento.
+        if (evento.getListaParticipantes().contains(usuario))
+            evento.getListaParticipantes().remove(usuario);
+    }
+
+    public static void bloquearUsuarioAlEvento(Evento evento,Usuario usuario) {
+        //TODO insertar un usuario en la lista de descartados del evento.
+        if (!evento.getListaDescartados().contains(usuario))
+            evento.getListaDescartados().add(usuario);
+    }
+
+    public static void bloquearUsuarioPermanentemente(Usuario usuario) {
+        //TODO insertar un usuario en la lista de personas bloqueadas del Usuario actual.
+        if (!LoginActivity.usuario.getListaBloqueados().contains(usuario))
+            LoginActivity.usuario.getListaBloqueados().add(usuario);
+    }
+
+    public static void eliminarBloqueoPermanentemente(Usuario usuario) {
+        //TODO eliminar un usuario de la lista de personas bloqueadas del Usuario actual.
+        if (LoginActivity.usuario.getListaBloqueados().contains(usuario))
+            LoginActivity.usuario.getListaBloqueados().remove(usuario);
+    }
+
+    public static void insertarAmigo(Usuario usuario) {
+        //TODO insertar un usuario en la lista de amigos del Usuario actual.
+        if (!LoginActivity.usuario.getListaAmigos().contains(usuario))
+            LoginActivity.usuario.getListaAmigos().add(usuario);
+    }
+
+    public static void eliminarAmigo(Usuario usuario) {
+        //TODO elimina un usuario de la lista de amigos del Usuario actual.
+        if (LoginActivity.usuario.getListaAmigos().contains(usuario))
+            LoginActivity.usuario.getListaAmigos().remove(usuario);
     }
 }

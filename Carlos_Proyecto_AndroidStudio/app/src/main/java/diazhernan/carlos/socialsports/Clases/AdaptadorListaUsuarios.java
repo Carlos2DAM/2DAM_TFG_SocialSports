@@ -61,7 +61,7 @@ public class AdaptadorListaUsuarios extends ArrayAdapter<Usuario> {
                 ratingBar.setRating(usuario.getReputacionParticipanteUsuario());
             else {
                 ratingBar.setNextFocusDownId(EventRate.listaPuntuaciones.size());
-                final PuntuacionParticipante puntuacion = new PuntuacionParticipante(LoginActivity.usuario.getEmailUsuario(),
+                PuntuacionParticipante puntuacion = new PuntuacionParticipante(LoginActivity.usuario.getEmailUsuario(),
                         usuario.getEmailUsuario(),Funcionalidades.eventoSeleccionado.getIdEvento(),0f);
                 EventRate.listaPuntuaciones.add(puntuacion);
                 ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
