@@ -46,11 +46,11 @@ public class EventSettings extends AppCompatActivity {
         if (!Funcionalidades.eventoSeleccionado.getOrganizadorEvento().getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario())) {
             rowDeleteFinalize.setVisibility(View.GONE);
             buttonSave.setVisibility(View.GONE);
-            if (!Funcionalidades.suscrito(Funcionalidades.eventoSeleccionado,this)
-                    && !Funcionalidades.participante(Funcionalidades.eventoSeleccionado,this)
-                    && !Funcionalidades.baneado(Funcionalidades.eventoSeleccionado,this))
+            if (!Funcionalidades.eresSolicitante(Funcionalidades.eventoSeleccionado)
+                    && !Funcionalidades.eresParticipante(Funcionalidades.eventoSeleccionado)
+                    && !Funcionalidades.estasBaneado(Funcionalidades.eventoSeleccionado,this))
                 buttonSubscribe.setVisibility(View.VISIBLE);
-            else if (!Funcionalidades.baneado(Funcionalidades.eventoSeleccionado,this))
+            else if (!Funcionalidades.estasBaneado(Funcionalidades.eventoSeleccionado,this))
                 buttonUnsubscribe.setVisibility(View.VISIBLE);
         }
         eventSettingsSettings = new EventSettingsSettings();
@@ -175,7 +175,7 @@ public class EventSettings extends AppCompatActivity {
 
     private void mandarSolicitud() {
         //TODO mostrar mensaje de confirmación y en caso afirmativo insertar en BBDD del evento la nueva solicitud
-        if (!Funcionalidades.suscrito(Funcionalidades.eventoSeleccionado,this)) {
+        if (!Funcionalidades.eresSolicitante(Funcionalidades.eventoSeleccionado)) {
             Funcionalidades.eventoSeleccionado.getListaSolicitantes().add(LoginActivity.usuario);
             Funcionalidades.mostrarMensaje(getResources().getString(R.string.messaje_request_sent),getApplicationContext());
             buttonSubscribe.setVisibility(View.GONE);

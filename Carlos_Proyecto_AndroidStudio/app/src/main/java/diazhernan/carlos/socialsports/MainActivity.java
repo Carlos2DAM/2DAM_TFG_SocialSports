@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     private SearchEvent searchEvent;
     private MyEvents myEvents;
     private UserConfig userConfig;
-    public static ArrayList<Usuario> listaAmigos;
     public static ArrayList<Evento> listaEventos;
 
     @Override
@@ -70,14 +69,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void agregarAmigos() {
-        listaAmigos = new ArrayList<>();
-        listaAmigos.add(new Usuario("d@mail.es","","dimitri","Male","aaa111",new Date(),new Date(),4,4,"d.jpg"));
-        listaAmigos.add(new Usuario("e@mail.es","","antonio","Male","aaa111",new Date(),new Date(),4,4,"d.jpg"));
-        listaAmigos.add(new Usuario("f@mail.es","","petra","Female","aaa111",new Date(),new Date(),4,4,"d.jpg"));
-        listaAmigos.add(new Usuario("q@mail.es","","juan","Male","aaa111",new Date(),new Date(),4,4,"d.jpg"));
-        listaAmigos.add(new Usuario("a@mail.es","","luisa","Female","aaa111",new Date(),new Date(),4,4,"d.jpg"));
-        listaAmigos.add(new Usuario("w@mail.es","","felipe","Male","aaa111",new Date(),new Date(),4,4,"d.jpg"));
-        listaAmigos.add(new Usuario("z@mail.es","","maria","Female","aaa111",new Date(),new Date(),4,4,"d.jpg"));
+        LoginActivity.usuario.setListaAmigos(new ArrayList<Usuario>());
+        LoginActivity.usuario.getListaAmigos().add(new Usuario("d@mail.es","","dimitri","Male","aaa111",new Date(),new Date(),4,4,"d.jpg"));
+        LoginActivity.usuario.getListaAmigos().add(new Usuario("e@mail.es","","antonio","Male","aaa111",new Date(),new Date(),4,4,"d.jpg"));
+        LoginActivity.usuario.getListaAmigos().add(new Usuario("f@mail.es","","petra","Female","aaa111",new Date(),new Date(),4,4,"d.jpg"));
+        LoginActivity.usuario.getListaAmigos().add(new Usuario("q@mail.es","","juan","Male","aaa111",new Date(),new Date(),4,4,"d.jpg"));
+        LoginActivity.usuario.getListaAmigos().add(new Usuario("a@mail.es","","luisa","Female","aaa111",new Date(),new Date(),4,4,"d.jpg"));
+        LoginActivity.usuario.getListaAmigos().add(new Usuario("w@mail.es","","felipe","Male","aaa111",new Date(),new Date(),4,4,"d.jpg"));
+        LoginActivity.usuario.getListaAmigos().add(new Usuario("z@mail.es","","maria","Female","aaa111",new Date(),new Date(),4,4,"d.jpg"));
     }
 
     private void agregarEventos() {
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         Evento evento = new Evento();
         evento.setDeporte("Futbol");
         evento.setLocalidad("Fuenlabrada");
-        evento.setOrganizadorEvento(listaAmigos.get(4));
+        evento.setOrganizadorEvento(LoginActivity.usuario.getListaAmigos().get(4));
         evento.setMaximoParticipantes(22);
         evento.setFechaEvento(new Date(120,6,12));
         evento.getListaSolicitantes().add(LoginActivity.usuario);
@@ -93,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         evento = new Evento();
         evento.setDeporte("Baloncesto");
         evento.setLocalidad("Madrid");
-        evento.setOrganizadorEvento(listaAmigos.get(5));
+        evento.setOrganizadorEvento(LoginActivity.usuario.getListaAmigos().get(5));
         evento.setMaximoParticipantes(10);
         evento.setInstalacionesReservadas(true);
         evento.setPrecioPorParticipante(3.5f);
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         evento = new Evento();
         evento.setDeporte("Padel");
         evento.setLocalidad("Alcorcón");
-        evento.setOrganizadorEvento(listaAmigos.get(6));
+        evento.setOrganizadorEvento(LoginActivity.usuario.getListaAmigos().get(6));
         evento.setMaximoParticipantes(4);
         evento.setInstalacionesReservadas(true);
         evento.setPrecioPorParticipante(3f);
@@ -110,18 +109,19 @@ public class MainActivity extends AppCompatActivity {
         evento = new Evento();
         evento.setDeporte("Tenis");
         evento.setLocalidad("Móstoles");
-        evento.setOrganizadorEvento(listaAmigos.get(2));
+        //evento.setOrganizadorEvento(listaAmigos.get(2));
+        evento.setOrganizadorEvento(LoginActivity.usuario);
         evento.setMaximoParticipantes(1);
         evento.getListaParticipantes().add(LoginActivity.usuario);
-        evento.getListaParticipantes().add(MainActivity.listaAmigos.get(2));
-        evento.getListaParticipantes().add(MainActivity.listaAmigos.get(1));
-        evento.getListaParticipantes().add(MainActivity.listaAmigos.get(0));
-        evento.getListaParticipantes().add(MainActivity.listaAmigos.get(6));
-        evento.getListaSolicitantes().add(MainActivity.listaAmigos.get(3));
-        evento.getListaSolicitantes().add(MainActivity.listaAmigos.get(4));
-        evento.getListaSolicitantes().add(MainActivity.listaAmigos.get(5));
+        evento.getListaParticipantes().add(LoginActivity.usuario.getListaAmigos().get(2));
+        evento.getListaParticipantes().add(LoginActivity.usuario.getListaAmigos().get(1));
+        evento.getListaParticipantes().add(LoginActivity.usuario.getListaAmigos().get(0));
+        evento.getListaParticipantes().add(LoginActivity.usuario.getListaAmigos().get(6));
+        evento.getListaSolicitantes().add(LoginActivity.usuario.getListaAmigos().get(3));
+        evento.getListaSolicitantes().add(LoginActivity.usuario.getListaAmigos().get(4));
+        evento.getListaSolicitantes().add(LoginActivity.usuario.getListaAmigos().get(5));
         evento.setFechaEvento(new Date(120,5,30));
-        evento.setTerminado(true);
+        //evento.setTerminado(true);
         listaEventos.add(evento);
         evento = new Evento();
         evento.setDeporte("Correr");

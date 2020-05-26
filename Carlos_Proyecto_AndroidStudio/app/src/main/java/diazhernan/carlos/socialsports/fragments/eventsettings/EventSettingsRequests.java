@@ -1,8 +1,10 @@
 package diazhernan.carlos.socialsports.fragments.eventsettings;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -20,10 +22,14 @@ import diazhernan.carlos.socialsports.R;
 
 public class EventSettingsRequests extends Fragment {
 
+    private Usuario usuarioSeleccionado;
     private ListView listViewSolicitudes;
+    private ArrayList<Usuario> listaSolicitantes;
+    private AlertDialog.Builder menuOpciones;
+    private String[] opcionesOrganizador;
 
     public EventSettingsRequests() {
-
+        listaSolicitantes = new ArrayList<>();
     }
 
     @Override
@@ -35,25 +41,86 @@ public class EventSettingsRequests extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        opcionesOrganizador = new String[]{getResources().getString(R.string.opcion_aceptar_solicitud)
+                ,getResources().getString(R.string.opcion_rechazar_solicitud)
+                ,getResources().getString(R.string.opcion_bloqueo_de_evento)
+                ,getResources().getString(R.string.opcion_bloqueo_permanente)
+                ,getResources().getString(R.string.opcion_solicitud_de_amistad)};
+        menuOpciones = new AlertDialog.Builder(getContext());
+        menuOpciones.setItems(opcionesOrganizador, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        aceptarSolicitud();
+                        break;
+                    case 1:
+                        eliminarSolicitud();
+                        break;
+                    case 2:
+                        bloquearSolicitud();
+                        break;
+                    case 3:
+                        bloquearSolicitantePermanentemente();
+                        break;
+                    case 4:
+                        agregarAmigo();
+                        break;
+                }
+                mostrarListaUsuarios(listaSolicitantes);
+            }
+        });
         listViewSolicitudes = getActivity().findViewById(R.id.listEventSettingsRequest);
-        mostrarListaUsuarios(Funcionalidades.eventoSeleccionado.getListaSolicitantes());
+        listaSolicitantes = Funcionalidades.eventoSeleccionado.getListaSolicitantes();
+        mostrarListaUsuarios(listaSolicitantes);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mostrarListaUsuarios(Funcionalidades.eventoSeleccionado.getListaSolicitantes());
+        mostrarListaUsuarios(listaSolicitantes);
     }
 
     private void mostrarListaUsuarios(ArrayList<Usuario> arrayList) {
         AdaptadorListaUsuarios adapter = new AdaptadorListaUsuarios(getContext(), R.layout.item_lista_usuarios,
                 R.id.textItemUsuarioNombre, arrayList);
         listViewSolicitudes.setAdapter(adapter);
-        listViewSolicitudes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (Funcionalidades.eresOrganizador(Funcionalidades.eventoSeleccionado)) {
+            listViewSolicitudes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    usuarioSeleccionado = listaSolicitantes.get(position);
+                    menuOpciones.setTitle(usuarioSeleccionado.getNombreUsuario() +
+                            " " + usuarioSeleccionado.getApellidosUsuario());
+                    menuOpciones.show();
+                }
+            });
+        }
+    }
 
-            }
-        });
+    private void aceptarSolicitud() {
+        Funcionalidades.eliminarSolicitante(Funcionalidades.eventoSeleccionado,usuarioSeleccionado);
+        Funcionalidades.insertarParticipante(Funcionalidades.eventoSeleccionado,usuarioSeleccionado);
+    }
+
+    private void eliminarSolicitud() {
+        Funcionalidades.eliminarSolicitante(Funcionalidades.eventoSeleccionado,usuarioSeleccionado);
+    }
+
+    private void bloquearSolicitud() {
+        Funcionalidades.eliminarSolicitante(Funcionalidades.eventoSeleccionado,usuarioSeleccionado);
+        Funcionalidades.bloquearUsuarioAlEvento(Funcionalidades.eventoSeleccionado,usuarioSeleccionado);
+    }
+
+    private void bloquearSolicitantePermanentemente() {
+        Funcionalidades.eliminarSolicitante(Funcionalidades.eventoSeleccionado,usuarioSeleccionado);
+        Funcionalidades.bloquearUsuarioAlEvento(Funcionalidades.eventoSeleccionado,usuarioSeleccionado);
+        Funcionalidades.bloquearUsuarioPermanentemente(usuarioSeleccionado);
+        Funcionalidades.eliminarAmigo(usuarioSeleccionado);
+    }
+
+    private void agregarAmigo() {
+        Funcionalidades.eliminarBloqueoPermanentemente(usuarioSeleccionado);
+        Funcionalidades.insertarAmigo(usuarioSeleccionado);
     }
 }

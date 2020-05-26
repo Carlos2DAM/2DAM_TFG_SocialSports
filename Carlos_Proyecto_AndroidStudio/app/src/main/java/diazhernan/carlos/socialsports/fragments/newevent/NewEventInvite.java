@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import diazhernan.carlos.socialsports.LoginActivity;
 import diazhernan.carlos.socialsports.MainActivity;
 import diazhernan.carlos.socialsports.R;
 
@@ -58,11 +59,11 @@ public class NewEventInvite extends Fragment {
                 seleccionarTodosAmigos(false);
             }
         });
-        for (int i=0; i<MainActivity.listaAmigos.size(); i++) {
+        for (int i = 0; i< LoginActivity.usuario.getListaAmigos().size(); i++) {
             CheckBox checkBox = new CheckBox(getContext());
             checkBox.setId(i);
-            checkBox.setText(MainActivity.listaAmigos.get(i).getNombreUsuario());
-            checkBox.setHint(MainActivity.listaAmigos.get(i).getEmailUsuario());
+            checkBox.setText(LoginActivity.usuario.getListaAmigos().get(i).getNombreUsuario());
+            checkBox.setHint(LoginActivity.usuario.getListaAmigos().get(i).getEmailUsuario());
             checkBox.setTextColor(getResources().getColor(R.color.colorElements));
             checkBox.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             checkBox.setButtonTintList(getResources().getColorStateList(R.color.colorElements));
@@ -96,7 +97,7 @@ public class NewEventInvite extends Fragment {
     }
 
     public void seleccionarTodosAmigos(boolean selec) {
-        for (int i=0; i<MainActivity.listaAmigos.size(); i++) {
+        for (int i=0; i<LoginActivity.usuario.getListaAmigos().size(); i++) {
             CheckBox checkBox = getActivity().findViewById(i);
             checkBox.setChecked(selec);
             if (selec)
