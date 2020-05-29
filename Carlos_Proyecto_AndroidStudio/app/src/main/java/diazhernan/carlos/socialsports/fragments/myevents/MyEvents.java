@@ -84,13 +84,15 @@ public class MyEvents extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Evento evento = listaDeEventos.get(position);
-                Intent intent = null;
-                if (!evento.isTerminado())
-                    intent = new Intent(getContext(), EventSettings.class);
-                else
-                    intent = new Intent(getContext(), EventRate.class);
-                Funcionalidades.eventoSeleccionado = evento;
-                startActivity(intent);
+                if (!Funcionalidades.estasBaneado(evento,getContext())) {
+                    Intent intent = null;
+                    if (!evento.isTerminado())
+                        intent = new Intent(getContext(), EventSettings.class);
+                    else
+                        intent = new Intent(getContext(), EventRate.class);
+                    Funcionalidades.eventoSeleccionado = evento;
+                    startActivity(intent);
+                }
             }
         });
     }

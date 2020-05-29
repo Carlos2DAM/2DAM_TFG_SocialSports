@@ -1,13 +1,13 @@
 package diazhernan.carlos.socialsports;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TableRow;
+import android.view.MenuItem;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import diazhernan.carlos.socialsports.fragments.eventsettings.EventSettingsParticipants;
@@ -18,12 +18,7 @@ public class EventSettings extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
-    private Button buttonSave;
-    private Button buttonDelete;
-    private Button buttonFinalize;
-    private Button buttonSubscribe;
-    private Button buttonUnsubscribe;
-    private TableRow rowDeleteFinalize;
+    private BottomNavigationView navigationView;
     private EventSettingsSettings eventSettingsSettings;
     private EventSettingsParticipants eventSettingsParticipants;
     private EventSettingsRequests eventSettingsRequests;
@@ -33,116 +28,31 @@ public class EventSettings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_settings);
         tabLayout = findViewById(R.id.tabsEventSettings);
+        navigationView = findViewById(R.id.navigationEventSettings);
         toolbar = findViewById(R.id.toolbarEventSettings);
         toolbar.setTitle(Funcionalidades.eventoSeleccionado.getDeporte()+" - "+Funcionalidades.eventoSeleccionado.getLocalidad());
-        rowDeleteFinalize = findViewById(R.id.rowEventSettings);
-        buttonSave = findViewById(R.id.buttonEventSettingsSave);
-        buttonDelete = findViewById(R.id.buttonEventSettingsDelete);
-        buttonFinalize = findViewById(R.id.buttonEventSettingsFinalize);
-        buttonSubscribe = findViewById(R.id.buttonEventSettingsSubscribe);
-        buttonUnsubscribe = findViewById(R.id.buttonEventSettingsUnSubscribe);
-        buttonSubscribe.setVisibility(View.GONE);
-        buttonUnsubscribe.setVisibility(View.GONE);
-        if (!Funcionalidades.eventoSeleccionado.getOrganizadorEvento().getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario())) {
-            rowDeleteFinalize.setVisibility(View.GONE);
-            buttonSave.setVisibility(View.GONE);
-            if (!Funcionalidades.eresSolicitante(Funcionalidades.eventoSeleccionado)
-                    && !Funcionalidades.eresParticipante(Funcionalidades.eventoSeleccionado)
-                    && !Funcionalidades.estasBaneado(Funcionalidades.eventoSeleccionado,this))
-                buttonSubscribe.setVisibility(View.VISIBLE);
-            else if (!Funcionalidades.estasBaneado(Funcionalidades.eventoSeleccionado,this))
-                buttonUnsubscribe.setVisibility(View.VISIBLE);
-        }
         eventSettingsSettings = new EventSettingsSettings();
         eventSettingsParticipants = new EventSettingsParticipants();
         eventSettingsRequests = new EventSettingsRequests();
-        Funcionalidades.showSelectedFragment(R.id.containerEventSettings,getSupportFragmentManager(),eventSettingsParticipants);
-        Funcionalidades.showSelectedFragment(R.id.containerEventSettings,getSupportFragmentManager(),eventSettingsRequests);
+
+        if (!Funcionalidades.eventoSeleccionado.getOrganizadorEvento().getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario())) {
+            if (!Funcionalidades.eresSolicitante(Funcionalidades.eventoSeleccionado)
+                    && !Funcionalidades.eresParticipante(Funcionalidades.eventoSeleccionado)
+                    && !Funcionalidades.estasBaneado(Funcionalidades.eventoSeleccionado,this)) {
+                toolbar.inflateMenu(R.menu.event_subscribe_menu);
+                navigationView.inflateMenu(R.menu.event_subscribe_menu);
+            }
+            else if (!Funcionalidades.estasBaneado(Funcionalidades.eventoSeleccionado,this)) {
+                toolbar.inflateMenu(R.menu.event_unsubscribe_menu);
+                navigationView.inflateMenu(R.menu.event_unsubscribe_menu);
+            }
+        }
+        else {
+            toolbar.inflateMenu(R.menu.event_organizer_menu);
+            navigationView.inflateMenu(R.menu.event_organizer_menu);
+        }
         Funcionalidades.showSelectedFragment(R.id.containerEventSettings,getSupportFragmentManager(),eventSettingsSettings);
 
-        buttonSave.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                Funcionalidades.cambiarColoresBoton((Button)v,getApplication());
-            }
-        });
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setFocusableInTouchMode(true);
-                v.requestFocus();
-                Funcionalidades.esconderTeclado(getSystemService(INPUT_METHOD_SERVICE),v);
-                v.setFocusableInTouchMode(false);
-                guardarCambiosEvento();
-            }
-        });
-        buttonDelete.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                Funcionalidades.cambiarColoresBoton((Button)v,getApplication());
-            }
-        });
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setFocusableInTouchMode(true);
-                v.requestFocus();
-                Funcionalidades.esconderTeclado(getSystemService(INPUT_METHOD_SERVICE),v);
-                v.setFocusableInTouchMode(false);
-                eliminarEvento();
-            }
-        });
-        buttonFinalize.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                Funcionalidades.cambiarColoresBoton((Button)v,getApplication());
-            }
-        });
-        buttonFinalize.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setFocusableInTouchMode(true);
-                v.requestFocus();
-                Funcionalidades.esconderTeclado(getSystemService(INPUT_METHOD_SERVICE),v);
-                v.setFocusableInTouchMode(false);
-                //TODO mostrar mensaje de confirmación y en caso afirmativo finalizar evento y volver a la pantalla anterior.
-                Funcionalidades.eventoSeleccionado.setTerminado(true);
-            }
-        });
-        buttonSubscribe.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                Funcionalidades.cambiarColoresBoton((Button)v,getApplication());
-            }
-        });
-        buttonSubscribe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setFocusableInTouchMode(true);
-                v.requestFocus();
-                Funcionalidades.esconderTeclado(getSystemService(INPUT_METHOD_SERVICE),v);
-                v.setFocusableInTouchMode(false);
-                mandarSolicitud();
-                //TODO hacer algo mas
-            }
-        });
-        buttonUnsubscribe.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                Funcionalidades.cambiarColoresBoton((Button)v,getApplication());
-            }
-        });
-        buttonUnsubscribe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setFocusableInTouchMode(true);
-                v.requestFocus();
-                Funcionalidades.esconderTeclado(getSystemService(INPUT_METHOD_SERVICE),v);
-                v.setFocusableInTouchMode(false);
-                eliminarSolicitud();
-                //TODO hacer algo mas
-            }
-        });
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -167,10 +77,56 @@ public class EventSettings extends AppCompatActivity {
 
             }
         });
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                realizarAccionSeleccionada(item);
+                return true;
+            }
+        });
+
+        navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                realizarAccionSeleccionada(menuItem);
+                return true;
+            }
+        });
+    }
+
+    private void realizarAccionSeleccionada(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.itemMenuEventSave:
+                Funcionalidades.esconderTeclado(getSystemService(INPUT_METHOD_SERVICE),toolbar);
+                guardarCambiosEvento();
+                break;
+            case R.id.itemMenuEventDelete:
+                Funcionalidades.esconderTeclado(getSystemService(INPUT_METHOD_SERVICE),toolbar);
+                eliminarEvento();
+                break;
+            case R.id.itemMenuEventFinalize:
+                Funcionalidades.esconderTeclado(getSystemService(INPUT_METHOD_SERVICE),toolbar);
+                //TODO mostrar mensaje de confirmación y en caso afirmativo finalizar evento y volver a la pantalla anterior.
+                Funcionalidades.eventoSeleccionado.setTerminado(true);
+                Funcionalidades.mostrarMensaje("Evento Finalizado",this);
+                break;
+            case R.id.itemMenuSubscribe:
+                Funcionalidades.esconderTeclado(getSystemService(INPUT_METHOD_SERVICE),toolbar);
+                mandarSolicitud();
+                //TODO hacer algo mas
+                break;
+            case R.id.itemMenuUnsubscribe:
+                Funcionalidades.esconderTeclado(getSystemService(INPUT_METHOD_SERVICE),toolbar);
+                eliminarSolicitud();
+                //TODO hacer algo mas
+                break;
+        }
     }
 
     private void guardarCambiosEvento() {
         //TODO mostrar mensaje de confirmación y en caso afirmativo actualizar datos del evento y guardarlos en la BBDD.
+        Funcionalidades.mostrarMensaje("Guardado Realizado",this);
     }
 
     private void mandarSolicitud() {
@@ -178,17 +134,21 @@ public class EventSettings extends AppCompatActivity {
         if (!Funcionalidades.eresSolicitante(Funcionalidades.eventoSeleccionado)) {
             Funcionalidades.eventoSeleccionado.getListaSolicitantes().add(LoginActivity.usuario);
             Funcionalidades.mostrarMensaje(getResources().getString(R.string.messaje_request_sent),getApplicationContext());
-            buttonSubscribe.setVisibility(View.GONE);
+            toolbar.inflateMenu(R.menu.event_unsubscribe_menu);
             tabLayout.getTabAt(2).select();
         }
+        Funcionalidades.mostrarMensaje("Solicitud Enviada",this);
     }
 
     private void eliminarSolicitud() {
         //TODO mostrar mensaje de confirmación y en caso afirmativo actualizar la lista de participantes o solicitudes del evento
+        toolbar.inflateMenu(R.menu.event_subscribe_menu);
+        Funcionalidades.mostrarMensaje("Solicitud Eliminada",this);
     }
 
     private void eliminarEvento() {
         //TODO mostrar mensaje de confirmación y en caso afirmativo eliminar el evento y volver a la pantalla anterior
         Funcionalidades.eliminarEvento(Funcionalidades.eventoSeleccionado,this);
+        Funcionalidades.mostrarMensaje("Evento Eliminado",this);
     }
 }

@@ -51,75 +51,21 @@
                 android:layout_height="wrap_content"
                 android:text="@string/tab_event_settings_requests" />
         </com.google.android.material.tabs.TabLayout>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/navigationEventSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            app:itemIconTint="@color/colorPrimary"
+            app:itemTextColor="@color/colorPrimary"
+            app:labelVisibilityMode="labeled" />
+
     </com.google.android.material.appbar.AppBarLayout>
-
-    <TableRow
-        android:id="@+id/rowEventSettings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/views_vertical_margin"
-        android:paddingHorizontal="@dimen/activity_horizontal_margin">
-
-        <Button
-            android:id="@+id/buttonEventSettingsDelete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/boton1"
-            android:text="@string/button_delete_event"
-            android:textAllCaps="true"
-            android:layout_weight="0.5"
-            android:textColor="@color/colorElements"
-            android:layout_marginRight="@dimen/views_horizontal_margin"/>
-
-        <Button
-            android:id="@+id/buttonEventSettingsFinalize"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/boton1"
-            android:text="@string/button_finalize_event"
-            android:textAllCaps="true"
-            android:layout_weight="0.5"
-            android:textColor="@color/colorElements"
-            android:layout_marginLeft="@dimen/views_horizontal_margin"/>
-    </TableRow>
-
-    <Button
-        android:id="@+id/buttonEventSettingsSave"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/boton1"
-        android:text="@string/button_save"
-        android:textAllCaps="true"
-        android:textColor="@color/colorElements"
-        android:layout_marginTop="@dimen/views_vertical_margin"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"/>
-
-    <Button
-        android:id="@+id/buttonEventSettingsSubscribe"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/boton1"
-        android:text="@string/button_subscribe"
-        android:textAllCaps="true"
-        android:textColor="@color/colorElements"
-        android:layout_marginTop="@dimen/views_vertical_margin"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"/>
-
-    <Button
-        android:id="@+id/buttonEventSettingsUnSubscribe"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/boton1"
-        android:text="@string/button_delete_request"
-        android:textAllCaps="true"
-        android:textColor="@color/colorElements"
-        android:layout_marginTop="@dimen/views_vertical_margin"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"/>
 
     <FrameLayout
         android:id="@+id/containerEventSettings"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </FrameLayout>
+        android:layout_height="match_parent"></FrameLayout>
 
 </LinearLayout>

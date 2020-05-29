@@ -20,6 +20,7 @@
         android:id="@+id/menu_nav_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
         app:itemIconTint="@drawable/color_items_menu"
         app:itemTextColor="@drawable/color_items_menu"
         app:labelVisibilityMode="selected"

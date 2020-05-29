@@ -81,7 +81,7 @@
     <string name="tab_search_events_filters">Filters</string>
     <string name="tab_search_events_results">Results</string>
     <string name="button_filter_search">Search</string>
-    <string name="button_filter_clean">Clean</string>
+    <string name="button_filter_clean">Clean All</string>
     <string name="organizer_reputation">Organizer Reputation:</string>
 
     <!-- Strings related to Event Settings -->
@@ -107,11 +107,34 @@
     <string name="organizer_has_been_rated">The organizer has been rated</string>
     <string name="participants_has_been_rated">Participants have been rated</string>
 
-    <!-- Strings related to opcionesOrganizador -->
+    <!-- Strings related to opciones emergentes -->
     <string name="opcion_aceptar_solicitud">Accept Request</string>
     <string name="opcion_rechazar_solicitud">Reject Request</string>
     <string name="opcion_bloqueo_de_evento">Banned to Event</string>
     <string name="opcion_bloqueo_permanente">Banned Forever</string>
-    <string name="opcion_solicitud_de_amistad">Friend Request</string>
-    <string name="opcion_eliminar_participante">Remove Participant</string>
+    <string name="opcion_solicitud_de_amistad">Add to Friendlist</string>
+    <string name="opcion_eliminar_participante">Delete Participant</string>
+    <string name="opcion_eliminar_amigo">Delete Friend</string>
+    <string name="opcion_desbloquear">Unlock User</string>
+
+    <!-- Strings related to User Config -->
+    <string name="tab_configuration">Configuration</string>
+    <string name="tab_amigos">Friends</string>
+    <string name="tab_bloqueados">Banned</string>
+    <string name="item_menu_delete_account">Delete Account</string>
+    <string name="item_menu_logout">Logout</string>
+    <string name="text_participant_rating">Participant rating</string>
+    <string name="text_organizer_rating">Organizer rating</string>
+    <string name="hint_user_name">Name</string>
+    <string name="hint_user_surname">Surname</string>
+    <string name="hint_user_address">Address</string>
+    <string name="hint_user_birthday">Birthdate</string>
+    <string name="hint_user_changepassword">Change Password:</string>
+    <string name="hint_user_newpassword">New password</string>
+    <string name="hint_user_repeatpassword">Repeat password</string>
+    <string name="user_config_button_save_settings">Save Settings</string>
+
+    <!-- Strings related to User Config -->
+    <string name="text_home_popular_events">Popular Events:</string>
+    <string name="text_home_rating">Yor actual rating</string>
 </resources>
