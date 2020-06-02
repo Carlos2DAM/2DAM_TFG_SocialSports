@@ -12,10 +12,17 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import diazhernan.carlos.socialsports.Clases.Usuario;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -112,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void iniciarRegistro() {
         loadingProgressBar.setVisibility(View.VISIBLE);
-        if (comprobarDatosLoginCorrectos(getResources().getString(R.string.action_register))) {
+        /*if (comprobarDatosLoginCorrectos(getResources().getString(R.string.action_register))) {
             if (Funcionalidades.comprobarExisteUsuario(emailEditText.getText().toString())) {
                 Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_usuario_existe), this);
                 limpiarCajas();
@@ -132,6 +139,42 @@ public class LoginActivity extends AppCompatActivity {
                     Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_error_nuevo_usuario),this);
                 }
             }
+        }*/
+        if (comprobarDatosLoginCorrectos(getResources().getString(R.string.action_register))) {
+            RETROFIT retrofit = new RETROFIT();
+            APIService service = retrofit.getAPIService();
+
+            Map<String, String> mapa = new HashMap<>();
+            mapa.put("correo", emailEditText.getText().toString());
+            mapa.put("contrasena", passwordEditText.getText().toString());
+
+            Call<ResponseBody> registro = service.postRegistro(mapa);
+
+            registro.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    int code = response.code();
+
+                    if (code == 201) {
+                        usuario = new Usuario();
+                        usuario.setEmailUsuario(emailEditText.getText().toString());
+                        usuario.setPaswordUsuario(emailEditText.getText().toString());
+                        Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_creado_nuevo_usuario), getApplicationContext());
+                        cargarAplicacionUsuario();
+                    } else if (code == 409) {
+                        Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_usuario_existe), getApplicationContext());
+                        limpiarCajas();
+                    } else {
+                        Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_error_nuevo_usuario), getApplicationContext());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
+
         }
         loadingProgressBar.setVisibility(View.GONE);
     }
