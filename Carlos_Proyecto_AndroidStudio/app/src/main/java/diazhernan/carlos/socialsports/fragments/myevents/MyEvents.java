@@ -21,6 +21,7 @@ import diazhernan.carlos.socialsports.Clases.Evento;
 import diazhernan.carlos.socialsports.EventRate;
 import diazhernan.carlos.socialsports.EventSettings;
 import diazhernan.carlos.socialsports.Funcionalidades;
+import diazhernan.carlos.socialsports.LoginActivity;
 import diazhernan.carlos.socialsports.MainActivity;
 import diazhernan.carlos.socialsports.R;
 
@@ -49,10 +50,14 @@ public class MyEvents extends Fragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getText().toString().equals(getResources().getString(R.string.tab_my_events_pend)))
-                    mostrarListaEventos(Funcionalidades.eventosPendientes(MainActivity.listaEventos));
-                if (tab.getText().toString().equals(getResources().getString(R.string.tab_my_events_final)))
-                    mostrarListaEventos(Funcionalidades.eventosFinalizados(MainActivity.listaEventos));
+                if (tab.getText().toString().equals(getResources().getString(R.string.tab_my_events_pend))) {
+                    //mostrarListaEventos(Funcionalidades.obtenerEventosPendientes(LoginActivity.usuario.getEmailUsuario()));
+                    mostrarListaEventos(Funcionalidades.eventosPendientes(MainActivity.listaEventos)); // TODO borrar, codigo provisional
+                }
+                if (tab.getText().toString().equals(getResources().getString(R.string.tab_my_events_final))) {
+                    //mostrarListaEventos(Funcionalidades.obtenerEventosFinalizados(LoginActivity.usuario.getEmailUsuario()));
+                    mostrarListaEventos(Funcionalidades.eventosFinalizados(MainActivity.listaEventos)); // TODO borrar, codigo provisional
+                }
             }
 
             @Override
@@ -84,7 +89,9 @@ public class MyEvents extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Evento evento = listaDeEventos.get(position);
-                if (!Funcionalidades.estasBaneado(evento,getContext())) {
+                if (!Funcionalidades.estasBaneado(evento,getContext()) &&
+                        !Funcionalidades.usuarioBloqueadoPermanentemente(LoginActivity.usuario.getEmailUsuario()
+                                ,evento.getOrganizadorEvento().getEmailUsuario(),getContext()) ) {
                     Intent intent = null;
                     if (!evento.isTerminado())
                         intent = new Intent(getContext(), EventSettings.class);

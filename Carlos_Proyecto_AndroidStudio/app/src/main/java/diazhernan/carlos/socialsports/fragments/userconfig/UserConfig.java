@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.Date;
+
 import diazhernan.carlos.socialsports.Funcionalidades;
 import diazhernan.carlos.socialsports.LoginActivity;
 import diazhernan.carlos.socialsports.R;
@@ -52,6 +54,7 @@ public class UserConfig extends Fragment {
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Funcionalidades.esconderTeclado(getActivity(),getContext(),toolbar);
                 realizarAccionSeleccionada(menuItem);
                 return true;
             }
@@ -60,6 +63,7 @@ public class UserConfig extends Fragment {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                Funcionalidades.esconderTeclado(getActivity(),getContext(),toolbar);
                 realizarAccionSeleccionada(item);
                 return true;
             }
@@ -109,14 +113,94 @@ public class UserConfig extends Fragment {
     }
 
     private void guardarCambios() {
-        //TODO gardar acmbios en los datos del usuario
+        String passwordNew = userConfigSettings.getNewpass();
+        String passwordNewRepeat = userConfigSettings.getRepeatpass();
+        if (!passwordNew.equals(passwordNewRepeat)) {
+            Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_passwords_diferentes),getContext());
+            return;
+        }
+
+        String email = LoginActivity.usuario.getEmailUsuario();
+        String nombreNew = userConfigSettings.getNombre().toUpperCase();
+        String nombreOld = LoginActivity.usuario.getNombreUsuario();
+        if (!nombreNew.isEmpty() && !nombreNew.equals(nombreOld)) {
+            if (Funcionalidades.actualizarNombreUsuario(email,nombreNew))
+                LoginActivity.usuario.setNombreUsuario(nombreNew);
+            else {
+                Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
+                return;
+            }
+        }
+
+        String apellidosNew = userConfigSettings.getApellido().toUpperCase();
+        String apellidosOld = LoginActivity.usuario.getApellidosUsuario();
+        if (!apellidosNew.isEmpty() && !apellidosNew.equals(apellidosOld)) {
+            if (Funcionalidades.actualizarApellidosUsuario(email,apellidosNew))
+                LoginActivity.usuario.setApellidosUsuario(apellidosNew);
+            else {
+                Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
+                return;
+            }
+        }
+
+        String direccionNew = userConfigSettings.getDireccion();
+        String direccionOld = LoginActivity.usuario.getDireccionUsuario();
+        if (!direccionNew.isEmpty() && !direccionNew.equals(direccionOld)) {
+            if (Funcionalidades.actualizarDireccionUsuario(email,direccionNew))
+                LoginActivity.usuario.setDireccionUsuario(direccionNew);
+            else {
+                Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
+                return;
+            }
+        }
+
+        String generoNew = userConfigSettings.getGenero();
+        String generoOld = LoginActivity.usuario.getGeneroUsuario();
+        if (!generoNew.isEmpty() && !generoNew.equals(generoOld)) {
+            if (Funcionalidades.actualizarGeneroUsuario(email,generoNew))
+                LoginActivity.usuario.setGeneroUsuario(generoNew);
+            else {
+                Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
+                return;
+            }
+        }
+
+        String passwordOld = LoginActivity.usuario.getPaswordUsuario();
+        if (!passwordNew.isEmpty() && !passwordNew.equals(passwordOld)) {
+            if (Funcionalidades.actualizarPasswordUsuario(email,passwordNew))
+                LoginActivity.usuario.setPaswordUsuario(passwordNew);
+            else {
+                Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
+                return;
+            }
+        }
+
+        Date fechaNew = userConfigSettings.getBirthdate();
+        Date fechaOld = LoginActivity.usuario.getFechaNacimientoUsuario();
+        if (fechaNew != null && fechaNew != fechaOld) {
+            if (Funcionalidades.actualizarNacimientoUsuario(email,fechaNew))
+                LoginActivity.usuario.setFechaNacimientoUsuario(fechaNew);
+            else {
+                Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
+                return;
+            }
+        }
+
+        //TODO cargar foto de perfil.
+
+        Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_guardados),getContext());
     }
 
     private void logout() {
-        //TODO salir a la pantalla de logueo
+        getActivity().finish();
     }
 
     private void eliminarCuentaDelUsuario() {
-        //TODO eliminar la cuenta del usuario
+        if (Funcionalidades.eliminarUsuario(LoginActivity.usuario)) {
+            Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_usuario_eliminado),getContext());
+            logout();
+        }
+        else
+            Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_usuario_no_eliminado),getContext());
     }
 }

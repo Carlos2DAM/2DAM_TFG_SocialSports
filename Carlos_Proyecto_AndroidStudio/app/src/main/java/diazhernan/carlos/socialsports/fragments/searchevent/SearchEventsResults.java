@@ -18,6 +18,7 @@ import diazhernan.carlos.socialsports.Clases.AdaptadorListaEventos;
 import diazhernan.carlos.socialsports.Clases.Evento;
 import diazhernan.carlos.socialsports.EventSettings;
 import diazhernan.carlos.socialsports.Funcionalidades;
+import diazhernan.carlos.socialsports.LoginActivity;
 import diazhernan.carlos.socialsports.R;
 
 public class SearchEventsResults extends Fragment {
@@ -61,9 +62,13 @@ public class SearchEventsResults extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Evento evento = listaEventosFiltrados.get(position);
-                Intent intent = new Intent(getContext(), EventSettings.class);
-                Funcionalidades.eventoSeleccionado = evento;
-                startActivity(intent);
+                if (!Funcionalidades.estasBaneado(evento,getContext()) &&
+                        !Funcionalidades.usuarioBloqueadoPermanentemente(LoginActivity.usuario.getEmailUsuario()
+                                ,evento.getOrganizadorEvento().getEmailUsuario(),getContext()) ) {
+                    Intent intent = new Intent(getContext(), EventSettings.class);
+                    Funcionalidades.eventoSeleccionado = evento;
+                    startActivity(intent);
+                }
             }
         });
     }

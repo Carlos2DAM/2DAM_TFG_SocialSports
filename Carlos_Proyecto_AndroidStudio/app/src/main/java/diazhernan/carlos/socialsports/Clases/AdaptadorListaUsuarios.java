@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.Date;
 import java.util.List;
 
 import diazhernan.carlos.socialsports.EventRate;
@@ -81,7 +80,7 @@ public class AdaptadorListaUsuarios extends ArrayAdapter<Usuario> {
                 textGenero.setText(context.getResources().getString(R.string.undefined_gender).toUpperCase());
             int edad = -1;
             if (usuario.getFechaNacimientoUsuario() != null)
-                edad = (int) (((new Date().getTime() - usuario.getFechaNacimientoUsuario().getTime()) / 86400000) / 365);
+                edad = Funcionalidades.calcularEdad(usuario.getFechaNacimientoUsuario());
             if (edad != -1)
                 textEdad.setText(edad + " " + context.getResources().getString(R.string.years_old).toUpperCase());
             else

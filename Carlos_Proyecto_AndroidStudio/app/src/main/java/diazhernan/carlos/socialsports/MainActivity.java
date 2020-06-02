@@ -22,28 +22,29 @@ import diazhernan.carlos.socialsports.fragments.userconfig.UserConfig;
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView navigationView;
-    private Home home = new Home();
+    private Home home;
     private NewEvent newEvent;
     private SearchEvent searchEvent;
     private MyEvents myEvents;
     private UserConfig userConfig;
-    public static ArrayList<Evento> listaEventos;
+    public static ArrayList<Evento> listaEventos;  // TODO borrar, codigo provisional
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        agregarAmigos();
-        agregarEventos();
+        agregarAmigos();    //TODO Linea de pruebas eliminar
+        agregarEventos();   //TODO Linea de pruebas eliminar
         navigationView = findViewById(R.id.menu_nav_main);
-        Funcionalidades.showSelectedFragment(R.id.container,getSupportFragmentManager(),home);
 
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case (R.id.menu_home):
+                        if (home == null)
+                            home = new Home();
                         Funcionalidades.showSelectedFragment(R.id.container,getSupportFragmentManager(),home);
                         break;
                     case (R.id.menu_new_event):
@@ -66,9 +67,17 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        if (LoginActivity.usuario.getNombreUsuario().equals("") || LoginActivity.usuario.getGeneroUsuario().equals("") || LoginActivity.usuario.getFechaNacimientoUsuario() == null) {
+            navigationView.setSelectedItemId(R.id.menu_user);
+        }
+        else {
+            navigationView.setSelectedItemId(R.id.menu_home);
+        }
+        //TODO calcular puntuaciones del usuario.
     }
 
-    private void agregarAmigos() {
+    private void agregarAmigos() {      //TODO función de pruebas eliminar
         LoginActivity.usuario.setListaAmigos(new ArrayList<Usuario>());
         LoginActivity.usuario.getListaAmigos().add(new Usuario("d@mail.es","","dimitri","Male","aaa111",new Date(),new Date(),4,4,"d.jpg"));
         LoginActivity.usuario.getListaAmigos().add(new Usuario("e@mail.es","","antonio","Male","aaa111",new Date(),new Date(),4,4,"d.jpg"));
@@ -79,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         LoginActivity.usuario.getListaAmigos().add(new Usuario("z@mail.es","","maria","Female","aaa111",new Date(),new Date(),4,4,"d.jpg"));
     }
 
-    private void agregarEventos() {
+    private void agregarEventos() {     //TODO función de pruebas eliminar
         listaEventos = new ArrayList<>();
         Evento evento = new Evento();
         evento.setDeporte("Futbol");

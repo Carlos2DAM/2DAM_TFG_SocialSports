@@ -2,22 +2,24 @@ package diazhernan.carlos.socialsports.fragments.newevent;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
 
 import diazhernan.carlos.socialsports.LoginActivity;
-import diazhernan.carlos.socialsports.MainActivity;
 import diazhernan.carlos.socialsports.R;
 
 public class NewEventInvite extends Fragment {
@@ -25,8 +27,7 @@ public class NewEventInvite extends Fragment {
     private ArrayList<String> listaInvitarAmigos;
     private TextView textDescrip;
     private LinearLayout viewListaAmigos;
-    private Button buttonAll;
-    private Button buttonNobody;
+    private BottomNavigationView navigationView;
 
     public NewEventInvite() {
         listaInvitarAmigos = new ArrayList<>();
@@ -45,18 +46,19 @@ public class NewEventInvite extends Fragment {
 
         textDescrip = getActivity().findViewById(R.id.textInviteDescription);
         viewListaAmigos = getActivity().findViewById(R.id.viewListaAmigos);
-        buttonAll = getActivity().findViewById(R.id.buttonInviteAll);
-        buttonNobody = getActivity().findViewById(R.id.buttonInviteNobody);
-        buttonAll.setOnClickListener(new View.OnClickListener() {
+        navigationView = getActivity().findViewById(R.id.navigationNewEventInvite);
+        navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                seleccionarTodosAmigos(true);
-            }
-        });
-        buttonNobody.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                seleccionarTodosAmigos(false);
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.itemInviteAllMenu:
+                        seleccionarTodosAmigos(true);
+                        break;
+                    case R.id.itemInviteNoneMenu:
+                        seleccionarTodosAmigos(false);
+                        break;
+                }
+                return true;
             }
         });
         for (int i = 0; i< LoginActivity.usuario.getListaAmigos().size(); i++) {

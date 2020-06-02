@@ -8,16 +8,23 @@
     android:orientation="vertical"
     tools:context=".EventRate">
 
-    <Button
-        android:id="@+id/buttonEventRateSend"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarEventRate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/views_vertical_margin"
-        android:background="@drawable/boton1"
-        android:text="@string/button_send_rate"
-        android:textAllCaps="true"
-        android:textColor="@color/colorElements" />
+        android:background="@color/colorPrimary"
+        android:minHeight="54dp"
+        app:titleTextColor="@color/colorAccent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigationEventRate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        app:itemIconTint="@color/colorPrimary"
+        app:itemTextColor="@color/colorPrimary"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/event_rate_menu"/>
 
     <TextView
         android:id="@+id/textRateOrganizer"
@@ -27,7 +34,7 @@
         android:textAllCaps="true"
         android:textAlignment="center"
         android:textColor="@color/colorElements"
-        android:layout_marginTop="@dimen/activity_vertical_margin"/>
+        android:layout_marginTop="@dimen/views_vertical_margin"/>
 
     <RatingBar
         android:id="@+id/ratingRateOrganizer"
@@ -41,7 +48,7 @@
         android:id="@+id/dividerEventRate"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/colorElements"/>
+        android:background="@color/colorAccent"/>
 
     <TextView
         android:id="@+id/textRateParticipants"

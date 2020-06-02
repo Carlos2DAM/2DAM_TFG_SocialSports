@@ -1,5 +1,6 @@
 package diazhernan.carlos.socialsports.fragments.userconfig;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -8,11 +9,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import diazhernan.carlos.socialsports.Funcionalidades;
@@ -33,6 +36,8 @@ public class UserConfigSettings extends Fragment {
     private RadioButton radioMale;
     private RadioButton radioFemale;
     private Date birthdate;
+    private DatePickerDialog dialogoCalendario;
+    private Calendar newCalendar;
 
     public UserConfigSettings() {
 
@@ -59,6 +64,24 @@ public class UserConfigSettings extends Fragment {
         editRepeatpass = getActivity().findViewById(R.id.editUserConfigRepeatpass);
         radioMale = getActivity().findViewById(R.id.radioUserConfigMale);
         radioFemale = getActivity().findViewById(R.id.radioUserConfigFemale);
+        //TODO permitir cargar una imagen de perfil.
+
+        newCalendar = Calendar.getInstance();
+        dialogoCalendario = new DatePickerDialog(getContext(), R.style.calenderDialogCustom, new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                newCalendar.set(year, monthOfYear, dayOfMonth);
+                birthdate = newCalendar.getTime();
+                editNacimiento.setText(Funcionalidades.dateToString(birthdate));
+            }
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+        editNacimiento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogoCalendario.show();
+                Funcionalidades.esconderTeclado(getActivity(),getContext(),v);
+            }
+        });
 
         textEmail.setText(LoginActivity.usuario.getEmailUsuario());
         ratingBarUser.setRating(LoginActivity.usuario.getReputacionParticipanteUsuario());
@@ -94,12 +117,12 @@ public class UserConfigSettings extends Fragment {
         return editRepeatpass.getText().toString();
     }
 
-    public boolean isMale() {
-        return radioMale.isChecked();
-    }
-
-    public boolean isFemale() {
-        return radioFemale.isChecked();
+    public String getGenero() {
+        if (radioMale.isChecked())
+            return "MALE";
+        else if (radioFemale.isChecked())
+            return "FEMALE";
+        return "";
     }
 
     public Date getBirthdate() {

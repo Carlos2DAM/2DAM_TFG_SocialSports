@@ -19,9 +19,10 @@ import diazhernan.carlos.socialsports.Clases.Usuario;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText usernameEditText;
+    private EditText emailEditText;
     private EditText passwordEditText;
     private Button loginButton;
+    private Button registerButton;
     private ProgressBar loadingProgressBar;
     public static Usuario usuario = null;
 
@@ -30,12 +31,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        usernameEditText = findViewById(R.id.username);
+        emailEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
         loginButton = findViewById(R.id.login);
+        registerButton = findViewById(R.id.register);
         loadingProgressBar = findViewById(R.id.loading);
 
-        usernameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        emailEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 Funcionalidades.cambiarColoresTexto((EditText) v, getApplication());
@@ -52,9 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (comprobarDatosLoginCorrectos())
-                    cargarAplicacionUsuario();
-                loadingProgressBar.setVisibility(View.GONE);
+                iniciarLogueo();
                 return true;
             }
         });
@@ -69,35 +69,94 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginButton.setFocusableInTouchMode(true);
-                loginButton.requestFocus();
-                loginButton.setFocusableInTouchMode(false);
-                if (comprobarDatosLoginCorrectos())
-                    cargarAplicacionUsuario();
-                loadingProgressBar.setVisibility(View.GONE);
+                v.setFocusableInTouchMode(true);
+                v.requestFocus();
+                v.setFocusableInTouchMode(false);
+                Funcionalidades.esconderTeclado(getSystemService(INPUT_METHOD_SERVICE),v);
+                iniciarLogueo();
+            }
+        });
+
+        registerButton.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Funcionalidades.cambiarColoresBoton((Button) v, getApplication());
+            }
+        });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setFocusableInTouchMode(true);
+                v.requestFocus();
+                v.setFocusableInTouchMode(false);
+                Funcionalidades.esconderTeclado(getSystemService(INPUT_METHOD_SERVICE),v);
+                iniciarRegistro();
             }
         });
     }
 
-    private boolean comprobarDatosLoginCorrectos(){
+    private void iniciarLogueo() {
         loadingProgressBar.setVisibility(View.VISIBLE);
+        if (comprobarDatosLoginCorrectos(getResources().getString(R.string.action_sign_in_short))) {
+            usuario = Funcionalidades.obtenerUsusarioBBDD(emailEditText.getText().toString(),passwordEditText.getText().toString());
+            if (usuario != null)
+                cargarAplicacionUsuario();
+            else {
+                Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_datos_incorrectos), this);
+                limpiarCajas();
+            }
+        }
+        loadingProgressBar.setVisibility(View.GONE);
+    }
 
-        usuario = new Usuario("carlos@mail.es","carlos",
-                "Carlos","Diaz Hernan","Male",
-                "calle Oviedo 37", new Date(83,11,21),
-                new Date(),4.5f, 5f,
-                "carlos.jpg",true,new ArrayList<Usuario>(),
-                new ArrayList<Usuario>());
+    private void iniciarRegistro() {
+        loadingProgressBar.setVisibility(View.VISIBLE);
+        if (comprobarDatosLoginCorrectos(getResources().getString(R.string.action_register))) {
+            if (Funcionalidades.comprobarExisteUsuario(emailEditText.getText().toString())) {
+                Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_usuario_existe), this);
+                limpiarCajas();
+            }
+            else {
+                usuario = new Usuario(emailEditText.getText().toString(),passwordEditText.getText().toString(),
+                        "","","","",
+                        null,new Date(),4f,
+                        4f,"",true,new ArrayList<Usuario>(),
+                        new ArrayList<Usuario>());
+                if (Funcionalidades.crearUsuarioBBDD(usuario)) {
+                    Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_creado_nuevo_usuario),this);
+                    cargarAplicacionUsuario();
+                }
+                else {
+                    usuario = null;
+                    Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_error_nuevo_usuario),this);
+                }
+            }
+        }
+        loadingProgressBar.setVisibility(View.GONE);
+    }
 
+    private boolean comprobarDatosLoginCorrectos(String botonPulsado){
+        if (emailEditText.getText().toString().equals("")) {
+            Funcionalidades.mostrarMensaje(getResources().getString(R.string.usuario_incompleto)+" "+botonPulsado,this);
+            return false;
+        }
+        else if (passwordEditText.getText().toString().equals("")) {
+            Funcionalidades.mostrarMensaje(getResources().getString(R.string.password_incompleto)+" "+botonPulsado, this);
+            return false;
+        }
         return true;
     }
 
     private void cargarAplicacionUsuario(){
-        Funcionalidades.cargarEventos();
-        Funcionalidades.cargarAmigos();
-        usuario.setOnlineNow(true);
-        Funcionalidades.guardarUsuarioOnlineNow(true);
+        //usuario.setListaAmigos(Funcionalidades.cargarAmigos(usuario.getEmailUsuario())); //TODO Borrar esto seria redundante.
+        //Funcionalidades.ponerUsuarioOnline(usuario,true);  TODO Funcionalidad desactivada.
         Intent i = new Intent(getBaseContext(), MainActivity.class);
         startActivity(i);
+    }
+
+    private void limpiarCajas() {
+        emailEditText.setText("");
+        passwordEditText.setText("");
     }
 }
