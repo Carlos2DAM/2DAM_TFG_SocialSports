@@ -1,6 +1,8 @@
 package diazhernan.carlos.socialsports.Clases;
 
-public class PuntuacionEvento {
+import java.io.Serializable;
+
+public class PuntuacionEvento implements Serializable {
 
     private String emailUsuarioEmisor;   //foreign key          | Primary key
     private String idEventoFinalizado;  //foreign key           | Primary key

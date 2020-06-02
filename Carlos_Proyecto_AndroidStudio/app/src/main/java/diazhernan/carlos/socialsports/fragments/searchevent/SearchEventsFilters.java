@@ -148,31 +148,31 @@ public class SearchEventsFilters extends Fragment {
         editHora.setText(cadHora+":"+cadMin);
     }
 
-    public EditText getEditFecha() {
-        return editFecha;
+    public Date getFecha() {
+        return this.date;
     }
 
-    public EditText getEditHora() {
-        return editHora;
+    public String getEditHora() {
+        return editHora.getText().toString();
     }
 
-    public EditText getEditDeporte() {
-        return editDeporte;
+    public String getEditDeporte() {
+        return editDeporte.getText().toString();
     }
 
-    public EditText getEditLocalidad() {
-        return editLocalidad;
+    public String getEditLocalidad() {
+        return editLocalidad.getText().toString();
     }
 
-    public CheckBox getCheckReserva() {
-        return checkReserva;
+    public boolean getCheckReserva() {
+        return checkReserva.isChecked();
     }
 
-    public CheckBox getCheckReputation() {
-        return checkReputation;
+    public boolean getCheckReputation() {
+        return checkReputation.isChecked();
     }
 
-    public RatingBar getRatingBarReputation() {
-        return ratingBarReputation;
+    public float getRatingBarReputation() {
+        return ratingBarReputation.getRating();
     }
 }

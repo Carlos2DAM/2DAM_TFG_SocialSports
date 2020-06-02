@@ -1,16 +1,20 @@
 package diazhernan.carlos.socialsports;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
@@ -27,7 +31,8 @@ public class EventRate extends AppCompatActivity {
     private TextView textOrganizer;
     private TextView textParticipants;
     private View viewDivider;
-    private Button buttonSubmit;
+    private Toolbar toolbar;
+    private BottomNavigationView navigationView;
     private boolean haSidoPuntuado;
     public static ArrayList<PuntuacionParticipante> listaPuntuaciones;
     private ArrayList<Usuario> listaParticipantes;
@@ -47,27 +52,21 @@ public class EventRate extends AppCompatActivity {
         textOrganizer = findViewById(R.id.textRateOrganizer);
         textParticipants = findViewById(R.id.textRateParticipants);
         viewDivider = findViewById(R.id.dividerEventRate);
-        buttonSubmit = findViewById(R.id.buttonEventRateSend);
+        navigationView = findViewById(R.id.navigationEventRate);
+        toolbar = findViewById(R.id.toolbarEventRate);
+        toolbar.setTitle(Funcionalidades.eventoSeleccionado.getDeporte()+" - "+Funcionalidades.eventoSeleccionado.getLocalidad());
         if (Funcionalidades.eventoSeleccionado.getOrganizadorEvento().getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario())) {
             ratingBarOrganizer.setVisibility(View.GONE);
             ratingBarOrganizer.setEnabled(false);
             textOrganizer.setVisibility(View.GONE);
             viewDivider.setVisibility(View.GONE);
         }
-        buttonSubmit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                Funcionalidades.cambiarColoresBoton((Button) v, getApplication());
-            }
-        });
-
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setFocusableInTouchMode(true);
-                v.requestFocus();
-                v.setFocusableInTouchMode(false);
-                enviarPuntuaciones();
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                if (menuItem.getItemId() == R.id.itemMenuRate)
+                    enviarPuntuaciones();
+                return true;
             }
         });
         haSidoPuntuado = eventoHasidoPuntuado();
@@ -112,15 +111,17 @@ public class EventRate extends AppCompatActivity {
     }
 
     private boolean eventoHasidoPuntuado() {
-        //TODO comprobar en la base de datos si el evento ya ha sido puntuado. (select count(login.user, idEvento) > 0)
-        return false;
+        return Funcionalidades.usuarioHaPuntuadoEvento(LoginActivity.usuario.getEmailUsuario(),Funcionalidades.eventoSeleccionado.getIdEvento());
     }
 
     private void enviarPuntuaciones() {
-        //TODO mostrar mensaje de confirmacion y enviar puntuaciones al servidor para insertar en la BBDD.
         if (ratingBarOrganizer.isEnabled()) {
             PuntuacionEvento puntuacionEvento = new PuntuacionEvento(LoginActivity.usuario.getEmailUsuario(),
                     Funcionalidades.eventoSeleccionado.getIdEvento(), ratingBarOrganizer.getRating());
+            Funcionalidades.enviarPuntuacionEvento(puntuacionEvento);
+        }
+        for (PuntuacionParticipante puntuacion: listaPuntuaciones) {
+            Funcionalidades.enviarPuntuacionParticipante(puntuacion);
         }
         haSidoPuntuado = true;
         deshabilitarPuntuar();
@@ -128,7 +129,7 @@ public class EventRate extends AppCompatActivity {
     }
 
     private void deshabilitarPuntuar() {
-        buttonSubmit.setVisibility(View.GONE);
+        navigationView.setVisibility(View.GONE);
         textOrganizer.setText(getResources().getString(R.string.organizer_has_been_rated));
         textParticipants.setText(getResources().getString(R.string.participants_has_been_rated));
     }

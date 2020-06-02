@@ -3,51 +3,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
     tools:context=".fragments.newevent.NewEventInvite">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/viewListaAmigos"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/navigationNewEventInvite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="@color/colorAccent"
+            app:itemIconTint="@color/colorPrimary"
+            app:itemTextColor="@color/colorPrimary"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/invite_slect_menu" />
 
-            <TextView
-                android:id="@+id/textInviteDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/invite_description"
-                android:textColor="@color/colorElements" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginVertical="@dimen/views_vertical_margin">
-
-                <Button
-                    android:id="@+id/buttonInviteAll"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/viewListaAmigos"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/boton1"
-                    android:text="@string/invite_btn_all"
-                    android:textColor="@color/colorElements"
-                    android:layout_marginHorizontal="@dimen/views_horizontal_margin"/>
+                    android:orientation="vertical"
+                    android:padding="@dimen/activity_horizontal_margin">
 
-                <Button
-                    android:id="@+id/buttonInviteNobody"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/boton1"
-                    android:text="@string/invite_btn_nobody"
-                    android:textColor="@color/colorElements"
-                    android:layout_marginHorizontal="@dimen/views_horizontal_margin"/>
-            </TableRow>
-
-        </LinearLayout>
-    </ScrollView>
+                    <TextView
+                        android:id="@+id/textInviteDescription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/invite_description"
+                        android:textColor="@color/colorElements" />
+                </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 </FrameLayout>

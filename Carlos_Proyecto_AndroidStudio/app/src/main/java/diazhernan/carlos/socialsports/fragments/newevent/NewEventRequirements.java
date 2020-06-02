@@ -194,7 +194,7 @@ public class NewEventRequirements extends Fragment {
             if (radioFemale.isChecked())
                 return ("Female").toUpperCase();
         }
-        return null;
+        return "";
     }
 
     public float getReputacion() {

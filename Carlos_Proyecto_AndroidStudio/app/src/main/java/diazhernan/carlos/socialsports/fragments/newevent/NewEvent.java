@@ -69,8 +69,6 @@ public class NewEvent extends Fragment {
                 v.setFocusableInTouchMode(false);
                 if (obtenerParametrosIntroducidos())
                     crearEvento();
-                else
-                    Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_incomplete_data), getContext());
             }
         });
 
@@ -157,18 +155,18 @@ public class NewEvent extends Fragment {
 
     private boolean obtenerParametrosIntroducidos() {
         String idEv,deporte,localidad,direccion,horaEv,comments;
-        deporte = newEventDescription.getDeporte();
-        if (deporte.equals(""))
+        deporte = newEventDescription.getDeporte().toUpperCase();
+        localidad = newEventDescription.getLocalidad().toUpperCase();
+        if (deporte.equals("") || localidad.equals("")) {
+            Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_incomplete_data), getContext());
             return false;
-        localidad = newEventDescription.getLocalidad();
-        if (localidad.equals(""))
-            return false;
+        }
         Date fechaEv,fechaCreado=new Date();
         int maxParticipantes;
         boolean reserva;
         Requisitos requisitos = new Requisitos();
         float coste,precio;
-        direccion = newEventSpecify.getDireccion();
+        direccion = newEventSpecify.getDireccion().toUpperCase();
         fechaEv = newEventSpecify.getFechaEvento();
         horaEv = newEventSpecify.getHoraEvento();
         maxParticipantes = newEventSpecify.getNumParticipantes();
@@ -178,23 +176,28 @@ public class NewEvent extends Fragment {
         comments = newEventSpecify.getComentarios();
         requisitos.setEdadMinima(newEventRequirements.getEdadMinima());
         requisitos.setEdadMaxima(newEventRequirements.getEdadMaxima());
-        requisitos.setRequisitoDeGenero(newEventRequirements.getGenero());
+        requisitos.setRequisitoDeGenero(newEventRequirements.getGenero().toUpperCase());
         requisitos.setReputacionNecesaria(newEventRequirements.getReputacion());
-        idEv = LoginActivity.usuario.getEmailUsuario()+"__"+fechaCreado.toString();
+        idEv = LoginActivity.usuario.getEmailUsuario()+"_"+Funcionalidades.dateToStringLargo(fechaCreado);
         ArrayList<Usuario> listaP = new ArrayList<>();
         if (newEventSpecify.getElOrganizadorEsParticipante())
             listaP.add(LoginActivity.usuario);
         eventoCreado = new Evento(idEv,LoginActivity.usuario,deporte,localidad,direccion,fechaEv,
                 horaEv,fechaCreado,maxParticipantes,reserva,coste,precio,comments,requisitos,
                 false,new ArrayList<Usuario>(),new ArrayList<Usuario>(),listaP);
-        Funcionalidades.enviarInvitaciones(eventoCreado,newEventInvite.getListaInvitarAmigos());
         return true;
     }
 
     private void crearEvento() {
         if (Funcionalidades.guardarEvento(eventoCreado)) {
             Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_evento_creado),getContext());
-            MainActivity.listaEventos.add(eventoCreado);
+            if (Funcionalidades.enviarInvitaciones(eventoCreado,newEventInvite.getListaInvitarAmigos())) {
+                for (Usuario usuario: LoginActivity.usuario.getListaAmigos()) {
+                    if (newEventInvite.getListaInvitarAmigos().contains(usuario.getEmailUsuario()))
+                        eventoCreado.getListaParticipantes().add(usuario);
+                }
+            }
+            MainActivity.listaEventos.add(eventoCreado);  // TODO borrar codigo provisional
             newEventDescription = new NewEventDescription();
             newEventSpecify = new NewEventSpecify();
             newEventRequirements = new NewEventRequirements();

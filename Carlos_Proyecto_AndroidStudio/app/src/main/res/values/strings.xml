@@ -4,11 +4,22 @@
     <!-- Strings related to Funcionalidades -->
     <string name="has_been_baned">You have been banned at this event.</string>
 
+    <!-- Strings related to Dialogo -->
+    <string name="boton_aceptar">Accept</string>
+    <string name="boton_cancelar">Cancel</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Login</string>
+    <string name="action_register">Register</string>
+    <string name="usuario_incompleto">You have to enter your email for</string>
+    <string name="password_incompleto">You have to enter any password for</string>
+    <string name="login_datos_incorrectos">Incorrect login data entered.</string>
+    <string name="login_usuario_existe">A user with this email already exists</string>
+    <string name="login_creado_nuevo_usuario">The new user has been created</string>
+    <string name="login_error_nuevo_usuario">The new user could not be created.</string>
 
     <!-- Strings related to main menu -->
     <string name="nav_new_event">Create New Event</string>
@@ -58,8 +69,8 @@
 
     <!-- Strings related to fragmet_new_event_invite -->
     <string name="invite_description">Invite friends to this event:</string>
-    <string name="invite_btn_all">All</string>
-    <string name="invite_btn_nobody">Nobody</string>
+    <string name="invite_text_all">Select All</string>
+    <string name="invite_text_none">Select None</string>
 
     <!-- Strings related to AdaptadorListaEventos -->
     <string name="sin_fecha">NO DATE</string>
@@ -111,7 +122,7 @@
     <string name="opcion_aceptar_solicitud">Accept Request</string>
     <string name="opcion_rechazar_solicitud">Reject Request</string>
     <string name="opcion_bloqueo_de_evento">Banned to Event</string>
-    <string name="opcion_bloqueo_permanente">Banned Forever</string>
+    <string name="opcion_bloqueo_permanente">Permanent Banned</string>
     <string name="opcion_solicitud_de_amistad">Add to Friendlist</string>
     <string name="opcion_eliminar_participante">Delete Participant</string>
     <string name="opcion_eliminar_amigo">Delete Friend</string>
@@ -131,10 +142,15 @@
     <string name="hint_user_birthday">Birthdate</string>
     <string name="hint_user_changepassword">Change Password:</string>
     <string name="hint_user_newpassword">New password</string>
-    <string name="hint_user_repeatpassword">Repeat password</string>
+    <string name="hint_user_repeatpassword">Repeat new password</string>
     <string name="user_config_button_save_settings">Save Settings</string>
 
     <!-- Strings related to User Config -->
     <string name="text_home_popular_events">Popular Events:</string>
-    <string name="text_home_rating">Yor actual rating</string>
+    <string name="text_home_rating">Your actual rating</string>
+    <string name="mensaje_usuario_eliminado">The user account has been deleted</string>
+    <string name="mensaje_usuario_no_eliminado">The user account could not be deleted</string>
+    <string name="mensaje_cambios_guardados">Updated data</string>
+    <string name="mensaje_cambios_no_guardados">The data could not be updated</string>
+    <string name="mensaje_passwords_diferentes">Passwords are different</string>
 </resources>

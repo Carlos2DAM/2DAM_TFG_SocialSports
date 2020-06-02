@@ -17,7 +17,9 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 
 import diazhernan.carlos.socialsports.Clases.Evento;
+import diazhernan.carlos.socialsports.Clases.FiltroDeEvento;
 import diazhernan.carlos.socialsports.Funcionalidades;
+import diazhernan.carlos.socialsports.LoginActivity;
 import diazhernan.carlos.socialsports.MainActivity;
 import diazhernan.carlos.socialsports.R;
 
@@ -95,12 +97,21 @@ public class SearchEvent extends Fragment {
     }
 
     private void buscarEventosFiltrados() {
-        listaEventosFiltrados = new ArrayList<>();
-        for (Evento evento: Funcionalidades.eventosPendientes(MainActivity.listaEventos)) {
-            String fecha = searchEventsFilters.getEditFecha().getText().toString();
-            if (fecha.equals("") || fecha.equals(Funcionalidades.dateToString(evento.getFechaEvento())))
-                listaEventosFiltrados.add(evento);
-        }
-        //TODO cargar de la BBDD la lista de los eventos no finalizados que cumplan los filtros (toUpperCase())
+        FiltroDeEvento filtro = obtenerFiltros();
+        listaEventosFiltrados = Funcionalidades.buscarEventosFiltrados(LoginActivity.usuario, filtro);
+    }
+
+    private FiltroDeEvento obtenerFiltros() {
+        FiltroDeEvento filtro = new FiltroDeEvento();
+        filtro.setSport(searchEventsFilters.getEditDeporte().toUpperCase());
+        filtro.setLocation(searchEventsFilters.getEditLocalidad().toUpperCase());
+        filtro.setFechaDelEvento(searchEventsFilters.getFecha());
+        filtro.setHoraDelEvento(searchEventsFilters.getEditHora());
+        filtro.setReserved(searchEventsFilters.getCheckReserva());
+        if (searchEventsFilters.getCheckReputation())
+            filtro.setReputation(searchEventsFilters.getRatingBarReputation());
+        else
+            filtro.setReputation(-1);
+        return filtro;
     }
 }

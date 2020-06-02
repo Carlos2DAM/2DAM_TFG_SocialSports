@@ -28,8 +28,6 @@ import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 
-import diazhernan.carlos.socialsports.Clases.Evento;
-import diazhernan.carlos.socialsports.Clases.Usuario;
 import diazhernan.carlos.socialsports.Funcionalidades;
 import diazhernan.carlos.socialsports.LoginActivity;
 import diazhernan.carlos.socialsports.R;
@@ -449,11 +447,12 @@ public class EventSettingsSettings extends Fragment {
             checkBoxMaxAge.setChecked(true);
             barMaxAge.setProgress(Funcionalidades.eventoSeleccionado.getRequisitos().getEdadMaxima());
         }
-        if (Funcionalidades.eventoSeleccionado.getRequisitos().getRequisitoDeGenero() != null) {
+        if (Funcionalidades.eventoSeleccionado.getRequisitos().getRequisitoDeGenero() != null
+                && !Funcionalidades.eventoSeleccionado.getRequisitos().getRequisitoDeGenero().isEmpty()) {
             checkBoxGender.setChecked(true);
             if (Funcionalidades.eventoSeleccionado.getRequisitos().getRequisitoDeGenero().toUpperCase().equals("MALE"))
                 radioMale.setChecked(true);
-            else
+            else if (Funcionalidades.eventoSeleccionado.getRequisitos().getRequisitoDeGenero().toUpperCase().equals("FEMALE"))
                 radioFemale.setChecked(true);
         }
         if (Funcionalidades.eventoSeleccionado.getRequisitos().getReputacionNecesaria() > 0) {
