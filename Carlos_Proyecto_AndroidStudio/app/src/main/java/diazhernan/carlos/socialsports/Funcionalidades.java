@@ -146,7 +146,6 @@ public class Funcionalidades extends AppCompatActivity {
     }
 
     public static void eliminarEvento(Evento evento, Context context) {
-        Funcionalidades.mostrarMensaje("Implementar Borrado",context);
         //TODO eliminar evento de la BBDD y de mi lista
     }
 
@@ -511,4 +510,6 @@ public class Funcionalidades extends AppCompatActivity {
         //TODO insertar un usuario en la lista de amigos del Usuario actual.
         //serverInsertarAmigo(emailInsertado, emailUsuario);
     }
+
+    // TODO Si nadie nos ha puntuado aún, se devuelve un 4.
 }
