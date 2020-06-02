@@ -7,7 +7,7 @@ import java.util.Date;
 public class Usuario implements Serializable {
 
     private String emailUsuario;        //50 caracteres
-    private String paswordUsuario;      //30 caracteres
+    private String paswordUsuario;      //128 caracteres
     private String nombreUsuario;       //50 caracteres
     private String apellidosUsuario;    //50 caracteres
     private String generoUsuario;       //6 caracteres (Male o Female)
