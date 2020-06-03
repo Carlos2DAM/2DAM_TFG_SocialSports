@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private Button registerButton;
     private ProgressBar loadingProgressBar;
+    private RETROFIT retrofit;
+    private APIService service;
     public static Usuario usuario = null;
 
     @Override
@@ -43,6 +46,8 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login);
         registerButton = findViewById(R.id.register);
         loadingProgressBar = findViewById(R.id.loading);
+        retrofit = new RETROFIT();
+        service = retrofit.getAPIService();
 
         emailEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -106,13 +111,39 @@ public class LoginActivity extends AppCompatActivity {
     private void iniciarLogueo() {
         loadingProgressBar.setVisibility(View.VISIBLE);
         if (comprobarDatosLoginCorrectos(getResources().getString(R.string.action_sign_in_short))) {
-            usuario = Funcionalidades.obtenerUsusarioBBDD(emailEditText.getText().toString(),passwordEditText.getText().toString());
+            /*usuario = Funcionalidades.obtenerUsusarioBBDD(emailEditText.getText().toString(),passwordEditText.getText().toString());
             if (usuario != null)
                 cargarAplicacionUsuario();
             else {
                 Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_datos_incorrectos), this);
                 limpiarCajas();
-            }
+            }*/
+
+            Call<Usuario> login = service.postLogin(emailEditText.getText().toString(), passwordEditText.getText().toString());
+            login.enqueue(new Callback<Usuario>() {
+                @Override
+                public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                    if(response.isSuccessful()){
+                            String authorizationHeader = response.headers().get("Authorization");
+                            //guardar en algun sitio
+                            String token = authorizationHeader.substring("Bearer".length()).trim();
+
+                            usuario = response.body();
+
+                            if(usuario != null){
+                                cargarAplicacionUsuario();
+                            }
+                    }else{
+                        Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_datos_incorrectos), getApplicationContext());
+                        limpiarCajas();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Usuario> call, Throwable t) {
+                    Log.e("ONFAILURE", t.getMessage());
+                }
+            });
         }
         loadingProgressBar.setVisibility(View.GONE);
     }
@@ -141,14 +172,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         }*/
         if (comprobarDatosLoginCorrectos(getResources().getString(R.string.action_register))) {
-            RETROFIT retrofit = new RETROFIT();
-            APIService service = retrofit.getAPIService();
 
-            Map<String, String> mapa = new HashMap<>();
-            mapa.put("correo", emailEditText.getText().toString());
-            mapa.put("contrasena", passwordEditText.getText().toString());
-
-            Call<ResponseBody> registro = service.postRegistro(mapa);
+            Call<ResponseBody> registro = service.postRegistro(emailEditText.getText().toString(), passwordEditText.getText().toString());
 
             registro.enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -158,20 +183,21 @@ public class LoginActivity extends AppCompatActivity {
                     if (code == 201) {
                         usuario = new Usuario();
                         usuario.setEmailUsuario(emailEditText.getText().toString());
-                        usuario.setPaswordUsuario(emailEditText.getText().toString());
+                        usuario.setPaswordUsuario(passwordEditText.getText().toString());
                         Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_creado_nuevo_usuario), getApplicationContext());
                         cargarAplicacionUsuario();
                     } else if (code == 409) {
                         Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_usuario_existe), getApplicationContext());
                         limpiarCajas();
                     } else {
+                        usuario = null;
                         Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_error_nuevo_usuario), getApplicationContext());
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                    Log.e("ONFAILURE", t.getMessage());
                 }
             });
 
