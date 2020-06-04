@@ -123,16 +123,23 @@ public class LoginActivity extends AppCompatActivity {
             login.enqueue(new Callback<Usuario>() {
                 @Override
                 public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                    if(response.isSuccessful()){
+                    Log.e("CODIGO", String.valueOf(response.code()));
+                    if(response.code() == 200){
+
+                        try{
                             String authorizationHeader = response.headers().get("Authorization");
-                            //guardar en algun sitio
-                            String token = authorizationHeader.substring("Bearer".length()).trim();
+                            
+                            String token = authorizationHeader.substring("Bearer".length()).trim(); //guardar en algun sitio
 
                             usuario = response.body();
 
                             if(usuario != null){
                                 cargarAplicacionUsuario();
                             }
+                        }catch(Exception e){
+                            Log.e("EXCEPTION", e.getMessage());
+                        }
+
                     }else{
                         Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_datos_incorrectos), getApplicationContext());
                         limpiarCajas();

@@ -18,9 +18,15 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.Date;
 
+import diazhernan.carlos.socialsports.APIService;
 import diazhernan.carlos.socialsports.Funcionalidades;
 import diazhernan.carlos.socialsports.LoginActivity;
 import diazhernan.carlos.socialsports.R;
+import diazhernan.carlos.socialsports.RETROFIT;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class UserConfig extends Fragment {
 
@@ -124,45 +130,112 @@ public class UserConfig extends Fragment {
         String nombreNew = userConfigSettings.getNombre().toUpperCase();
         String nombreOld = LoginActivity.usuario.getNombreUsuario();
         if (!nombreNew.isEmpty() && !nombreNew.equals(nombreOld)) {
-            if (Funcionalidades.actualizarNombreUsuario(email,nombreNew))
+        /*    if (Funcionalidades.actualizarNombreUsuario(email,nombreNew))
                 LoginActivity.usuario.setNombreUsuario(nombreNew);
             else {
                 Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
                 return;
             }
+        */
+
+            RETROFIT retrofit = new RETROFIT();
+            APIService service = retrofit.getAPIService();
+
+            service.putNombre(email, nombreNew).enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if(response.code() == 200) LoginActivity.usuario.setNombreUsuario(response.body());
+                    else Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+
+                }
+            });
         }
 
         String apellidosNew = userConfigSettings.getApellido().toUpperCase();
         String apellidosOld = LoginActivity.usuario.getApellidosUsuario();
         if (!apellidosNew.isEmpty() && !apellidosNew.equals(apellidosOld)) {
-            if (Funcionalidades.actualizarApellidosUsuario(email,apellidosNew))
+            /*if (Funcionalidades.actualizarApellidosUsuario(email,apellidosNew))
                 LoginActivity.usuario.setApellidosUsuario(apellidosNew);
             else {
                 Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
                 return;
-            }
+            }*/
+            RETROFIT retrofit = new RETROFIT();
+            APIService service = retrofit.getAPIService();
+
+            service.putApellidos(email, apellidosNew).enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if(response.code() == 200) LoginActivity.usuario.setApellidosUsuario(response.body());
+                    else Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+
+                }
+            });
         }
 
         String direccionNew = userConfigSettings.getDireccion();
         String direccionOld = LoginActivity.usuario.getDireccionUsuario();
         if (!direccionNew.isEmpty() && !direccionNew.equals(direccionOld)) {
-            if (Funcionalidades.actualizarDireccionUsuario(email,direccionNew))
+            /*if (Funcionalidades.actualizarDireccionUsuario(email,direccionNew))
                 LoginActivity.usuario.setDireccionUsuario(direccionNew);
             else {
                 Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
                 return;
-            }
+            }*/
+
+            RETROFIT retrofit = new RETROFIT();
+            APIService service = retrofit.getAPIService();
+
+            service.putDireccion(email, direccionNew).enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if(response.code() == 200) LoginActivity.usuario.setDireccionUsuario(response.body());
+                    else{
+                        Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+
+                }
+            });
         }
 
         String generoNew = userConfigSettings.getGenero();
         String generoOld = LoginActivity.usuario.getGeneroUsuario();
         if (!generoNew.isEmpty() && !generoNew.equals(generoOld)) {
-            if (Funcionalidades.actualizarGeneroUsuario(email,generoNew))
+            /*if (Funcionalidades.actualizarGeneroUsuario(email,generoNew))
                 LoginActivity.usuario.setGeneroUsuario(generoNew);
             else {
                 Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
                 return;
-            }
+            }*/
+
+            RETROFIT retrofit = new RETROFIT();
+            APIService service = retrofit.getAPIService();
+
+            service.putGenero(email, generoNew).enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if(response.code() == 200) LoginActivity.usuario.setGeneroUsuario(response.body());
+                    else Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+
+                }
+            });
+
         }
 
         String passwordOld = LoginActivity.usuario.getPaswordUsuario();
@@ -186,6 +259,7 @@ public class UserConfig extends Fragment {
             }
         }
 
+
         //TODO cargar foto de perfil.
 
         Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_guardados),getContext());
@@ -196,11 +270,33 @@ public class UserConfig extends Fragment {
     }
 
     private void eliminarCuentaDelUsuario() {
-        if (Funcionalidades.eliminarUsuario(LoginActivity.usuario)) {
+        /*if (Funcionalidades.eliminarUsuario(LoginActivity.usuario)) {
             Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_usuario_eliminado),getContext());
             logout();
         }
         else
-            Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_usuario_no_eliminado),getContext());
+            Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_usuario_no_eliminado),getContext());*/
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+
+        service.borrarUsuario(LoginActivity.usuario).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.code() == 204) {
+                    Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_usuario_eliminado),getContext());
+                    logout();
+                }else{
+                    Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_usuario_no_eliminado),getContext());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
+
+
     }
 }

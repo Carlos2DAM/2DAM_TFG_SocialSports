@@ -1,4 +1,4 @@
-package diazhernan.carlos.socialsports;
+﻿package diazhernan.carlos.socialsports;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        agregarAmigos();    //TODO Linea de pruebas eliminar
-        agregarEventos();   //TODO Linea de pruebas eliminar
+        //agregarAmigos();    //TODO Linea de pruebas eliminar
+        //agregarEventos();   //TODO Linea de pruebas eliminar
         navigationView = findViewById(R.id.menu_nav_main);
 
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
