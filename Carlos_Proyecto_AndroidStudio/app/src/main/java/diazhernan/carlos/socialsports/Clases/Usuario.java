@@ -28,7 +28,7 @@ public class Usuario implements Serializable {
         apellidosUsuario = "";
         generoUsuario = "";
         direccionUsuario = "";
-        fechaNacimientoUsuario = new Date();
+        fechaNacimientoUsuario = null;
         fechaAltaUsuario = new Date();
         reputacionParticipanteUsuario = -1;
         reputacionOrganizadorUsuario = -1;
@@ -193,5 +193,28 @@ public class Usuario implements Serializable {
                 ", generoUsuario='" + generoUsuario + '\'' +
                 ", reputacionParticipanteUsuario=" + reputacionParticipanteUsuario +
                 '}';
+    }
+
+    public void inicializarValoresNulos() {
+        if (emailUsuario == null)
+            emailUsuario = "";
+        if (paswordUsuario == null)
+            paswordUsuario = "";
+        if (nombreUsuario == null)
+            nombreUsuario = "";
+        if (apellidosUsuario == null)
+            apellidosUsuario = "";
+        if (generoUsuario == null)
+            generoUsuario = "";
+        if (direccionUsuario == null)
+            direccionUsuario = "";
+        if (fechaAltaUsuario == null)
+            fechaAltaUsuario = new Date();
+        if (fotoPerfilUsuario == null)
+            fotoPerfilUsuario = "";
+        if (listaAmigos == null)
+            listaAmigos = new ArrayList<>();
+        if (listaBloqueados == null)
+            listaBloqueados = new ArrayList<>();
     }
 }

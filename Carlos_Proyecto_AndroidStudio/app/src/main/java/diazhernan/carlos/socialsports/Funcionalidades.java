@@ -150,40 +150,6 @@ public class Funcionalidades extends AppCompatActivity {
         return LoginActivity.usuario.getEmailUsuario().equals(usuario.getEmailUsuario());
     }
 
-    public static void eliminarEvento(Evento evento, Context context) {
-        //TODO eliminar evento de la BBDD y de mi lista
-    }
-
-    public static void eliminarSolicitante(Evento evento,Usuario usuario) {
-        //TODO eliminar usuario de la lista de solicitantes del evento.
-        if (evento.getListaSolicitantes().contains(usuario))
-            evento.getListaSolicitantes().remove(usuario);
-    }
-
-    public static void insertarSolicitante(Evento evento,Usuario usuario) {
-        //TODO insertar usuario de la lista de solicitantes del evento.
-        if (!evento.getListaSolicitantes().contains(usuario))
-            evento.getListaSolicitantes().add(usuario);
-    }
-
-    public static void insertarParticipante(Evento evento,Usuario usuario) {
-        //TODO insertar un usuario en la lista de participantes del evento.
-        if (!evento.getListaParticipantes().contains(usuario))
-            evento.getListaParticipantes().add(usuario);
-    }
-
-    public static void eliminarParticipante(Evento evento,Usuario usuario) {
-        //TODO eliminar un usuario de la lista de participantes del evento.
-        if (evento.getListaParticipantes().contains(usuario))
-            evento.getListaParticipantes().remove(usuario);
-    }
-
-    public static void bloquearUsuarioAlEvento(Evento evento,Usuario usuario) {
-        //TODO insertar un usuario en la lista de descartados del evento.
-        if (!evento.getListaDescartados().contains(usuario))
-            evento.getListaDescartados().add(usuario);
-    }
-
     public static int calcularEdad(Date fecha) {
         if (fecha==null)
             return 0;
@@ -436,7 +402,7 @@ public class Funcionalidades extends AppCompatActivity {
 
     public static void actualizarTerminarEvento(String idEvento, boolean terminado) {
         //TODO Actualiza en la BBDD el atributo "terminado" del evento.
-        //serverActualizarTerminado(terminado)
+        //serverActualizarTerminado(idEvento, terminado)
     }
 
     public static ArrayList<Evento> obtenerEventosPendientes(String email) {
@@ -515,6 +481,116 @@ public class Funcionalidades extends AppCompatActivity {
 
         //TODO insertar un usuario en la lista de amigos del Usuario actual.
         //serverInsertarAmigo(emailInsertado, emailUsuario);
+    }
+
+    public static void actualizarFechaEvento(String idEvento, Date fecha) {
+        //TODO Actualiza en la BBDD la fecha del evento.
+        //serverActualizarFechaEvento(idEvento, fecha)
+    }
+
+    public static void actualizarHoraEvento(String idEvento, String hora) {
+        //TODO Actualiza en la BBDD la hora del evento.
+        //serverActualizarHoraEvento(idEvento, hora)
+    }
+
+    public static void actualizarDireccionEvento(String idEvento, String direccion) {
+        //TODO Actualiza en la BBDD la dirección del evento.
+        //serverActualizarDireccionEvento(idEvento, direccion)
+    }
+
+    public static void actualizarMaxParticipantesEvento(String idEvento, int maxParticipants) {
+        //TODO Actualiza en la BBDD el máximo de participantes permitidos en el evento.
+        //serverActualizarMaxParticipantes(idEvento, maxParticipants)
+    }
+
+    public static void eliminarParticipante(Evento evento,Usuario usuario) {
+        if (evento.getListaParticipantes().contains(usuario)) {
+            evento.getListaParticipantes().remove(usuario);
+
+            //TODO eliminar un usuario de la lista de participantes del evento.
+            //serverEliminarParticipante(evento.getIdEvento(), usuario.getEmailUsuario());
+        }
+    }
+
+    public static void insertarParticipante(Evento evento,Usuario usuario) {
+        if (!evento.getListaParticipantes().contains(usuario)) {
+            evento.getListaParticipantes().add(usuario);
+
+            //TODO insertar un usuario en la lista de participantes del evento.
+            //serverInsertarParticipante(evento.getIdEvento(), usuario.getEmailUsuario());
+        }
+    }
+
+    public static void actualizarReservaEvento(String idEvento, boolean reserva) {
+        //TODO Actualiza en la BBDD el estado de reserva de instalaciones para el evento.
+        //serverActualizarReservaEvento(idEvento, reserva)
+    }
+
+    public static void actualizarCosteEvento(String idEvento, float coste) {
+        //TODO Actualiza en la BBDD el coste del evento.
+        //serverActualizarCosteEvento(idEvento, coste)
+    }
+
+    public static void actualizarPrecioEvento(String idEvento, float precio) {
+        //TODO Actualiza en la BBDD el precio individual que tendrá que pagar cada participante del evento.
+        //serverActualizarPrecioEvento(idEvento, precio)
+    }
+
+    public static void actualizarComentariosEvento(String idEvento, String comment) {
+        //TODO Actualiza en la BBDD los comentarios del evento.
+        //serverActualizarComentariosEvento(idEvento, comment)
+    }
+
+    public static void actualizarEdadMinEvento(String idEvento, int edad) {
+        //TODO Actualiza en la BBDD el requisito de edad mínima para acceder al evento.
+        //serverActualizarEdadMinEvento(idEvento, edad)
+    }
+
+    public static void actualizarEdadMaxEvento(String idEvento, int edad) {
+        //TODO Actualiza en la BBDD el requisito de edad máxima para acceder al evento.
+        //serverActualizarEdadMaxEvento(idEvento, edad)
+    }
+
+    public static void actualizarGeneroEvento(String idEvento, String genero) {
+        //TODO Actualiza en la BBDD el requisito de genero para acceder al evento.
+        //serverActualizarGeneroEvento(idEvento, genero)
+    }
+
+    public static void actualizarReputacionEvento(String idEvento, float reputacion) {
+        //TODO Actualiza en la BBDD el requisito de reputacion necesario para acceder al evento.
+        //serverActualizarReputacionEvento(idEvento, reputacion)
+    }
+
+    public static void insertarSolicitante(Evento evento,Usuario usuario) {
+        if (!evento.getListaSolicitantes().contains(usuario)) {
+            evento.getListaSolicitantes().add(usuario);
+
+            //TODO insertar usuario de la lista de solicitantes del evento.
+            //serverInsertarSolicitante(evento.getIdEvento(), usuario.getEmailUsuario());
+        }
+    }
+
+    public static void eliminarSolicitante(Evento evento,Usuario usuario) {
+        if (evento.getListaSolicitantes().contains(usuario)) {
+            evento.getListaSolicitantes().remove(usuario);
+
+            //TODO eliminar usuario de la lista de solicitantes del evento.
+            //serverEliminarSolicitante(evento.getIdEvento(), usuario.getEmailUsuario());
+        }
+    }
+
+    public static void eliminarEvento(String idEvento) {
+        //TODO eliminar completamente el evento de la BBDD.
+        //serverEliminarEvento(evento.getIdEvento());
+    }
+
+    public static void bloquearUsuarioAlEvento(Evento evento,Usuario usuario) {
+        if (!evento.getListaDescartados().contains(usuario)) {
+            evento.getListaDescartados().add(usuario);
+
+            //TODO insertar un usuario en la lista de descartados del evento.
+            //serverBloquearParticipante(evento.getIdEvento(), usuario.getEmailUsuario());
+        }
     }
 
     // TODO Si nadie nos ha puntuado aún, se devuelve un 4.

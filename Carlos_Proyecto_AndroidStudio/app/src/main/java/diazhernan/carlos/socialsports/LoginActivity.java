@@ -134,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                             usuario = response.body();
 
                             if(usuario != null){
+                                usuario.inicializarValoresNulos();
                                 cargarAplicacionUsuario();
                             }
                         }catch(Exception e){

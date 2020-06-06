@@ -129,14 +129,13 @@ public class UserConfig extends Fragment {
         String email = LoginActivity.usuario.getEmailUsuario();
         String nombreNew = userConfigSettings.getNombre().toUpperCase();
         String nombreOld = LoginActivity.usuario.getNombreUsuario();
-        if (!nombreNew.isEmpty() && !nombreNew.equals(nombreOld)) {
-        /*    if (Funcionalidades.actualizarNombreUsuario(email,nombreNew))
+        if (!nombreNew.equals(nombreOld)) {
+            /*if (Funcionalidades.actualizarNombreUsuario(email,nombreNew))
                 LoginActivity.usuario.setNombreUsuario(nombreNew);
             else {
                 Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
                 return;
-            }
-        */
+            }*/
 
             RETROFIT retrofit = new RETROFIT();
             APIService service = retrofit.getAPIService();
@@ -157,7 +156,7 @@ public class UserConfig extends Fragment {
 
         String apellidosNew = userConfigSettings.getApellido().toUpperCase();
         String apellidosOld = LoginActivity.usuario.getApellidosUsuario();
-        if (!apellidosNew.isEmpty() && !apellidosNew.equals(apellidosOld)) {
+        if (!apellidosNew.equals(apellidosOld)) {
             /*if (Funcionalidades.actualizarApellidosUsuario(email,apellidosNew))
                 LoginActivity.usuario.setApellidosUsuario(apellidosNew);
             else {
@@ -183,14 +182,14 @@ public class UserConfig extends Fragment {
 
         String direccionNew = userConfigSettings.getDireccion();
         String direccionOld = LoginActivity.usuario.getDireccionUsuario();
-        if (!direccionNew.isEmpty() && !direccionNew.equals(direccionOld)) {
+        if (!direccionNew.equals(direccionOld)) {
             /*if (Funcionalidades.actualizarDireccionUsuario(email,direccionNew))
                 LoginActivity.usuario.setDireccionUsuario(direccionNew);
             else {
                 Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
                 return;
-            }*/
-
+            }
+            */
             RETROFIT retrofit = new RETROFIT();
             APIService service = retrofit.getAPIService();
 
@@ -295,8 +294,5 @@ public class UserConfig extends Fragment {
 
             }
         });
-
-
-
     }
 }

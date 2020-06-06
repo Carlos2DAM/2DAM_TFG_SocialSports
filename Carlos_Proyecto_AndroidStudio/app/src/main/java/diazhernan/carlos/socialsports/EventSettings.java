@@ -104,51 +104,121 @@ public class EventSettings extends AppCompatActivity {
             case R.id.itemMenuEventDelete:
                 Funcionalidades.esconderTeclado(getSystemService(INPUT_METHOD_SERVICE),toolbar);
                 eliminarEvento();
+                finish();
                 break;
             case R.id.itemMenuEventFinalize:
                 Funcionalidades.esconderTeclado(getSystemService(INPUT_METHOD_SERVICE),toolbar);
-                //TODO mostrar mensaje de confirmación y en caso afirmativo finalizar evento y volver a la pantalla anterior.
                 Funcionalidades.eventoSeleccionado.setTerminado(true);
+                Funcionalidades.actualizarTerminarEvento(Funcionalidades.eventoSeleccionado.getIdEvento(),true);
+                finish();
                 Funcionalidades.mostrarMensaje("Evento Finalizado",this);
                 break;
             case R.id.itemMenuSubscribe:
                 Funcionalidades.esconderTeclado(getSystemService(INPUT_METHOD_SERVICE),toolbar);
                 mandarSolicitud();
-                //TODO hacer algo mas
                 break;
             case R.id.itemMenuUnsubscribe:
                 Funcionalidades.esconderTeclado(getSystemService(INPUT_METHOD_SERVICE),toolbar);
                 eliminarSolicitud();
-                //TODO hacer algo mas
                 break;
         }
     }
 
     private void guardarCambiosEvento() {
-        //TODO mostrar mensaje de confirmación y en caso afirmativo actualizar datos del evento y guardarlos en la BBDD.
-        Funcionalidades.mostrarMensaje("Guardado Realizado",this);
+        if (eventSettingsSettings.getFechaEvento() != null) {
+            if (Funcionalidades.eventoSeleccionado.getFechaEvento() == null ||
+                    eventSettingsSettings.getFechaEvento().compareTo(Funcionalidades.eventoSeleccionado.getFechaEvento()) != 0) {
+                Funcionalidades.eventoSeleccionado.setFechaEvento(eventSettingsSettings.getFechaEvento());
+                Funcionalidades.actualizarFechaEvento(Funcionalidades.eventoSeleccionado.getIdEvento(),eventSettingsSettings.getFechaEvento());
+            }
+        }
+
+        if (!eventSettingsSettings.getHoraEvento().equals(Funcionalidades.eventoSeleccionado.getHoraEvento())) {
+            Funcionalidades.eventoSeleccionado.setHoraEvento(eventSettingsSettings.getHoraEvento());
+            Funcionalidades.actualizarHoraEvento(Funcionalidades.eventoSeleccionado.getIdEvento(), eventSettingsSettings.getHoraEvento());
+        }
+
+        if (!eventSettingsSettings.getDireccion().equals(Funcionalidades.eventoSeleccionado.getDireccion())) {
+            Funcionalidades.eventoSeleccionado.setDireccion(eventSettingsSettings.getDireccion());
+            Funcionalidades.actualizarDireccionEvento(Funcionalidades.eventoSeleccionado.getIdEvento(),eventSettingsSettings.getDireccion());
+        }
+
+        if (eventSettingsSettings.getNumParticipantes() != Funcionalidades.eventoSeleccionado.getMaximoParticipantes()) {
+            Funcionalidades.eventoSeleccionado.setMaximoParticipantes(eventSettingsSettings.getNumParticipantes());
+            Funcionalidades.actualizarMaxParticipantesEvento(Funcionalidades.eventoSeleccionado.getIdEvento(),eventSettingsSettings.getNumParticipantes());
+        }
+
+        if (eventSettingsSettings.getElOrganizadorEsParticipante() !=
+                Funcionalidades.eventoSeleccionado.getListaParticipantes().contains(Funcionalidades.eventoSeleccionado.getOrganizadorEvento())) {
+            if (eventSettingsSettings.getElOrganizadorEsParticipante())
+                Funcionalidades.insertarParticipante(Funcionalidades.eventoSeleccionado,Funcionalidades.eventoSeleccionado.getOrganizadorEvento());
+            else
+                Funcionalidades.eliminarParticipante(Funcionalidades.eventoSeleccionado,Funcionalidades.eventoSeleccionado.getOrganizadorEvento());
+        }
+
+        if (eventSettingsSettings.getResevaRealizada() != Funcionalidades.eventoSeleccionado.isInstalacionesReservadas()) {
+            Funcionalidades.eventoSeleccionado.setInstalacionesReservadas(eventSettingsSettings.getResevaRealizada());
+            Funcionalidades.actualizarReservaEvento(Funcionalidades.eventoSeleccionado.getIdEvento(),eventSettingsSettings.getResevaRealizada());
+        }
+
+        if (eventSettingsSettings.getCosteReserva() != Funcionalidades.eventoSeleccionado.getCosteEvento()) {
+            Funcionalidades.eventoSeleccionado.setCosteEvento(eventSettingsSettings.getCosteReserva());
+            Funcionalidades.actualizarCosteEvento(Funcionalidades.eventoSeleccionado.getIdEvento(),eventSettingsSettings.getCosteReserva());
+        }
+
+        if (eventSettingsSettings.getPrecioIndividual() != Funcionalidades.eventoSeleccionado.getPrecioPorParticipante()) {
+            Funcionalidades.eventoSeleccionado.setPrecioPorParticipante(eventSettingsSettings.getPrecioIndividual());
+            Funcionalidades.actualizarPrecioEvento(Funcionalidades.eventoSeleccionado.getIdEvento(),eventSettingsSettings.getPrecioIndividual());
+        }
+
+        if (!eventSettingsSettings.getComentarios().equals(Funcionalidades.eventoSeleccionado.getComentarios())) {
+            Funcionalidades.eventoSeleccionado.setComentarios(eventSettingsSettings.getComentarios());
+            Funcionalidades.actualizarComentariosEvento(Funcionalidades.eventoSeleccionado.getIdEvento(),eventSettingsSettings.getComentarios());
+        }
+
+        if (eventSettingsSettings.getEdadMinima() != Funcionalidades.eventoSeleccionado.getRequisitos().getEdadMinima()) {
+            Funcionalidades.eventoSeleccionado.getRequisitos().setEdadMinima(eventSettingsSettings.getEdadMinima());
+            Funcionalidades.actualizarEdadMinEvento(Funcionalidades.eventoSeleccionado.getIdEvento(),eventSettingsSettings.getEdadMinima());
+        }
+
+        if (eventSettingsSettings.getEdadMaxima() != Funcionalidades.eventoSeleccionado.getRequisitos().getEdadMaxima()) {
+            Funcionalidades.eventoSeleccionado.getRequisitos().setEdadMaxima(eventSettingsSettings.getEdadMaxima());
+            Funcionalidades.actualizarEdadMaxEvento(Funcionalidades.eventoSeleccionado.getIdEvento(),eventSettingsSettings.getEdadMaxima());
+        }
+
+        if (eventSettingsSettings.getGenero() != Funcionalidades.eventoSeleccionado.getRequisitos().getRequisitoDeGenero()) {
+            Funcionalidades.eventoSeleccionado.getRequisitos().setRequisitoDeGenero(eventSettingsSettings.getGenero());
+            Funcionalidades.actualizarGeneroEvento(Funcionalidades.eventoSeleccionado.getIdEvento(),eventSettingsSettings.getGenero());
+        }
+
+        if (eventSettingsSettings.getReputacion() != Funcionalidades.eventoSeleccionado.getRequisitos().getReputacionNecesaria()) {
+            Funcionalidades.eventoSeleccionado.getRequisitos().setReputacionNecesaria(eventSettingsSettings.getReputacion());
+            Funcionalidades.actualizarReputacionEvento(Funcionalidades.eventoSeleccionado.getIdEvento(),eventSettingsSettings.getReputacion());
+        }
+
+        Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_guardado_correcto), this);
     }
 
     private void mandarSolicitud() {
-        //TODO mostrar mensaje de confirmación y en caso afirmativo insertar en BBDD del evento la nueva solicitud
-        if (!Funcionalidades.eresSolicitante(Funcionalidades.eventoSeleccionado)) {
-            Funcionalidades.eventoSeleccionado.getListaSolicitantes().add(LoginActivity.usuario);
-            Funcionalidades.mostrarMensaje(getResources().getString(R.string.messaje_request_sent),getApplicationContext());
-            toolbar.inflateMenu(R.menu.event_unsubscribe_menu);
-            tabLayout.getTabAt(2).select();
-        }
-        Funcionalidades.mostrarMensaje("Solicitud Enviada",this);
+        Funcionalidades.insertarSolicitante(Funcionalidades.eventoSeleccionado,LoginActivity.usuario);
+        Funcionalidades.mostrarMensaje(getResources().getString(R.string.messaje_request_sent),getApplicationContext());
+        toolbar.inflateMenu(R.menu.event_unsubscribe_menu);
+        tabLayout.getTabAt(2).select();
     }
 
     private void eliminarSolicitud() {
-        //TODO mostrar mensaje de confirmación y en caso afirmativo actualizar la lista de participantes o solicitudes del evento
+        if (Funcionalidades.eresSolicitante(Funcionalidades.eventoSeleccionado))
+            Funcionalidades.eliminarSolicitante(Funcionalidades.eventoSeleccionado,LoginActivity.usuario);
+        else if (Funcionalidades.eresParticipante(Funcionalidades.eventoSeleccionado))
+            Funcionalidades.eliminarParticipante(Funcionalidades.eventoSeleccionado,LoginActivity.usuario);
         toolbar.inflateMenu(R.menu.event_subscribe_menu);
-        Funcionalidades.mostrarMensaje("Solicitud Eliminada",this);
+        Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_request_removed),this);
     }
 
     private void eliminarEvento() {
-        //TODO mostrar mensaje de confirmación y en caso afirmativo eliminar el evento y volver a la pantalla anterior
-        Funcionalidades.eliminarEvento(Funcionalidades.eventoSeleccionado,this);
-        Funcionalidades.mostrarMensaje("Evento Eliminado",this);
+        Funcionalidades.eliminarEvento(Funcionalidades.eventoSeleccionado.getIdEvento());
+        Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_event_removed),this);
+        MainActivity.listaEventos.remove(Funcionalidades.eventoSeleccionado); //TODO eliminar fila provisional
+        finish();
     }
 }
