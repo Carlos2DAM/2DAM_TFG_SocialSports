@@ -1,4 +1,4 @@
-﻿package diazhernan.carlos.socialsports;
+package diazhernan.carlos.socialsports;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
