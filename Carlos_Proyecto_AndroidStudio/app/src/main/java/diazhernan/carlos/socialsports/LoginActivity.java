@@ -111,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
     private void iniciarLogueo() {
         loadingProgressBar.setVisibility(View.VISIBLE);
         if (comprobarDatosLoginCorrectos(getResources().getString(R.string.action_sign_in_short))) {
+            cargarUsuarioDeLaBBDD(emailEditText.getText().toString(), passwordEditText.getText().toString());
             /*usuario = Funcionalidades.obtenerUsusarioBBDD(emailEditText.getText().toString(),passwordEditText.getText().toString());
             if (usuario != null)
                 cargarAplicacionUsuario();
@@ -118,48 +119,15 @@ public class LoginActivity extends AppCompatActivity {
                 Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_datos_incorrectos), this);
                 limpiarCajas();
             }*/
-
-            Call<Usuario> login = service.postLogin(emailEditText.getText().toString(), passwordEditText.getText().toString());
-            login.enqueue(new Callback<Usuario>() {
-                @Override
-                public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                    Log.e("CODIGO", String.valueOf(response.code()));
-                    if(response.code() == 200){
-
-                        try{
-                            String authorizationHeader = response.headers().get("Authorization");
-                            
-                            String token = authorizationHeader.substring("Bearer".length()).trim(); //guardar en algun sitio
-
-                            usuario = response.body();
-
-                            if(usuario != null){
-                                usuario.inicializarValoresNulos();
-                                cargarAplicacionUsuario();
-                            }
-                        }catch(Exception e){
-                            Log.e("EXCEPTION", e.getMessage());
-                        }
-
-                    }else{
-                        Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_datos_incorrectos), getApplicationContext());
-                        limpiarCajas();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Usuario> call, Throwable t) {
-                    Log.e("ONFAILURE", t.getMessage());
-                }
-            });
         }
         loadingProgressBar.setVisibility(View.GONE);
     }
 
     private void iniciarRegistro() {
         loadingProgressBar.setVisibility(View.VISIBLE);
-        /*if (comprobarDatosLoginCorrectos(getResources().getString(R.string.action_register))) {
-            if (Funcionalidades.comprobarExisteUsuario(emailEditText.getText().toString())) {
+        if (comprobarDatosLoginCorrectos(getResources().getString(R.string.action_register))) {
+            registrarUsuarioEnLaBBDD(emailEditText.getText().toString(), passwordEditText.getText().toString());
+            /*if (Funcionalidades.comprobarExisteUsuario(emailEditText.getText().toString())) {
                 Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_usuario_existe), this);
                 limpiarCajas();
             }
@@ -177,38 +145,7 @@ public class LoginActivity extends AppCompatActivity {
                     usuario = null;
                     Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_error_nuevo_usuario),this);
                 }
-            }
-        }*/
-        if (comprobarDatosLoginCorrectos(getResources().getString(R.string.action_register))) {
-
-            Call<ResponseBody> registro = service.postRegistro(emailEditText.getText().toString(), passwordEditText.getText().toString());
-
-            registro.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    int code = response.code();
-
-                    if (code == 201) {
-                        usuario = new Usuario();
-                        usuario.setEmailUsuario(emailEditText.getText().toString());
-                        usuario.setPaswordUsuario(passwordEditText.getText().toString());
-                        Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_creado_nuevo_usuario), getApplicationContext());
-                        cargarAplicacionUsuario();
-                    } else if (code == 409) {
-                        Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_usuario_existe), getApplicationContext());
-                        limpiarCajas();
-                    } else {
-                        usuario = null;
-                        Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_error_nuevo_usuario), getApplicationContext());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.e("ONFAILURE", t.getMessage());
-                }
-            });
-
+            }/*/
         }
         loadingProgressBar.setVisibility(View.GONE);
     }
@@ -235,5 +172,72 @@ public class LoginActivity extends AppCompatActivity {
     private void limpiarCajas() {
         emailEditText.setText("");
         passwordEditText.setText("");
+    }
+
+//------------- FUNCIONES PARA CONECTAR CON LA BBDD DEL SERVIDOR -------------------------------------------------------------------------------------
+
+    public void cargarUsuarioDeLaBBDD(String email, String password) {
+        Call<Usuario> login = service.postLogin(email, password);
+        login.enqueue(new Callback<Usuario>() {
+            @Override
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                Log.e("CODIGO", String.valueOf(response.code()));
+                if(response.code() == 200){
+
+                    try{
+                        String authorizationHeader = response.headers().get("Authorization");
+                        String token = authorizationHeader.substring("Bearer".length()).trim(); //guardar en algun sitio
+
+                        usuario = response.body();
+
+                        if(usuario != null){
+                            usuario.inicializarValoresNulos();
+                            cargarAplicacionUsuario();
+                        }
+                    }catch(Exception e){
+                        Log.e("EXCEPTION", e.getMessage());
+                    }
+
+                }else{
+                    Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_datos_incorrectos), getApplicationContext());
+                    limpiarCajas();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                Log.e("ONFAILURE", t.getMessage());
+            }
+        });
+    }
+
+    public void registrarUsuarioEnLaBBDD(String email, String password) {
+        Call<ResponseBody> registro = service.postRegistro(email, password);
+
+        registro.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                int code = response.code();
+
+                if (code == 201) {
+                    usuario = new Usuario();
+                    usuario.setEmailUsuario(emailEditText.getText().toString());
+                    usuario.setPaswordUsuario(passwordEditText.getText().toString());
+                    Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_creado_nuevo_usuario), getApplicationContext());
+                    cargarAplicacionUsuario();
+                } else if (code == 409) {
+                    Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_usuario_existe), getApplicationContext());
+                    limpiarCajas();
+                } else {
+                    usuario = null;
+                    Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_error_nuevo_usuario), getApplicationContext());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("ONFAILURE", t.getMessage());
+            }
+        });
     }
 }

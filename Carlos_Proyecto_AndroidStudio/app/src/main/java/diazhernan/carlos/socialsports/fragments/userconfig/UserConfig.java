@@ -19,6 +19,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.Date;
 
 import diazhernan.carlos.socialsports.APIService;
+import diazhernan.carlos.socialsports.Clases.Usuario;
 import diazhernan.carlos.socialsports.Funcionalidades;
 import diazhernan.carlos.socialsports.LoginActivity;
 import diazhernan.carlos.socialsports.R;
@@ -122,7 +123,7 @@ public class UserConfig extends Fragment {
         String passwordNew = userConfigSettings.getNewpass();
         String passwordNewRepeat = userConfigSettings.getRepeatpass();
         if (!passwordNew.equals(passwordNewRepeat)) {
-            Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_passwords_diferentes),getContext());
+            Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_passwords_diferentes),getContext());
             return;
         }
 
@@ -130,59 +131,31 @@ public class UserConfig extends Fragment {
         String nombreNew = userConfigSettings.getNombre().toUpperCase();
         String nombreOld = LoginActivity.usuario.getNombreUsuario();
         if (!nombreNew.equals(nombreOld)) {
+            actualizarNombreUsuarioBBDD(email,nombreNew);
             /*if (Funcionalidades.actualizarNombreUsuario(email,nombreNew))
                 LoginActivity.usuario.setNombreUsuario(nombreNew);
             else {
                 Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
                 return;
             }*/
-
-            RETROFIT retrofit = new RETROFIT();
-            APIService service = retrofit.getAPIService();
-
-            service.putNombre(email, nombreNew).enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    if(response.code() == 200) LoginActivity.usuario.setNombreUsuario(response.body());
-                    else Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
-                }
-
-                @Override
-                public void onFailure(Call<String> call, Throwable t) {
-
-                }
-            });
         }
 
         String apellidosNew = userConfigSettings.getApellido().toUpperCase();
         String apellidosOld = LoginActivity.usuario.getApellidosUsuario();
         if (!apellidosNew.equals(apellidosOld)) {
+            actualizarApellidosUsuarioBBDD(email,apellidosNew);
             /*if (Funcionalidades.actualizarApellidosUsuario(email,apellidosNew))
                 LoginActivity.usuario.setApellidosUsuario(apellidosNew);
             else {
                 Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
                 return;
             }*/
-            RETROFIT retrofit = new RETROFIT();
-            APIService service = retrofit.getAPIService();
-
-            service.putApellidos(email, apellidosNew).enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    if(response.code() == 200) LoginActivity.usuario.setApellidosUsuario(response.body());
-                    else Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
-                }
-
-                @Override
-                public void onFailure(Call<String> call, Throwable t) {
-
-                }
-            });
         }
 
         String direccionNew = userConfigSettings.getDireccion();
         String direccionOld = LoginActivity.usuario.getDireccionUsuario();
         if (!direccionNew.equals(direccionOld)) {
+            actualizarDireccionUsuarioBBDD(email,direccionNew);
             /*if (Funcionalidades.actualizarDireccionUsuario(email,direccionNew))
                 LoginActivity.usuario.setDireccionUsuario(direccionNew);
             else {
@@ -190,51 +163,18 @@ public class UserConfig extends Fragment {
                 return;
             }
             */
-            RETROFIT retrofit = new RETROFIT();
-            APIService service = retrofit.getAPIService();
-
-            service.putDireccion(email, direccionNew).enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    if(response.code() == 200) LoginActivity.usuario.setDireccionUsuario(response.body());
-                    else{
-                        Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<String> call, Throwable t) {
-
-                }
-            });
         }
 
         String generoNew = userConfigSettings.getGenero();
         String generoOld = LoginActivity.usuario.getGeneroUsuario();
         if (!generoNew.isEmpty() && !generoNew.equals(generoOld)) {
+            actualizarGeneroUsuarioBBDD(email,generoNew);
             /*if (Funcionalidades.actualizarGeneroUsuario(email,generoNew))
                 LoginActivity.usuario.setGeneroUsuario(generoNew);
             else {
                 Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
                 return;
             }*/
-
-            RETROFIT retrofit = new RETROFIT();
-            APIService service = retrofit.getAPIService();
-
-            service.putGenero(email, generoNew).enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    if(response.code() == 200) LoginActivity.usuario.setGeneroUsuario(response.body());
-                    else Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
-                }
-
-                @Override
-                public void onFailure(Call<String> call, Throwable t) {
-
-                }
-            });
-
         }
 
         String passwordOld = LoginActivity.usuario.getPaswordUsuario();
@@ -242,7 +182,7 @@ public class UserConfig extends Fragment {
             if (Funcionalidades.actualizarPasswordUsuario(email,passwordNew))
                 LoginActivity.usuario.setPaswordUsuario(passwordNew);
             else {
-                Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
+                Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
                 return;
             }
         }
@@ -253,15 +193,14 @@ public class UserConfig extends Fragment {
             if (Funcionalidades.actualizarNacimientoUsuario(email,fechaNew))
                 LoginActivity.usuario.setFechaNacimientoUsuario(fechaNew);
             else {
-                Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
+                Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
                 return;
             }
         }
 
-
         //TODO cargar foto de perfil.
 
-        Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_guardados),getContext());
+        Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_guardados),getContext());
     }
 
     private void logout() {
@@ -269,23 +208,103 @@ public class UserConfig extends Fragment {
     }
 
     private void eliminarCuentaDelUsuario() {
+        eliminararUsuarioBBDD(LoginActivity.usuario);
         /*if (Funcionalidades.eliminarUsuario(LoginActivity.usuario)) {
             Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_usuario_eliminado),getContext());
             logout();
         }
         else
             Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_usuario_no_eliminado),getContext());*/
+    }
+
+//------------- FUNCIONES PARA CONECTAR CON LA BBDD DEL SERVIDOR -------------------------------------------------------------------------------------
+
+    public void actualizarNombreUsuarioBBDD(String email,String nombre) {
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
 
-        service.borrarUsuario(LoginActivity.usuario).enqueue(new Callback<ResponseBody>() {
+        service.putNombre(email, nombre).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response.code() == 200) LoginActivity.usuario.setNombreUsuario(response.body());
+                else Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void actualizarApellidosUsuarioBBDD(String email,String apellidos) {
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+
+        service.putApellidos(email, apellidos).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response.code() == 200) LoginActivity.usuario.setApellidosUsuario(response.body());
+                else Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void actualizarDireccionUsuarioBBDD(String email,String direccion) {
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+
+        service.putDireccion(email, direccion).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response.code() == 200) LoginActivity.usuario.setDireccionUsuario(response.body());
+                else{
+                    Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void actualizarGeneroUsuarioBBDD(String email,String genero) {
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+
+        service.putGenero(email, genero).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response.code() == 200) LoginActivity.usuario.setGeneroUsuario(response.body());
+                else Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void eliminararUsuarioBBDD(Usuario usuario) {
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+
+        service.borrarUsuario(usuario).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.code() == 204) {
-                    Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_usuario_eliminado),getContext());
+                    Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_usuario_eliminado),getContext());
                     logout();
                 }else{
-                    Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_usuario_no_eliminado),getContext());
+                    Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_usuario_no_eliminado),getContext());
                 }
             }
 

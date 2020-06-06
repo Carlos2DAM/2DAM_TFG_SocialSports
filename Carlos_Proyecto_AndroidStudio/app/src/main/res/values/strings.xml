@@ -147,13 +147,15 @@
     <string name="hint_user_newpassword">New password</string>
     <string name="hint_user_repeatpassword">Repeat new password</string>
     <string name="user_config_button_save_settings">Save Settings</string>
-
-    <!-- Strings related to User Config -->
-    <string name="text_home_popular_events">Popular Events:</string>
-    <string name="text_home_rating">Your actual rating</string>
     <string name="mensaje_usuario_eliminado">The user account has been deleted</string>
     <string name="mensaje_usuario_no_eliminado">The user account could not be deleted</string>
     <string name="mensaje_cambios_guardados">Updated data</string>
     <string name="mensaje_cambios_no_guardados">The data could not be updated</string>
     <string name="mensaje_passwords_diferentes">Passwords are different</string>
+
+    <!-- Strings related to Home -->
+    <string name="text_home_popular_events">My Next Events:</string>
+    <string name="text_home_rating">Your actual rating</string>
+    <string name="wellcome">WELLCOME TO SOCIAL SPORTS</string>
+    <string name="no_events">(no events yet)</string>
 </resources>
