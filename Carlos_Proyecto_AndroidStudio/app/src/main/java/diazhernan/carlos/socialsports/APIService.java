@@ -37,6 +37,6 @@ public interface APIService {
     @PUT("perfil/genero")
     Call<String> putGenero(@Field("correo") String correo, @Field("genero") String genero);
 
-    @DELETE("perfil/borrarusuario")
-    Call<ResponseBody> borrarUsuario(@Body Usuario usuario);
+    @DELETE("perfil/borrarusuario/{correo}")
+    Call<ResponseBody> borrarUsuario(@Path("correo") String correo);
 }
