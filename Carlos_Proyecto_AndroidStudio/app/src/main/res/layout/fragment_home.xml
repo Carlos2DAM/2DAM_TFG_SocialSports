@@ -28,60 +28,6 @@
         android:inAnimation="@android:anim/slide_in_left"
         android:outAnimation="@android:anim/slide_out_right"
         android:padding="6dp">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:adjustViewBounds="true"
-            android:contentDescription="Campeonato Futbol7 MADRID 28/06/2020"
-            android:scaleType="fitStart"
-            android:src="@drawable/futbol2" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:adjustViewBounds="true"
-            android:contentDescription="Ciclismo en ruta SEGOVIA 04/06/2020"
-            android:scaleType="fitStart"
-            android:src="@drawable/ciclismo" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:adjustViewBounds="true"
-            android:contentDescription="¿Salimos a correr? MADRID 12/06/2020"
-            android:scaleType="fitStart"
-            android:src="@drawable/runnin" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:adjustViewBounds="true"
-            android:contentDescription="¿Te apetece un partido? MADRID 28/06/2020"
-            android:scaleType="fitStart"
-            android:src="@drawable/futbol" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:adjustViewBounds="true"
-            android:contentDescription="Torneo de Parla PARLA 17/06/2020"
-            android:scaleType="fitStart"
-            android:src="@drawable/tenis" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:adjustViewBounds="true"
-            android:contentDescription="¿Aguatarás 10Km? MADRID 10/07/2020"
-            android:scaleType="fitStart"
-            android:src="@drawable/runin2" />
     </ViewFlipper>
 
     <TextView

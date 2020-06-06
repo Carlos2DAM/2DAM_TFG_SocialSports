@@ -3,6 +3,7 @@ package diazhernan.carlos.socialsports;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -99,13 +100,15 @@ public class Funcionalidades extends AppCompatActivity {
 
     public static ArrayList<Evento> eventosPendientes(ArrayList<Evento> arrayList) {
         ArrayList<Evento> pendientes = new ArrayList<>();
-        for (Evento evento: arrayList) {
-            if (!evento.isTerminado()) {
-                if (evento.getFechaEvento() == null || evento.getFechaEvento().after(new Date()))
-                    pendientes.add(evento);
-                else {
-                    evento.setTerminado(true);
-                    actualizarTerminarEvento(evento.getIdEvento(),true);
+        if (arrayList != null) {
+            for (Evento evento : arrayList) {
+                if (!evento.isTerminado()) {
+                    if (evento.getFechaEvento() == null || evento.getFechaEvento().after(new Date()))
+                        pendientes.add(evento);
+                    else {
+                        evento.setTerminado(true);
+                        actualizarTerminarEvento(evento.getIdEvento(), true);
+                    }
                 }
             }
         }
@@ -114,13 +117,15 @@ public class Funcionalidades extends AppCompatActivity {
 
     public static ArrayList<Evento> eventosFinalizados(ArrayList<Evento> arrayList) {
         ArrayList<Evento> finalizados = new ArrayList<>();
-        for (Evento evento: arrayList) {
-            if (evento.isTerminado())
-                finalizados.add(evento);
-            else if (evento.getFechaEvento() != null && evento.getFechaEvento().before(new Date())) {
-                finalizados.add(evento);
-                evento.setTerminado(true);
-                actualizarTerminarEvento(evento.getIdEvento(),true);
+        if (arrayList != null) {
+            for (Evento evento : arrayList) {
+                if (evento.isTerminado())
+                    finalizados.add(evento);
+                else if (evento.getFechaEvento() != null && evento.getFechaEvento().before(new Date())) {
+                    finalizados.add(evento);
+                    evento.setTerminado(true);
+                    actualizarTerminarEvento(evento.getIdEvento(), true);
+                }
             }
         }
         return finalizados;
@@ -155,6 +160,7 @@ public class Funcionalidades extends AppCompatActivity {
             return 0;
         return (int) (((new Date().getTime() - fecha.getTime()) / 86400000) / 365);
     }
+
 ////////////////////////------------------------------------------------------------------------------------------------------
     public static boolean comprobarExisteUsuario(String email) {
         /** TODO Comprobar en la base de datos si ya existe un usuario con este email y devolver true o false
