@@ -1,0 +1,23 @@
+/*----------Operaciones con TABLAUSUARIOS ---------------------------------------------------------*/
+insert into tablausuarios (emailusuario, nombreusuario, listaamigos) values('Juan@gmail.com','Juan salinas', TLISTAPERSONAS());
+insert into tablausuarios (emailusuario, nombreusuario) values('luisa@gmail.com','luisa salinas');
+insert into tablausuarios (emailusuario, nombreusuario) values('mirella@gmail.com','mirella salinas');
+
+insert into table(select listaamigos from tablausuarios where emailusuario='Juan@gmail.com')(SELECT REF(u)
+from tablausuarios u where u.emailusuario='mirella@gmail.com');
+insert into table(select listaamigos from tablausuarios where emailusuario='Juan@gmail.com')(SELECT REF(u)
+from tablausuarios u where u.emailusuario='luisa@gmail.com');
+
+select deref(a.COLUMN_VALUE).emailusuario
+from tablausuarios u, table(u.listaamigos) a
+where u.emailusuario = 'Juan@gmail.com';
+
+select deref(a.COLUMN_VALUE).emailusuario from table(select u.listaamigos from tablausuarios u where u.emailusuario = 'Juan@gmail.com') a;
+
+
+/*----------Operaciones con TABLAEVENTOS ---------------------------------------------------------*/
+insert into tablaeventos (idEvento,organizadorEvento,requisitos) values('002',
+    (select ref(u) from tablausuarios u where u.emailusuario='Juan@gmail.com'),
+    trequisito(1,100,'MALE',0));
+
+select e.requisitos.edadMinima from tablaeventos e where idevento = '002';os e where idevento = '002';

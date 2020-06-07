@@ -112,13 +112,6 @@ public class LoginActivity extends AppCompatActivity {
         loadingProgressBar.setVisibility(View.VISIBLE);
         if (comprobarDatosLoginCorrectos(getResources().getString(R.string.action_sign_in_short))) {
             cargarUsuarioDeLaBBDD(emailEditText.getText().toString(), passwordEditText.getText().toString());
-            /*usuario = Funcionalidades.obtenerUsusarioBBDD(emailEditText.getText().toString(),passwordEditText.getText().toString());
-            if (usuario != null)
-                cargarAplicacionUsuario();
-            else {
-                Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_datos_incorrectos), this);
-                limpiarCajas();
-            }*/
         }
         loadingProgressBar.setVisibility(View.GONE);
     }
@@ -127,25 +120,6 @@ public class LoginActivity extends AppCompatActivity {
         loadingProgressBar.setVisibility(View.VISIBLE);
         if (comprobarDatosLoginCorrectos(getResources().getString(R.string.action_register))) {
             registrarUsuarioEnLaBBDD(emailEditText.getText().toString(), passwordEditText.getText().toString());
-            /*if (Funcionalidades.comprobarExisteUsuario(emailEditText.getText().toString())) {
-                Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_usuario_existe), this);
-                limpiarCajas();
-            }
-            else {
-                usuario = new Usuario(emailEditText.getText().toString(),passwordEditText.getText().toString(),
-                        "","","","",
-                        null,new Date(),4f,
-                        4f,"",true,new ArrayList<Usuario>(),
-                        new ArrayList<Usuario>());
-                if (Funcionalidades.crearUsuarioBBDD(usuario)) {
-                    Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_creado_nuevo_usuario),this);
-                    cargarAplicacionUsuario();
-                }
-                else {
-                    usuario = null;
-                    Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_error_nuevo_usuario),this);
-                }
-            }/*/
         }
         loadingProgressBar.setVisibility(View.GONE);
     }
@@ -163,8 +137,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void cargarAplicacionUsuario(){
-        //usuario.setListaAmigos(Funcionalidades.cargarAmigos(usuario.getEmailUsuario())); //TODO Borrar esto seria redundante.
-        //Funcionalidades.ponerUsuarioOnline(usuario,true);  TODO Funcionalidad desactivada.
+        Funcionalidades.calcularReputacionParticipante(usuario.getEmailUsuario());
+        Funcionalidades.calcularReputacionOrganizador(usuario.getEmailUsuario());
         Intent i = new Intent(getBaseContext(), MainActivity.class);
         startActivity(i);
     }
