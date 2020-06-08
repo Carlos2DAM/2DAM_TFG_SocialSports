@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.IOException;
 import java.util.Date;
 
 import diazhernan.carlos.socialsports.APIService;
@@ -223,15 +224,21 @@ public class UserConfig extends Fragment {
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
 
-        service.putNombre(email, nombre).enqueue(new Callback<String>() {
+        service.putNombre(email, nombre).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if(response.code() == 200) LoginActivity.usuario.setNombreUsuario(response.body());
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.code() == 200) {
+                    try {
+                        LoginActivity.usuario.setNombreUsuario(response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
                 else Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
             }
         });
@@ -241,15 +248,21 @@ public class UserConfig extends Fragment {
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
 
-        service.putApellidos(email, apellidos).enqueue(new Callback<String>() {
+        service.putApellidos(email, apellidos).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if(response.code() == 200) LoginActivity.usuario.setApellidosUsuario(response.body());
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.code() == 200) {
+                    try {
+                        LoginActivity.usuario.setApellidosUsuario(response.body().string());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
                 else Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
             }
         });
@@ -259,17 +272,23 @@ public class UserConfig extends Fragment {
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
 
-        service.putDireccion(email, direccion).enqueue(new Callback<String>() {
+        service.putDireccion(email, direccion).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if(response.code() == 200) LoginActivity.usuario.setDireccionUsuario(response.body());
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.code() == 200) {
+                    try {
+                        LoginActivity.usuario.setDireccionUsuario(response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
                 else{
                     Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
             }
         });
@@ -279,15 +298,21 @@ public class UserConfig extends Fragment {
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
 
-        service.putGenero(email, genero).enqueue(new Callback<String>() {
+        service.putGenero(email, genero).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if(response.code() == 200) LoginActivity.usuario.setGeneroUsuario(response.body());
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.code() == 200) {
+                    try {
+                        LoginActivity.usuario.setGeneroUsuario(response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
                 else Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
             }
         });

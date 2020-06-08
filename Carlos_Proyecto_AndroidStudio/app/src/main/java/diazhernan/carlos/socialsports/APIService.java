@@ -1,5 +1,8 @@
 package diazhernan.carlos.socialsports;
 
+import java.util.ArrayList;
+
+import diazhernan.carlos.socialsports.Clases.Evento;
 import diazhernan.carlos.socialsports.Clases.Usuario;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -23,20 +26,26 @@ public interface APIService {
 
     @FormUrlEncoded
     @PUT("perfil/nombre")
-    Call<String> putNombre(@Field("correo") String correo, @Field("nombre") String nombre);
+    Call<ResponseBody> putNombre(@Field("correo") String correo, @Field("nombre") String nombre);
 
     @FormUrlEncoded
     @PUT("perfil/apellidos")
-    Call<String> putApellidos(@Field("correo") String correo, @Field("apellidos") String apellidos);
+    Call<ResponseBody> putApellidos(@Field("correo") String correo, @Field("apellidos") String apellidos);
 
     @FormUrlEncoded
     @PUT("perfil/direccion")
-    Call<String> putDireccion(@Field("correo") String correo, @Field("direccion") String direccion);
+    Call<ResponseBody> putDireccion(@Field("correo") String correo, @Field("direccion") String direccion);
 
     @FormUrlEncoded
     @PUT("perfil/genero")
-    Call<String> putGenero(@Field("correo") String correo, @Field("genero") String genero);
+    Call<ResponseBody> putGenero(@Field("correo") String correo, @Field("genero") String genero);
 
     @DELETE("perfil/borrarusuario/{correo}")
     Call<ResponseBody> borrarUsuario(@Path("correo") String correo);
+
+    @POST("eventos/crear")
+    Call<ResponseBody> crearEvento(@Body Evento evento);
+
+    @POST("eventos/invitaciones/{idEvento}")
+    Call<ResponseBody> enviarInvitaciones(@Path("idEvento") String idEvento, @Body ArrayList<String> listaInvitados);
 }
