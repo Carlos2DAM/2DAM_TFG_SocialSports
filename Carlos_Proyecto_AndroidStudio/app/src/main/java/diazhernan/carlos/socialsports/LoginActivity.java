@@ -155,21 +155,16 @@ public class LoginActivity extends AppCompatActivity {
         login.enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                Log.e("CODIGO", String.valueOf(response.code()));
+
                 if(response.code() == 200){
+                    String authorizationHeader = response.headers().get("Authorization");
+                    String token = authorizationHeader.substring("Bearer".length()).trim(); //guardar en algun sitio
 
-                    try{
-                        String authorizationHeader = response.headers().get("Authorization");
-                        String token = authorizationHeader.substring("Bearer".length()).trim(); //guardar en algun sitio
+                    usuario = response.body();
 
-                        usuario = response.body();
-
-                        if(usuario != null){
-                            usuario.inicializarValoresNulos();
-                            cargarAplicacionUsuario();
-                        }
-                    }catch(Exception e){
-                        Log.e("EXCEPTION", e.getMessage());
+                    if(usuario != null){
+                        usuario.inicializarValoresNulos();
+                        cargarAplicacionUsuario();
                     }
 
                 }else{
@@ -180,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
-                Log.e("ONFAILURE", t.getMessage());
+                Log.e("ONFAILURE", t.getLocalizedMessage());
             }
         });
     }

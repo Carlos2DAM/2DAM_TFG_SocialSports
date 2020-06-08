@@ -3,7 +3,6 @@ package diazhernan.carlos.socialsports;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -15,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,10 +23,6 @@ import diazhernan.carlos.socialsports.Clases.FiltroDeEvento;
 import diazhernan.carlos.socialsports.Clases.PuntuacionEvento;
 import diazhernan.carlos.socialsports.Clases.PuntuacionParticipante;
 import diazhernan.carlos.socialsports.Clases.Usuario;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Funcionalidades extends AppCompatActivity {
 
