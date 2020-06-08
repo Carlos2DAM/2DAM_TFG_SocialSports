@@ -593,5 +593,15 @@ public class Funcionalidades extends AppCompatActivity {
         }
     }
 
-    // TODO Si nadie nos ha puntuado aún, se devuelve un 4.
+    public static int calcularReputacionParticipante(String email) {
+        // TODO Calcular la reputación de la tablaPuntuacionesParticipantes. Si nadie nos ha puntuado aún, se devuelve un 4.
+        // return serverCalcularReputacionParticipante(email);
+        return 4;
+    }
+
+    public static int calcularReputacionOrganizador(String email) {
+        // TODO Calcular la reputación de la tablaPuntuacionesEventos. Si nadie nos ha puntuado aún, se devuelve un 4.
+        // return serverCalcularReputacionOrganizador(email);
+        return 4;
+    }
 }

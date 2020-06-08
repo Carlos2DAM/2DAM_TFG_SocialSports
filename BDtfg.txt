@@ -1,0 +1,132 @@
+drop table tablapuntuacioneseventos;
+drop table tablapuntuacionesparticipantes;
+drop table tablaeventos;
+drop table tablausuarios;
+drop TYPE tpuntuacionevento;
+drop TYPE tpuntuacionparticipante;
+drop TYPE tevento;
+drop TYPE trequisito;
+drop TYPE tusuario;
+drop TYPE tlistapersonas;
+
+/*CREACION DE TIPOS*/
+
+create or replace NONEDITIONABLE TYPE TUSUARIO AS OBJECT(
+    emailUsuario varchar2(50),
+    passwordUsuario varchar2(128),
+    usuarioSalt varchar2(40),
+    nombreUsuario varchar2(50),
+    apellidosUsuario varchar2(50),
+    generoUsuario varchar2(6),
+    direccionUsuario varchar2(60),
+    fechaNacimientoUsuario date,
+    fechaAltaUsuario date,
+    reputacionParticipanteUsuario float,
+    reputacionOrganizadorUsuario float,
+    fotoPerfilUsuario blob,
+    isOnlineNow number(1)    
+)
+
+create or replace NONEDITIONABLE TYPE TLISTAPERSONAS 
+AS TABLE OF ref Tusuario;
+
+ALTER TYPE TUSUARIO ADD ATTRIBUTE(
+    listaAmigos TLISTAPERSONAS,
+    listaBloqueados TLISTAPERSONAS
+    )CASCADE;
+
+create or replace NONEDITIONABLE TYPE TREQUISITO AS OBJECT (
+    edadMinima number,
+    edadMaxima number,
+    requisitoDeGenero varchar2(6),
+    reputacionNecesaria float
+)
+
+create or replace NONEDITIONABLE TYPE TEVENTO AS OBJECT (
+    idEvento varchar2(100),
+    organizadorEvento REF TUSUARIO,
+    deporte varchar2(30),
+    localidad varchar2(30),
+    direccion varchar2(50),
+    fechaEvento date,
+    horaEvento varchar2(5),
+    fechaCreacionEvento date,
+    maximoParticipantes number,
+    instalacionesReservadas number(1),
+    costeEvento float,
+    precioPorParticipante float,
+    comentarios varchar2(300),
+    requisitos TREQUISITO,
+    terminado number(1),
+    listaSolicitantes TLISTAPERSONAS,
+    listaDescartados TLISTAPERSONAS,
+    listaParticipantes TLISTAPERSONAS
+)
+
+create or replace NONEDITIONABLE TYPE TPUNTUACIONPARTICIPANTE AS OBJECT ( 
+    emailUsuarioEmisor varchar2(50),
+    emailUsuarioPuntuado varchar2(50),
+    idEventoFinalizado varchar2(100),
+    calificacion float
+)
+
+create or replace NONEDITIONABLE TYPE TPUNTUACIONEVENTO AS OBJECT (
+    emailUsuarioEmisor varchar2(50),
+    idEventoFinalizado varchar2(100),
+    calificacion float
+)
+
+
+/*CREACION DE TABLAS*/
+
+create table TablaUsuarios of Tusuario
+(emailUsuario primary key)
+nested table listaAmigos store as amigos
+nested table listaBloqueados store as bloqueados;
+
+
+create table TablaEventos of Tevento
+(idEvento primary key)
+NESTED TABLE listaSolicitantes STORE AS solicitantes
+NESTED TABLE listaDescartados STORE AS descartados
+NESTED TABLE listaParticipantes STORE AS participantes;
+
+
+create table TablaPuntuacionesParticipantes of TpuntuacionParticipante(
+PRIMARY KEY(emailUsuarioEmisor, emailUsuarioPuntuado, idEventoFinalizado),
+FOREIGN KEY(emailUsuarioEmisor) REFERENCES TablaUsuarios(emailUsuario),
+FOREIGN KEY(emailUsuarioPuntuado) REFERENCES TablaUsuarios(emailUsuario),
+FOREIGN KEY(idEventoFinalizado) REFERENCES TablaEventos(idEvento)
+);
+
+
+create table TablaPuntuacionesEventos of TpuntuacionEvento(
+PRIMARY KEY(emailUsuarioEmisor, idEventoFinalizado),
+FOREIGN KEY(emailUsuarioEmisor) REFERENCES TablaUsuarios(emailUsuario),
+FOREIGN KEY(idEventoFinalizado) REFERENCES TablaEventos(idEvento)
+);
+
+
+/*----------Operaciones con TABLAUSUARIOS ---------------------------------------------------------*/
+insert into tablausuarios (emailusuario, nombreusuario, listaamigos) values('Juan@gmail.com','Juan salinas', TLISTAPERSONAS());
+insert into tablausuarios (emailusuario, nombreusuario) values('luisa@gmail.com','luisa salinas');
+insert into tablausuarios (emailusuario, nombreusuario) values('mirella@gmail.com','mirella salinas');
+
+insert into table(select listaamigos from tablausuarios where emailusuario='Juan@gmail.com')(SELECT REF(u)
+from tablausuarios u where u.emailusuario='mirella@gmail.com');
+insert into table(select listaamigos from tablausuarios where emailusuario='Juan@gmail.com')(SELECT REF(u)
+from tablausuarios u where u.emailusuario='luisa@gmail.com');
+
+select deref(a.COLUMN_VALUE).emailusuario
+from tablausuarios u, table(u.listaamigos) a
+where u.emailusuario = 'Juan@gmail.com';
+
+select deref(a.COLUMN_VALUE).emailusuario from table(select u.listaamigos from tablausuarios u where u.emailusuario = 'Juan@gmail.com') a;
+
+
+/*----------Operaciones con TABLAEVENTOS ---------------------------------------------------------*/
+insert into tablaeventos (idEvento,organizadorEvento,requisitos) values('002',
+    (select ref(u) from tablausuarios u where u.emailusuario='Juan@gmail.com'),
+    trequisito(1,100,'MALE',0));
+
+select e.requisitos.edadMinima from tablaeventos e where idevento = '002';os e where idevento = '002';
