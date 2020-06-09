@@ -155,7 +155,7 @@
 
     <!-- Strings related to Home -->
     <string name="text_home_popular_events">My Next Events:</string>
-    <string name="text_home_rating">Your actual rating</string>
+    <string name="text_home_rating">Your current rating</string>
     <string name="wellcome">WELLCOME TO SOCIAL SPORTS</string>
     <string name="no_events">(no events yet)</string>
 </resources>
