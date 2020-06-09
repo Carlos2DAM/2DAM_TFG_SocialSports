@@ -191,12 +191,13 @@ public class UserConfig extends Fragment {
         Date fechaNew = userConfigSettings.getBirthdate();
         Date fechaOld = LoginActivity.usuario.getFechaNacimientoUsuario();
         if (fechaNew != null && fechaNew != fechaOld) {
-            if (Funcionalidades.actualizarNacimientoUsuario(email,fechaNew))
+            actualizarFechaNacimientoUsuarioBBDD(email,Funcionalidades.dateToString2(fechaNew));
+            /*if (Funcionalidades.actualizarNacimientoUsuario(email,fechaNew))
                 LoginActivity.usuario.setFechaNacimientoUsuario(fechaNew);
             else {
                 Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
                 return;
-            }
+            }*/
         }
 
         //TODO cargar foto de perfil.
@@ -304,6 +305,31 @@ public class UserConfig extends Fragment {
                 if(response.code() == 200) {
                     try {
                         LoginActivity.usuario.setGeneroUsuario(response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void actualizarFechaNacimientoUsuarioBBDD(String email,String fecha) {
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+
+        service.putFechaNacimiento(email, fecha).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.code() == 200) {
+                    try {
+                        String f = response.body().string();
+                        LoginActivity.usuario.setFechaNacimientoUsuario(Funcionalidades.StringToDate(f));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

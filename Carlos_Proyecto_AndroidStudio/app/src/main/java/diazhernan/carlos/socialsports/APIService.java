@@ -41,6 +41,10 @@ public interface APIService {
     @PUT("perfil/genero")
     Call<ResponseBody> putGenero(@Field("correo") String correo, @Field("genero") String genero);
 
+    @FormUrlEncoded
+    @PUT("perfil/nacimiento")
+    Call<ResponseBody> putFechaNacimiento(@Field("correo") String correo, @Field("fecha") String fecha);
+
     @DELETE("perfil/borrarusuario/{correo}")
     Call<ResponseBody> borrarUsuario(@Path("correo") String correo);
 
