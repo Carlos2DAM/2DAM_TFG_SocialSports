@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import diazhernan.carlos.socialsports.APIService;
 import diazhernan.carlos.socialsports.Clases.AdaptadorListaEventos;
 import diazhernan.carlos.socialsports.Clases.AdaptadorListaUsuarios;
 import diazhernan.carlos.socialsports.Clases.Evento;
@@ -24,6 +26,10 @@ import diazhernan.carlos.socialsports.EventSettings;
 import diazhernan.carlos.socialsports.Funcionalidades;
 import diazhernan.carlos.socialsports.LoginActivity;
 import diazhernan.carlos.socialsports.R;
+import diazhernan.carlos.socialsports.RETROFIT;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class UserConfigFriends extends Fragment {
 
@@ -35,7 +41,6 @@ public class UserConfigFriends extends Fragment {
     public UserConfigFriends() {
 
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,13 +69,15 @@ public class UserConfigFriends extends Fragment {
             }
         });
         listViewAmigos = getActivity().findViewById(R.id.listUserConfigFriends);
-        mostrarListaAmigos(LoginActivity.usuario.getListaAmigos());
+        obtenerListaAmigos(LoginActivity.usuario.getEmailUsuario());
+        //mostrarListaAmigos(LoginActivity.usuario.getListaAmigos());
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mostrarListaAmigos(LoginActivity.usuario.getListaAmigos());
+        obtenerListaAmigos(LoginActivity.usuario.getEmailUsuario());
+        //mostrarListaAmigos(LoginActivity.usuario.getListaAmigos());
     }
 
     private void mostrarListaAmigos(final ArrayList<Usuario> arrayList)
@@ -99,5 +106,31 @@ public class UserConfigFriends extends Fragment {
             LoginActivity.usuario.getListaAmigos().remove(usuarioSeleccionado);
         LoginActivity.usuario.getListaBloqueados().add(usuarioSeleccionado);
         //TODO actualizar lista de amigos y de bloqueados del usuario de la BBDD
+    }
+
+    private void obtenerListaAmigos(String correo){
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.listaAmigos(correo).enqueue(new Callback<ArrayList<Usuario>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Usuario>> call, Response<ArrayList<Usuario>> response) {
+
+                if(response.isSuccessful()){
+
+                    LoginActivity.usuario.setListaAmigos(new ArrayList<Usuario>());
+
+                    for(Usuario usuario : response.body()){
+                        LoginActivity.usuario.getListaAmigos().add(usuario);
+                    }
+
+                    mostrarListaAmigos(LoginActivity.usuario.getListaAmigos());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Usuario>> call, Throwable t) {
+                Log.e("ONFAILURE", t.getLocalizedMessage());
+            }
+        });
     }
 }

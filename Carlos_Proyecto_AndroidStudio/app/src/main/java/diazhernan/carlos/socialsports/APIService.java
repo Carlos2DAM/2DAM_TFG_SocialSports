@@ -10,6 +10,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -48,4 +49,11 @@ public interface APIService {
 
     @POST("eventos/invitaciones/{idEvento}")
     Call<ResponseBody> enviarInvitaciones(@Path("idEvento") String idEvento, @Body ArrayList<String> listaInvitados);
+
+    @GET("perfil/amigos/{correo}")
+    Call<ArrayList<Usuario>> listaAmigos(@Path("correo") String correo);
+
+    @GET("eventos/pendientes/{correo}")
+    Call<ArrayList<Evento>> listaEventosPendientes(@Path("correo") String correo);
+
 }

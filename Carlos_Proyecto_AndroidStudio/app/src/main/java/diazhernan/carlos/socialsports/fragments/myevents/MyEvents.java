@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,10 @@ import android.widget.ListView;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import diazhernan.carlos.socialsports.APIService;
 import diazhernan.carlos.socialsports.Clases.AdaptadorListaEventos;
 import diazhernan.carlos.socialsports.Clases.Evento;
 import diazhernan.carlos.socialsports.EventRate;
@@ -24,6 +27,10 @@ import diazhernan.carlos.socialsports.Funcionalidades;
 import diazhernan.carlos.socialsports.LoginActivity;
 import diazhernan.carlos.socialsports.MainActivity;
 import diazhernan.carlos.socialsports.R;
+import diazhernan.carlos.socialsports.RETROFIT;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MyEvents extends Fragment {
 
@@ -53,6 +60,27 @@ public class MyEvents extends Fragment {
                 if (tab.getText().toString().equals(getResources().getString(R.string.tab_my_events_pend))) {
                     //mostrarListaEventos(Funcionalidades.obtenerEventosPendientes(LoginActivity.usuario.getEmailUsuario()));
                     mostrarListaEventos(Funcionalidades.eventosPendientes(MainActivity.listaEventos)); // TODO borrar, codigo provisional
+                    /*RETROFIT retrofit = new RETROFIT();
+                    APIService service = retrofit.getAPIService();
+                    service.listaEventosPendientes(LoginActivity.usuario.getEmailUsuario()).enqueue(new Callback<ArrayList<Evento>>() {
+                        @Override
+                        public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {
+                            if(response.isSuccessful()){
+                                mostrarListaEventos(response.body());
+                            }else{
+                                try {
+                                    Log.e("MENSAJE-ERROR: ", response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ArrayList<Evento>> call, Throwable t) {
+                            Log.e("ONFAILURE: ", t.getMessage());
+                        }
+                    });*/
                 }
                 if (tab.getText().toString().equals(getResources().getString(R.string.tab_my_events_final))) {
                     //mostrarListaEventos(Funcionalidades.obtenerEventosFinalizados(LoginActivity.usuario.getEmailUsuario()));

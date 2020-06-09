@@ -71,7 +71,12 @@ public class AdaptadorListaUsuarios extends ArrayAdapter<Usuario> {
                 });
             }
             TextView textNombre = fila.findViewById(R.id.textItemUsuarioNombre);
-            textNombre.setText(usuario.getNombreUsuario().toUpperCase() + " " + usuario.getApellidosUsuario().toUpperCase());
+
+            //PROVISIONAL, lo he puesto así para que no me de error si son nulos.
+            if(usuario.getNombreUsuario() != null && usuario.getApellidosUsuario() != null) {
+                textNombre.setText(usuario.getNombreUsuario().toUpperCase() + " " + usuario.getApellidosUsuario().toUpperCase());
+            }
+
             TextView textGenero = fila.findViewById(R.id.textItemUsuarioGenero);
             TextView textEdad = fila.findViewById(R.id.textItemUsuarioEdad);
             if (usuario.getGeneroUsuario() != null)

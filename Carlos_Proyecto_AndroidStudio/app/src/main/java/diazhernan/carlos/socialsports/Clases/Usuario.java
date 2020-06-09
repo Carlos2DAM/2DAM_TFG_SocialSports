@@ -7,7 +7,7 @@ import java.util.Date;
 public class Usuario implements Serializable {
 
     private String emailUsuario;        //50 caracteres
-    private String paswordUsuario;      //128 caracteres
+    private String passwordUsuario;      //128 caracteres
     private String nombreUsuario;       //50 caracteres
     private String apellidosUsuario;    //50 caracteres
     private String generoUsuario;       //6 caracteres (Male o Female)
@@ -17,13 +17,15 @@ public class Usuario implements Serializable {
     private float reputacionParticipanteUsuario;
     private float reputacionOrganizadorUsuario;
     private String fotoPerfilUsuario;               //80 caracteres
-    private boolean isOnlineNow;
+    /*@SerializedName("isOnlineNow")
+    @Expose
+    private boolean isOnlineNow;*/
     private ArrayList<Usuario> listaAmigos;
     private ArrayList<Usuario> listaBloqueados;
 
     public Usuario() {
         emailUsuario = "";
-        paswordUsuario = "";
+        passwordUsuario = "";
         nombreUsuario = "";
         apellidosUsuario = "";
         generoUsuario = "";
@@ -33,14 +35,14 @@ public class Usuario implements Serializable {
         reputacionParticipanteUsuario = -1;
         reputacionOrganizadorUsuario = -1;
         fotoPerfilUsuario = "";
-        isOnlineNow = false;
+        //isOnlineNow = false;
         listaAmigos = new ArrayList<>();
         listaBloqueados = new ArrayList<>();
     }
 
-    public Usuario(String emailUsuario, String paswordUsuario, String nombreUsuario, String generoUsuario, String direccionUsuario, Date fechaNacimientoUsuario, Date fechaAltaUsuario, float reputacionParticipanteUsuario, float reputacionOrganizadorUsuario, String fotoPerfilUsuario) {
+    public Usuario(String emailUsuario, String passwordUsuario, String nombreUsuario, String generoUsuario, String direccionUsuario, Date fechaNacimientoUsuario, Date fechaAltaUsuario, float reputacionParticipanteUsuario, float reputacionOrganizadorUsuario, String fotoPerfilUsuario) {
         this.emailUsuario = emailUsuario;
-        this.paswordUsuario = paswordUsuario;
+        this.passwordUsuario = passwordUsuario;
         this.nombreUsuario = nombreUsuario;
         this.apellidosUsuario = "";
         this.generoUsuario = generoUsuario;
@@ -50,14 +52,14 @@ public class Usuario implements Serializable {
         this.reputacionParticipanteUsuario = reputacionParticipanteUsuario;
         this.reputacionOrganizadorUsuario = reputacionOrganizadorUsuario;
         this.fotoPerfilUsuario = fotoPerfilUsuario;
-        this.isOnlineNow = false;
+        //this.isOnlineNow = false;
         listaAmigos = new ArrayList<>();
         listaBloqueados = new ArrayList<>();
     }
 
-    public Usuario(String emailUsuario, String paswordUsuario, String nombreUsuario, String apellidosUsuario, String generoUsuario, String direccionUsuario, Date fechaNacimientoUsuario, Date fechaAltaUsuario, float reputacionParticipanteUsuario, float reputacionOrganizadorUsuario, String fotoPerfilUsuario, boolean isOnlineNow, ArrayList<Usuario> listaAmigos, ArrayList<Usuario> listaBloqueados) {
+    public Usuario(String emailUsuario, String passwordUsuario, String nombreUsuario, String apellidosUsuario, String generoUsuario, String direccionUsuario, Date fechaNacimientoUsuario, Date fechaAltaUsuario, float reputacionParticipanteUsuario, float reputacionOrganizadorUsuario, String fotoPerfilUsuario, boolean isOnlineNow, ArrayList<Usuario> listaAmigos, ArrayList<Usuario> listaBloqueados) {
         this.emailUsuario = emailUsuario;
-        this.paswordUsuario = paswordUsuario;
+        this.passwordUsuario = passwordUsuario;
         this.nombreUsuario = nombreUsuario;
         this.apellidosUsuario = apellidosUsuario;
         this.generoUsuario = generoUsuario;
@@ -67,7 +69,7 @@ public class Usuario implements Serializable {
         this.reputacionParticipanteUsuario = reputacionParticipanteUsuario;
         this.reputacionOrganizadorUsuario = reputacionOrganizadorUsuario;
         this.fotoPerfilUsuario = fotoPerfilUsuario;
-        this.isOnlineNow = isOnlineNow;
+        //this.isOnlineNow = isOnlineNow;
         this.listaAmigos = listaAmigos;
         this.listaBloqueados = listaBloqueados;
     }
@@ -80,12 +82,12 @@ public class Usuario implements Serializable {
         this.emailUsuario = emailUsuario;
     }
 
-    public String getPaswordUsuario() {
-        return paswordUsuario;
+    public String getPasswordUsuario() {
+        return passwordUsuario;
     }
 
-    public void setPaswordUsuario(String paswordUsuario) {
-        this.paswordUsuario = paswordUsuario;
+    public void setPasswordUsuario(String passwordUsuario) {
+        this.passwordUsuario = passwordUsuario;
     }
 
     public String getNombreUsuario() {
@@ -160,13 +162,13 @@ public class Usuario implements Serializable {
         this.fotoPerfilUsuario = fotoPerfilUsuario;
     }
 
-    public boolean isOnlineNow() {
+    /*public boolean isOnlineNow() {
         return isOnlineNow;
     }
 
     public void setOnlineNow(boolean onlineNow) {
         isOnlineNow = onlineNow;
-    }
+    }*/
 
     public ArrayList<Usuario> getListaAmigos() {
         return listaAmigos;
@@ -198,8 +200,8 @@ public class Usuario implements Serializable {
     public void inicializarValoresNulos() {
         if (emailUsuario == null)
             emailUsuario = "";
-        if (paswordUsuario == null)
-            paswordUsuario = "";
+        if (passwordUsuario == null)
+            passwordUsuario = "";
         if (nombreUsuario == null)
             nombreUsuario = "";
         if (apellidosUsuario == null)
@@ -216,7 +218,7 @@ public class Usuario implements Serializable {
             listaAmigos = new ArrayList<>();
         if (listaBloqueados == null)
             listaBloqueados = new ArrayList<>();
-        isOnlineNow = true;
+        //isOnlineNow = true;
         reputacionParticipanteUsuario = 4;
         reputacionOrganizadorUsuario = 4;
     }
