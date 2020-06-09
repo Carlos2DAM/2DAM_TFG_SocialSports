@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -83,6 +84,25 @@ public class Funcionalidades extends AppCompatActivity {
         if (fecha!=null)
             return formato.format(fecha);
         return "";
+    }
+
+    public static String dateToString2(Date fecha) {
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        if (fecha!=null)
+            return formato.format(fecha);
+        return "";
+    }
+
+    public static Date StringToDate(String fecha) {
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        if (fecha!=null && !fecha.isEmpty()) {
+            try {
+                return formato.parse(fecha);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     public static String dateToStringLargo(Date fecha) {
@@ -156,34 +176,6 @@ public class Funcionalidades extends AppCompatActivity {
     }
 
 ////////////////////////------------------------------------------------------------------------------------------------------
-    public static boolean comprobarExisteUsuario(String email) {
-        /** TODO Comprobar en la base de datos si ya existe un usuario con este email y devolver true o false
-         */
-        // return serverExisteUsuario(email);
-        return false; //TODO borrar esta linea provisional.
-    }
-
-    public static Usuario obtenerUsusarioBBDD(String email, String password) {
-        /**TODO comprobar en la base de datos que el email y la contraseña son correctas,
-         *      devolver el usuario en caso correcto y null si no es correcto.
-         *      Si no existe el usuario devolver null.
-        */
-        //return serverLogin(Map<String,String>);
-        return null; //TODO borrar esta linea provisional.
-    }
-
-    public static boolean crearUsuarioBBDD(Usuario usuario) {
-        //TODO crear un nuevo usuario en la base de datos, y devolver true o false si se pudo crear.
-        //return serverAltaUsuario(usuario);
-        return true; //TODO eliminar esta linea cuando la función esté completada.
-    }
-
-    //****************************** NO NO NO NO NO NO NO NO NO NO NO
-    public static ArrayList<Usuario> cargarAmigos(String email) {
-        //TODO Obtener una lista con todos los amigos del usuario de la BBDD.
-        //return serverListaAmigos(email);
-        return new ArrayList<>();
-    }
 
     public static boolean guardarEvento(Evento evento) {
         //TODO Insertar un nuevo evento en la BBDD.
@@ -341,46 +333,10 @@ public class Funcionalidades extends AppCompatActivity {
         return new ArrayList<>();   //TODO Borrar esta línea provisional.
     }
 
-    public static boolean eliminarUsuario(Usuario usuario) {
-        /** TODO Eliminar un usuario de la BBDD. Retorna true si puedo eliminarlo, o sino false.
-         */
-        // return serverEliminarUsuario(usuario);
-        return true;    //TODO Borrar esta línea provisional.
-    }
-
-    public static boolean actualizarNombreUsuario(String email, String nombre) {
-
-        // TODO Busca al usuario cuyo email paso por parámetro, y modifica su nombre.
-        //  Devuelve true o false como resultado de la operación.
-        //return serverActualizarNombre(email, nombre);
-        return true;    //TODO Borrar esta línea provisional.
-    }
-
-    public static boolean actualizarApellidosUsuario(String email, String apellidos) {
-        // TODO Busca al usuario cuyo email paso por parámetro, y modifica sus apellidos.
-        //  Devuelve true o false como resultado de la operación.
-        //return serverActualizarApellidos(email, apellidos);
-        return true;    //TODO Borrar esta línea provisional.
-    }
-
-    public static boolean actualizarDireccionUsuario(String email, String direccion) {
-        // TODO Busca al usuario cuyo email paso por parámetro, y modifica su direccion.
-        //  Devuelve true o false como resultado de la operación.
-        //return serverActualizarDireccion(email, direccion);
-        return true;    //TODO Borrar esta línea provisional.
-    }
-
     public static boolean actualizarNacimientoUsuario(String email, Date fecha) {
         // TODO Busca al usuario cuyo email paso por parámetro, y modifica su fecha de nacimiento.
         //  Devuelve true o false como resultado de la operación.
         //return serverActualizarNacimiento(email, fecha);
-        return true;    //TODO Borrar esta línea provisional.
-    }
-
-    public static boolean actualizarGeneroUsuario(String email, String genero) {
-        // TODO Busca al usuario cuyo email paso por parámetro, y modifica su genero.
-        //  Devuelve true o false como resultado de la operación.
-        //return serverActualizarGenero(email, genero);
         return true;    //TODO Borrar esta línea provisional.
     }
 

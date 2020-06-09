@@ -50,14 +50,10 @@ public class MyEvents extends Fragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getText().toString().equals(getResources().getString(R.string.tab_my_events_pend))) {
-                    //mostrarListaEventos(Funcionalidades.obtenerEventosPendientes(LoginActivity.usuario.getEmailUsuario()));
-                    mostrarListaEventos(Funcionalidades.eventosPendientes(MainActivity.listaEventos)); // TODO borrar, codigo provisional
-                }
-                if (tab.getText().toString().equals(getResources().getString(R.string.tab_my_events_final))) {
-                    //mostrarListaEventos(Funcionalidades.obtenerEventosFinalizados(LoginActivity.usuario.getEmailUsuario()));
-                    mostrarListaEventos(Funcionalidades.eventosFinalizados(MainActivity.listaEventos)); // TODO borrar, codigo provisional
-                }
+                if (tab.getText().toString().equals(getResources().getString(R.string.tab_my_events_pend)))
+                    mostrarListaEventos(Funcionalidades.obtenerEventosPendientes(LoginActivity.usuario.getEmailUsuario()));
+                if (tab.getText().toString().equals(getResources().getString(R.string.tab_my_events_final)))
+                    mostrarListaEventos(Funcionalidades.obtenerEventosFinalizados(LoginActivity.usuario.getEmailUsuario()));
             }
 
             @Override
