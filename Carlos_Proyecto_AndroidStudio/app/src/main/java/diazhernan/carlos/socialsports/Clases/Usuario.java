@@ -17,9 +17,7 @@ public class Usuario implements Serializable {
     private float reputacionParticipanteUsuario;
     private float reputacionOrganizadorUsuario;
     private String fotoPerfilUsuario;               //80 caracteres
-    /*@SerializedName("isOnlineNow")
-    @Expose
-    private boolean isOnlineNow;*/
+    /*private boolean isOnlineNow;*/
     private ArrayList<Usuario> listaAmigos;
     private ArrayList<Usuario> listaBloqueados;
 

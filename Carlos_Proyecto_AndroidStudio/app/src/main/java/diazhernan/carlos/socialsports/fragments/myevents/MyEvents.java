@@ -15,7 +15,6 @@ import android.widget.ListView;
 
 import com.google.android.material.tabs.TabLayout;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import diazhernan.carlos.socialsports.APIService;
@@ -57,21 +56,12 @@ public class MyEvents extends Fragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-<<<<<<< HEAD
-                if (tab.getText().toString().equals(getResources().getString(R.string.tab_my_events_pend))) {
-                    //mostrarListaEventos(Funcionalidades.obtenerEventosPendientes(LoginActivity.usuario.getEmailUsuario()));
-                    mostrarListaEventos(Funcionalidades.eventosPendientes(MainActivity.listaEventos)); // TODO borrar, codigo provisional
-                }
-                if (tab.getText().toString().equals(getResources().getString(R.string.tab_my_events_final))) {
-                    //mostrarListaEventos(Funcionalidades.obtenerEventosFinalizados(LoginActivity.usuario.getEmailUsuario()));
-                    mostrarListaEventos(Funcionalidades.eventosFinalizados(MainActivity.listaEventos)); // TODO borrar, codigo provisional
-                }
-=======
                 if (tab.getText().toString().equals(getResources().getString(R.string.tab_my_events_pend)))
-                    mostrarListaEventos(Funcionalidades.obtenerEventosPendientes(LoginActivity.usuario.getEmailUsuario()));
+                    //mostrarListaEventos(Funcionalidades.obtenerEventosPendientes(LoginActivity.usuario.getEmailUsuario()));
+                    eventosPendientes(LoginActivity.usuario.getEmailUsuario());
+
                 if (tab.getText().toString().equals(getResources().getString(R.string.tab_my_events_final)))
                     mostrarListaEventos(Funcionalidades.obtenerEventosFinalizados(LoginActivity.usuario.getEmailUsuario()));
->>>>>>> master
             }
 
             @Override
@@ -91,6 +81,26 @@ public class MyEvents extends Fragment {
     public void onResume() {
         super.onResume();
         tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).select();
+    }
+
+    public void eventosPendientes(String correo){
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+
+        service.listaEventosPendientes(correo).enqueue(new Callback<ArrayList<Evento>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {
+                if(response.isSuccessful()){
+                    ArrayList<Evento> listaEventos = response.body();
+                    if(listaEventos != null) mostrarListaEventos(listaEventos);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Evento>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
     private void mostrarListaEventos(ArrayList<Evento> arrayList)

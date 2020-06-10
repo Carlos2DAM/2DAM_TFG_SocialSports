@@ -13,7 +13,7 @@ public class RETROFIT {
     public RETROFIT(){
 
         Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .setDateFormat("yyyy-MM-dd")
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()

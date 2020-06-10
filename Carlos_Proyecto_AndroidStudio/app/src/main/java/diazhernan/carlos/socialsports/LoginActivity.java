@@ -169,7 +169,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
-                Log.e("ONFAILURE", t.getLocalizedMessage());
+                t.printStackTrace();
             }
         });
     }
