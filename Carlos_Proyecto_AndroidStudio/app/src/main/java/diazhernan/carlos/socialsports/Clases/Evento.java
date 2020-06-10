@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Evento implements Serializable {
-
     private String idEvento;    //100 caracteres TODO concatenar el email del organizador con la fecha de creación.
     private Usuario organizadorEvento;
     private String deporte;     //30 caracteres

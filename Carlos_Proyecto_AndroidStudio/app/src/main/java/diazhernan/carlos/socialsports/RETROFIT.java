@@ -12,7 +12,9 @@ public class RETROFIT {
 
     public RETROFIT(){
 
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd")
+                .create();
 
         Retrofit retrofit = new Retrofit.Builder()
                 //.baseUrl("http://socialsports.ddns.net:8081/API-0.0.1-SNAPSHOT/rest/")

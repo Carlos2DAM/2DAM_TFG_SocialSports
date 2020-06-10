@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,11 @@ import android.widget.Button;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import diazhernan.carlos.socialsports.APIService;
 import diazhernan.carlos.socialsports.Clases.Evento;
 import diazhernan.carlos.socialsports.Clases.Requisitos;
 import diazhernan.carlos.socialsports.Clases.Usuario;
@@ -22,6 +25,11 @@ import diazhernan.carlos.socialsports.Funcionalidades;
 import diazhernan.carlos.socialsports.LoginActivity;
 import diazhernan.carlos.socialsports.MainActivity;
 import diazhernan.carlos.socialsports.R;
+import diazhernan.carlos.socialsports.RETROFIT;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NewEvent extends Fragment {
 
@@ -182,14 +190,22 @@ public class NewEvent extends Fragment {
         ArrayList<Usuario> listaP = new ArrayList<>();
         if (newEventSpecify.getElOrganizadorEsParticipante())
             listaP.add(LoginActivity.usuario);
+
+
+        for (Usuario usuario: LoginActivity.usuario.getListaAmigos()) {
+            listaP.add(usuario);
+        }
+
+
         eventoCreado = new Evento(idEv,LoginActivity.usuario,deporte,localidad,direccion,fechaEv,
                 horaEv,fechaCreado,maxParticipantes,reserva,coste,precio,comments,requisitos,
                 false,new ArrayList<Usuario>(),new ArrayList<Usuario>(),listaP);
+
         return true;
     }
 
     private void crearEvento() {
-        if (Funcionalidades.guardarEvento(eventoCreado)) {
+        /*if (Funcionalidades.guardarEvento(eventoCreado)) {
             Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_evento_creado),getContext());
             if (Funcionalidades.enviarInvitaciones(eventoCreado,newEventInvite.getListaInvitarAmigos())) {
                 for (Usuario usuario: LoginActivity.usuario.getListaAmigos()) {
@@ -209,6 +225,33 @@ public class NewEvent extends Fragment {
             tabLayout.getTabAt(0).select();
         }
         else
-            Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_error_evento_creado),getContext());
+            Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_error_evento_creado),getContext());*/
+
+        //INACABADO
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+
+        service.crearEvento(eventoCreado).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if(response.code() == 201){
+                    Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_evento_creado),getContext());
+                }else{
+                    Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_error_evento_creado),getContext());
+                    try {
+                        Log.e("MENSAJE-ERROR:", response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("ONFAILURE: ", t.getMessage());
+            }
+        });
+
     }
 }

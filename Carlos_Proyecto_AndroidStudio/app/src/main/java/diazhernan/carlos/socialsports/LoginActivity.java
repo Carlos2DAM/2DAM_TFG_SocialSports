@@ -13,12 +13,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import diazhernan.carlos.socialsports.Clases.Usuario;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -175,7 +169,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
-                Log.e("ONFAILURE", t.getLocalizedMessage());
+                t.printStackTrace();
             }
         });
     }
@@ -191,7 +185,6 @@ public class LoginActivity extends AppCompatActivity {
                 if (code == 201) {
                     usuario = new Usuario();
                     usuario.setEmailUsuario(emailEditText.getText().toString());
-                    usuario.setPaswordUsuario(passwordEditText.getText().toString());
                     Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_creado_nuevo_usuario), getApplicationContext());
                     cargarAplicacionUsuario();
                 } else if (code == 409) {

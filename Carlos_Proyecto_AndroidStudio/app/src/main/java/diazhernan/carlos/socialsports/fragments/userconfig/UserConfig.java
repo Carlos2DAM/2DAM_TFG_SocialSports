@@ -178,10 +178,10 @@ public class UserConfig extends Fragment {
             }*/
         }
 
-        String passwordOld = LoginActivity.usuario.getPaswordUsuario();
+        String passwordOld = LoginActivity.usuario.getPasswordUsuario();
         if (!passwordNew.isEmpty() && !passwordNew.equals(passwordOld)) {
             if (Funcionalidades.actualizarPasswordUsuario(email,passwordNew))
-                LoginActivity.usuario.setPaswordUsuario(passwordNew);
+                LoginActivity.usuario.setPasswordUsuario(passwordNew);
             else {
                 Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
                 return;
@@ -202,7 +202,7 @@ public class UserConfig extends Fragment {
 
         //TODO cargar foto de perfil.
 
-        Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_guardados),getContext());
+        //Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_guardados),getContext());
     }
 
     private void logout() {

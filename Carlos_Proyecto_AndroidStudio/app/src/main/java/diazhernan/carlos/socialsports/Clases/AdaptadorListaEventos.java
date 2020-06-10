@@ -49,7 +49,7 @@ public class AdaptadorListaEventos extends ArrayAdapter<Evento> {
         Evento evento = getItem(position);
 
         deporte.setText(evento.getDeporte().toUpperCase());
-        localidad.setText(evento.getLocalidad().toUpperCase());
+        if(evento.getLocalidad() != null) localidad.setText(evento.getLocalidad().toUpperCase());
         if (evento.getFechaEvento() != null)
             fecha.setText(Funcionalidades.dateToString(evento.getFechaEvento()));
         else
