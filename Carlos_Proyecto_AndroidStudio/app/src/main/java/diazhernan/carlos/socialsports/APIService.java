@@ -75,4 +75,22 @@ public interface APIService {
     @GET("eventos/pendientes/{correo}")
     Call<ArrayList<Evento>> listaEventosPendientes(@Header("Authorization") String authHeader, @Path("correo") String correo);
 
+    @GET("eventos/finalizados/{correo}")
+    Call<ArrayList<Evento>> listaEventosFinalizados(@Header("Authorization") String authHeader, @Path("correo") String correo);
+
+    @FormUrlEncoded
+    @PUT("eventos/fecha")
+    Call<ResponseBody> actualizarFechaEvento(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("fecha") String fecha);
+
+    @FormUrlEncoded
+    @PUT("eventos/hora")
+    Call<ResponseBody> actualizarHoraEvento(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("hora") String hora);
+
+    @FormUrlEncoded
+    @PUT("eventos/direccion")
+    Call<ResponseBody> actualizarDireccionEvento(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("direccion") String direccion);
+
+    @FormUrlEncoded
+    @PUT("eventos/maximoparticipantes")
+    Call<ResponseBody> actualizarMaxParticipantesEvento(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("maxParticipantes") int maxParticipantes);
 }

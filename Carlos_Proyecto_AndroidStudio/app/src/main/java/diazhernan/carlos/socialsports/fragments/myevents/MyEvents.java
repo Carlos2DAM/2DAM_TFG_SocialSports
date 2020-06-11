@@ -61,7 +61,8 @@ public class MyEvents extends Fragment {
                     eventosPendientes(LoginActivity.usuario.getEmailUsuario());
 
                 if (tab.getText().toString().equals(getResources().getString(R.string.tab_my_events_final)))
-                    mostrarListaEventos(Funcionalidades.obtenerEventosFinalizados(LoginActivity.usuario.getEmailUsuario()));
+                    //mostrarListaEventos(Funcionalidades.obtenerEventosFinalizados(LoginActivity.usuario.getEmailUsuario()));
+                    eventosFinalizados(LoginActivity.usuario.getEmailUsuario());
             }
 
             @Override
@@ -88,6 +89,26 @@ public class MyEvents extends Fragment {
         APIService service = retrofit.getAPIService();
 
         service.listaEventosPendientes("Bearer " + LoginActivity.token, correo).enqueue(new Callback<ArrayList<Evento>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {
+                if(response.isSuccessful()){
+                    ArrayList<Evento> listaEventos = response.body();
+                    if(listaEventos != null) mostrarListaEventos(listaEventos);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Evento>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void eventosFinalizados(String correo){
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+
+        service.listaEventosFinalizados("Bearer " + LoginActivity.token, correo).enqueue(new Callback<ArrayList<Evento>>() {
             @Override
             public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {
                 if(response.isSuccessful()){
