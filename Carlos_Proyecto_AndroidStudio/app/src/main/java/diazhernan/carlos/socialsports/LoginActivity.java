@@ -186,6 +186,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (code == 201) {
                     usuario = new Usuario();
                     usuario.setEmailUsuario(emailEditText.getText().toString());
+                    String authorizationHeader = response.headers().get("Authorization");
+                    token = authorizationHeader.substring("Bearer".length()).trim();
                     Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_creado_nuevo_usuario), getApplicationContext());
                     cargarAplicacionUsuario();
                 } else if (code == 409) {

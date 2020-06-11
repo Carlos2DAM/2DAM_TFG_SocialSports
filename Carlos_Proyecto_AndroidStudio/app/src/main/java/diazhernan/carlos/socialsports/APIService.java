@@ -52,7 +52,7 @@ public interface APIService {
 
     @FormUrlEncoded
     @PUT("perfil/password")
-    Call<ResponseBody> putPassword(@Field("correo") String correo, @Field("password") String password);
+    Call<ResponseBody> putPassword(@Header("Authorization") String authHeader, @Field("correo") String correo, @Field("password") String password);
 
     @DELETE("perfil/borrarusuario/{correo}")
     Call<ResponseBody> borrarUsuario(@Header("Authorization") String authHeader, @Path("correo") String correo);

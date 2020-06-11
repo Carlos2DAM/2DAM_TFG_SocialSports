@@ -348,7 +348,7 @@ public class UserConfig extends Fragment {
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
 
-        service.putPassword(email, password).enqueue(new Callback<ResponseBody>() {
+        service.putPassword("Bearer " + LoginActivity.token, email, password).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.code() == 200) {
