@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Evento implements Serializable {
-    private String idEvento;    //100 caracteres TODO concatenar el email del organizador con la fecha de creación.
+    private String idEvento;    //100 caracteres
     private Usuario organizadorEvento;
     private String deporte;     //30 caracteres
     private String localidad;   //30 caracteres
@@ -231,5 +231,23 @@ public class Evento implements Serializable {
                 ", listaDescartados=" + listaDescartados +
                 ", listaParticipantes=" + listaParticipantes +
                 '}';
+    }
+
+    public void inicializarValoresNulos() {
+        if (localidad == null)
+            localidad = "";
+        if (direccion == null)
+            direccion = "";
+        if (horaEvento == null)
+            horaEvento = "";
+        if (comentarios == null)
+            comentarios = "";
+        if (listaSolicitantes == null)
+            listaSolicitantes = new ArrayList<>();
+        if (listaDescartados == null)
+            listaDescartados = new ArrayList<>();
+        if (listaParticipantes == null)
+            listaParticipantes = new ArrayList<>();
+        requisitos.inicializarValoresNulos();
     }
 }

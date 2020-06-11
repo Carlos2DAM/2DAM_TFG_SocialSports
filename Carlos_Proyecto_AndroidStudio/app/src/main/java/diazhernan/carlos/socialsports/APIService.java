@@ -50,6 +50,10 @@ public interface APIService {
     @PUT("perfil/nacimiento")
     Call<ResponseBody> putFechaNacimiento(@Header("Authorization") String authHeader, @Field("correo") String correo, @Field("fecha") String fecha);
 
+    @FormUrlEncoded
+    @PUT("perfil/password")
+    Call<ResponseBody> putPassword(@Field("correo") String correo, @Field("password") String password);
+
     @DELETE("perfil/borrarusuario/{correo}")
     Call<ResponseBody> borrarUsuario(@Header("Authorization") String authHeader, @Path("correo") String correo);
 
