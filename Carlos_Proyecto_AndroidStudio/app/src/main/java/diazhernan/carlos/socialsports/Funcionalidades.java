@@ -191,10 +191,12 @@ public class Funcionalidades extends AppCompatActivity {
     }
 
     public static boolean estasBaneado(Evento ev,Context c) {
-        for (Usuario usuario: ev.getListaDescartados()) {
-            if (usuario.getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario())) {
-                mostrarMensaje(c.getResources().getString(R.string.has_been_baned),c);
-                return true;
+        if(ev.getListaDescartados() != null) {
+            for (Usuario usuario : ev.getListaDescartados()) {
+                if (usuario.getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario())) {
+                    mostrarMensaje(c.getResources().getString(R.string.has_been_baned), c);
+                    return true;
+                }
             }
         }
         //TODO Consultar si nuestro usuario se encuentra en la lista de descartados del evento.

@@ -87,7 +87,7 @@ public class MyEvents extends Fragment {
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
 
-        service.listaEventosPendientes(correo).enqueue(new Callback<ArrayList<Evento>>() {
+        service.listaEventosPendientes("Bearer " + LoginActivity.token, correo).enqueue(new Callback<ArrayList<Evento>>() {
             @Override
             public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {
                 if(response.isSuccessful()){
@@ -113,6 +113,7 @@ public class MyEvents extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Evento evento = listaDeEventos.get(position);
+
                 if (!Funcionalidades.estasBaneado(evento,getContext()) &&
                         !Funcionalidades.usuarioBloqueadoPermanentemente(LoginActivity.usuario.getEmailUsuario()
                                 ,evento.getOrganizadorEvento().getEmailUsuario(),getContext()) ) {

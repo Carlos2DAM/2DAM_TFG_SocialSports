@@ -27,6 +27,7 @@ import diazhernan.carlos.socialsports.Funcionalidades;
 import diazhernan.carlos.socialsports.LoginActivity;
 import diazhernan.carlos.socialsports.R;
 import diazhernan.carlos.socialsports.RETROFIT;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -97,8 +98,24 @@ public class UserConfigFriends extends Fragment {
     }
 
     private void eliminarAmigo() {
-        LoginActivity.usuario.getListaAmigos().remove(usuarioSeleccionado);
-        //TODO actualizar lista de amigos del usuario de la BBDD
+
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.eliminarAmigo("Bearer " + LoginActivity.token,
+                LoginActivity.usuario.getEmailUsuario(),
+                usuarioSeleccionado.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.code() == 204){
+                    LoginActivity.usuario.getListaAmigos().remove(usuarioSeleccionado);
+                    mostrarListaAmigos(LoginActivity.usuario.getListaAmigos());
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
     private void bloqueaoPermanebte() {
@@ -111,25 +128,22 @@ public class UserConfigFriends extends Fragment {
     private void obtenerListaAmigos(String correo){
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
-        service.listaAmigos(correo).enqueue(new Callback<ArrayList<Usuario>>() {
+        service.listaAmigos("Bearer " + LoginActivity.token, correo).enqueue(new Callback<ArrayList<Usuario>>() {
             @Override
             public void onResponse(Call<ArrayList<Usuario>> call, Response<ArrayList<Usuario>> response) {
 
                 if(response.isSuccessful()){
-
                     LoginActivity.usuario.setListaAmigos(new ArrayList<Usuario>());
-
                     for(Usuario usuario : response.body()){
                         LoginActivity.usuario.getListaAmigos().add(usuario);
                     }
-
                     mostrarListaAmigos(LoginActivity.usuario.getListaAmigos());
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<Usuario>> call, Throwable t) {
-                Log.e("ONFAILURE", t.getLocalizedMessage());
+                t.printStackTrace();
             }
         });
     }

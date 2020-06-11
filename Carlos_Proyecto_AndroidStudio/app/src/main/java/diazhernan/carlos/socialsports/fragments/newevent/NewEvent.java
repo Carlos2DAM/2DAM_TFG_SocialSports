@@ -193,9 +193,10 @@ public class NewEvent extends Fragment {
 
 
         for (Usuario usuario: LoginActivity.usuario.getListaAmigos()) {
-            listaP.add(usuario);
+            if (newEventInvite.getListaInvitarAmigos().contains(usuario.getEmailUsuario())) {
+                listaP.add(usuario);
+            }
         }
-
 
         eventoCreado = new Evento(idEv,LoginActivity.usuario,deporte,localidad,direccion,fechaEv,
                 horaEv,fechaCreado,maxParticipantes,reserva,coste,precio,comments,requisitos,
@@ -231,12 +232,21 @@ public class NewEvent extends Fragment {
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
 
-        service.crearEvento(eventoCreado).enqueue(new Callback<ResponseBody>() {
+        service.crearEvento("Bearer " + LoginActivity.token, eventoCreado).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 if(response.code() == 201){
                     Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_evento_creado),getContext());
+                    newEventDescription = new NewEventDescription();
+                    newEventSpecify = new NewEventSpecify();
+                    newEventRequirements = new NewEventRequirements();
+                    newEventInvite = new NewEventInvite();
+                    eventoCreado = null;
+                    Funcionalidades.showSelectedFragment(R.id.newEventContainer, getActivity().getSupportFragmentManager(), newEventSpecify);
+                    Funcionalidades.showSelectedFragment(R.id.newEventContainer, getActivity().getSupportFragmentManager(), newEventRequirements);
+                    Funcionalidades.showSelectedFragment(R.id.newEventContainer, getActivity().getSupportFragmentManager(), newEventInvite);
+                    tabLayout.getTabAt(0).select();
                 }else{
                     Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_error_evento_creado),getContext());
                     try {
@@ -249,7 +259,7 @@ public class NewEvent extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e("ONFAILURE: ", t.getMessage());
+                t.printStackTrace();
             }
         });
 

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import diazhernan.carlos.socialsports.Clases.Evento;
 import diazhernan.carlos.socialsports.Clases.Usuario;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -11,8 +13,11 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface APIService {
@@ -27,37 +32,43 @@ public interface APIService {
 
     @FormUrlEncoded
     @PUT("perfil/nombre")
-    Call<ResponseBody> putNombre(@Field("correo") String correo, @Field("nombre") String nombre);
+    Call<ResponseBody> putNombre(@Header("Authorization") String authHeader, @Field("correo") String correo, @Field("nombre") String nombre);
 
     @FormUrlEncoded
     @PUT("perfil/apellidos")
-    Call<ResponseBody> putApellidos(@Field("correo") String correo, @Field("apellidos") String apellidos);
+    Call<ResponseBody> putApellidos(@Header("Authorization") String authHeader, @Field("correo") String correo, @Field("apellidos") String apellidos);
 
     @FormUrlEncoded
     @PUT("perfil/direccion")
-    Call<ResponseBody> putDireccion(@Field("correo") String correo, @Field("direccion") String direccion);
+    Call<ResponseBody> putDireccion(@Header("Authorization") String authHeader, @Field("correo") String correo, @Field("direccion") String direccion);
 
     @FormUrlEncoded
     @PUT("perfil/genero")
-    Call<ResponseBody> putGenero(@Field("correo") String correo, @Field("genero") String genero);
+    Call<ResponseBody> putGenero(@Header("Authorization") String authHeader, @Field("correo") String correo, @Field("genero") String genero);
 
     @FormUrlEncoded
     @PUT("perfil/nacimiento")
-    Call<ResponseBody> putFechaNacimiento(@Field("correo") String correo, @Field("fecha") String fecha);
+    Call<ResponseBody> putFechaNacimiento(@Header("Authorization") String authHeader, @Field("correo") String correo, @Field("fecha") String fecha);
 
     @DELETE("perfil/borrarusuario/{correo}")
-    Call<ResponseBody> borrarUsuario(@Path("correo") String correo);
+    Call<ResponseBody> borrarUsuario(@Header("Authorization") String authHeader, @Path("correo") String correo);
 
     @POST("eventos/crear")
-    Call<ResponseBody> crearEvento(@Body Evento evento);
+    Call<ResponseBody> crearEvento(@Header("Authorization") String authHeader, @Body Evento evento);
 
     @POST("eventos/invitaciones/{idEvento}")
-    Call<ResponseBody> enviarInvitaciones(@Path("idEvento") String idEvento, @Body ArrayList<String> listaInvitados);
+    Call<ResponseBody> enviarInvitaciones(@Header("Authorization") String authHeader, @Path("idEvento") String idEvento, @Body ArrayList<String> listaInvitados);
 
     @GET("perfil/amigos/{correo}")
-    Call<ArrayList<Usuario>> listaAmigos(@Path("correo") String correo);
+    Call<ArrayList<Usuario>> listaAmigos(@Header("Authorization") String authHeader, @Path("correo") String correo);
+
+    @POST("perfil/amigos/agregar/{correo}/{correoAmigo}")
+    Call<ResponseBody> agregarAmigo(@Header("Authorization") String authHeader, @Path("correo") String correo, @Path("correoAmigo") String correoAmigo);
+
+    @DELETE("perfil/amigos/eliminar/{correo}/{correoAmigo}")
+    Call<ResponseBody> eliminarAmigo(@Header("Authorization") String authHeader, @Path("correo") String correo, @Path("correoAmigo") String correoAmigo);
 
     @GET("eventos/pendientes/{correo}")
-    Call<ArrayList<Evento>> listaEventosPendientes(@Path("correo") String correo);
+    Call<ArrayList<Evento>> listaEventosPendientes(@Header("Authorization") String authHeader, @Path("correo") String correo);
 
 }
