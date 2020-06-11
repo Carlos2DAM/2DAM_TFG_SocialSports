@@ -64,4 +64,9 @@ public class Requisitos implements Serializable {
                 ", reputacionNecesaria=" + reputacionNecesaria +
                 '}';
     }
+
+    public void inicializarValoresNulos() {
+        if (requisitoDeGenero == null)
+            requisitoDeGenero = "";
+    }
 }

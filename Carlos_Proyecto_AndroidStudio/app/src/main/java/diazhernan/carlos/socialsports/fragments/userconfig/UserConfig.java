@@ -178,14 +178,14 @@ public class UserConfig extends Fragment {
             }*/
         }
 
-        String passwordOld = LoginActivity.usuario.getPasswordUsuario();
-        if (!passwordNew.isEmpty() && !passwordNew.equals(passwordOld)) {
-            if (Funcionalidades.actualizarPasswordUsuario(email,passwordNew))
+        if (!passwordNew.isEmpty()) {
+            actualizarPasswordUsuarioBBDD(email,passwordNew);
+            /*if (Funcionalidades.actualizarPasswordUsuario(email,passwordNew))
                 LoginActivity.usuario.setPasswordUsuario(passwordNew);
             else {
                 Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
                 return;
-            }
+            }*/
         }
 
         Date fechaNew = userConfigSettings.getBirthdate();
@@ -330,6 +330,30 @@ public class UserConfig extends Fragment {
                     try {
                         String f = response.body().string();
                         LoginActivity.usuario.setFechaNacimientoUsuario(Funcionalidades.StringToDate(f));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void actualizarPasswordUsuarioBBDD(String email,String password) {
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+
+        service.putPassword(email, password).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.code() == 200) {
+                    try {
+                        LoginActivity.usuario.setPasswordUsuario(response.body().string());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

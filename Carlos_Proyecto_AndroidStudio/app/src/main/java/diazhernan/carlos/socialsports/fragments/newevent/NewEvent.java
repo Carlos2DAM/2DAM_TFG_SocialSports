@@ -193,7 +193,7 @@ public class NewEvent extends Fragment {
 
 
         for (Usuario usuario: LoginActivity.usuario.getListaAmigos()) {
-            listaP.add(usuario);
+            listaP.add(usuario); // TODO Mas adelante cambiar esto. Este bucle está agregando a todos sus amigos como participante
         }
 
 

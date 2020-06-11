@@ -217,7 +217,5 @@ public class Usuario implements Serializable {
         if (listaBloqueados == null)
             listaBloqueados = new ArrayList<>();
         //isOnlineNow = true;
-        reputacionParticipanteUsuario = 4;
-        reputacionOrganizadorUsuario = 4;
     }
 }
