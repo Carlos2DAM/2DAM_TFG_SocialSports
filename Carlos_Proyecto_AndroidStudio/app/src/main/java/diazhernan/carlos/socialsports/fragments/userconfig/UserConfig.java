@@ -225,7 +225,7 @@ public class UserConfig extends Fragment {
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
 
-        service.putNombre(email, nombre).enqueue(new Callback<ResponseBody>() {
+        service.putNombre("Bearer " + LoginActivity.token, email, nombre).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.code() == 200) {
@@ -249,7 +249,7 @@ public class UserConfig extends Fragment {
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
 
-        service.putApellidos(email, apellidos).enqueue(new Callback<ResponseBody>() {
+        service.putApellidos("Bearer " + LoginActivity.token, email, apellidos).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.code() == 200) {
@@ -273,7 +273,7 @@ public class UserConfig extends Fragment {
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
 
-        service.putDireccion(email, direccion).enqueue(new Callback<ResponseBody>() {
+        service.putDireccion("Bearer " + LoginActivity.token, email, direccion).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.code() == 200) {
@@ -299,7 +299,7 @@ public class UserConfig extends Fragment {
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
 
-        service.putGenero(email, genero).enqueue(new Callback<ResponseBody>() {
+        service.putGenero("Bearer " + LoginActivity.token, email, genero).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.code() == 200) {
@@ -323,7 +323,7 @@ public class UserConfig extends Fragment {
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
 
-        service.putFechaNacimiento(email, fecha).enqueue(new Callback<ResponseBody>() {
+        service.putFechaNacimiento("Bearer " + LoginActivity.token, email, fecha).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.code() == 200) {
@@ -348,7 +348,7 @@ public class UserConfig extends Fragment {
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
 
-        service.putPassword(email, password).enqueue(new Callback<ResponseBody>() {
+        service.putPassword("Bearer " + LoginActivity.token, email, password).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.code() == 200) {
@@ -372,7 +372,7 @@ public class UserConfig extends Fragment {
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
 
-        service.borrarUsuario(usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
+        service.borrarUsuario("Bearer " + LoginActivity.token, usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.code() == 204) {

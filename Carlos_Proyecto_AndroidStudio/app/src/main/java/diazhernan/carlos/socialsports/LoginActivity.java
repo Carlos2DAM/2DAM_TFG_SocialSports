@@ -29,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private RETROFIT retrofit;
     private APIService service;
     public static Usuario usuario = null;
+    public static String token = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -152,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(response.code() == 200){
                     String authorizationHeader = response.headers().get("Authorization");
-                    String token = authorizationHeader.substring("Bearer".length()).trim(); //guardar en algun sitio
+                    token = authorizationHeader.substring("Bearer".length()).trim();
 
                     usuario = response.body();
 
@@ -185,6 +186,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (code == 201) {
                     usuario = new Usuario();
                     usuario.setEmailUsuario(emailEditText.getText().toString());
+                    String authorizationHeader = response.headers().get("Authorization");
+                    token = authorizationHeader.substring("Bearer".length()).trim();
                     Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_creado_nuevo_usuario), getApplicationContext());
                     cargarAplicacionUsuario();
                 } else if (code == 409) {

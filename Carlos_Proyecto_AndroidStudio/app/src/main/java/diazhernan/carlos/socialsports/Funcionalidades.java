@@ -24,6 +24,10 @@ import diazhernan.carlos.socialsports.Clases.FiltroDeEvento;
 import diazhernan.carlos.socialsports.Clases.PuntuacionEvento;
 import diazhernan.carlos.socialsports.Clases.PuntuacionParticipante;
 import diazhernan.carlos.socialsports.Clases.Usuario;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Funcionalidades extends AppCompatActivity {
 
@@ -191,10 +195,12 @@ public class Funcionalidades extends AppCompatActivity {
     }
 
     public static boolean estasBaneado(Evento ev,Context c) {
-        for (Usuario usuario: ev.getListaDescartados()) {
-            if (usuario.getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario())) {
-                mostrarMensaje(c.getResources().getString(R.string.has_been_baned),c);
-                return true;
+        if(ev.getListaDescartados() != null) {
+            for (Usuario usuario : ev.getListaDescartados()) {
+                if (usuario.getEmailUsuario().equals(LoginActivity.usuario.getEmailUsuario())) {
+                    mostrarMensaje(c.getResources().getString(R.string.has_been_baned), c);
+                    return true;
+                }
             }
         }
         //TODO Consultar si nuestro usuario se encuentra en la lista de descartados del evento.
@@ -435,6 +441,23 @@ public class Funcionalidades extends AppCompatActivity {
         if (!LoginActivity.usuario.getListaAmigos().contains(usuario))
             LoginActivity.usuario.getListaAmigos().add(usuario);
 
+        RETROFIT retrofit = new RETROFIT();
+        retrofit.getAPIService().agregarAmigo("Bearer " + LoginActivity.token,
+                LoginActivity.usuario.getEmailUsuario(),
+                usuario.getEmailUsuario())
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if(response.isSuccessful()){
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
         //TODO insertar un usuario en la lista de amigos del Usuario actual.
         //serverInsertarAmigo(emailInsertado, emailUsuario);
     }
@@ -442,21 +465,81 @@ public class Funcionalidades extends AppCompatActivity {
     public static void actualizarFechaEvento(String idEvento, Date fecha) {
         //TODO Actualiza en la BBDD la fecha del evento.
         //serverActualizarFechaEvento(idEvento, fecha)
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.actualizarFechaEvento("Bearer " + LoginActivity.token, idEvento, dateToString2(fecha)).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
     public static void actualizarHoraEvento(String idEvento, String hora) {
         //TODO Actualiza en la BBDD la hora del evento.
         //serverActualizarHoraEvento(idEvento, hora)
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.actualizarHoraEvento("Bearer " + LoginActivity.token, idEvento, hora).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
     public static void actualizarDireccionEvento(String idEvento, String direccion) {
         //TODO Actualiza en la BBDD la dirección del evento.
         //serverActualizarDireccionEvento(idEvento, direccion)
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.actualizarDireccionEvento("Bearer " + LoginActivity.token, idEvento, direccion).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
     public static void actualizarMaxParticipantesEvento(String idEvento, int maxParticipants) {
         //TODO Actualiza en la BBDD el máximo de participantes permitidos en el evento.
         //serverActualizarMaxParticipantes(idEvento, maxParticipants)
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.actualizarMaxParticipantesEvento("Bearer " + LoginActivity.token, idEvento, maxParticipants).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
     public static void eliminarParticipante(Evento evento,Usuario usuario) {

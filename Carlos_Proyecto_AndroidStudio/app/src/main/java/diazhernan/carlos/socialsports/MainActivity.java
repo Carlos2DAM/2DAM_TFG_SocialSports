@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         //TODO calcular puntuaciones del usuario.
     }
 
-    private void agregarAmigos() {      //TODO función de pruebas eliminar
+    /*private void agregarAmigos() {      //TODO función de pruebas eliminar
         LoginActivity.usuario.setListaAmigos(new ArrayList<Usuario>());
         LoginActivity.usuario.getListaAmigos().add(new Usuario("d@mail.es","","dimitri","Male","aaa111",new Date(),new Date(),4,4,"d.jpg"));
         LoginActivity.usuario.getListaAmigos().add(new Usuario("e@mail.es","","antonio","Male","aaa111",new Date(),new Date(),4,4,"d.jpg"));
@@ -163,5 +163,5 @@ public class MainActivity extends AppCompatActivity {
         evento.setFechaEvento(new Date());
         evento.setTerminado(true);
         listaEventos.add(evento);
-    }
+    }*/
 }
