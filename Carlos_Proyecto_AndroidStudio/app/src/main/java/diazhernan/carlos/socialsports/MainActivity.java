@@ -34,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //agregarAmigos();    //TODO Linea de pruebas eliminar
-        //agregarEventos();   //TODO Linea de pruebas eliminar
         navigationView = findViewById(R.id.menu_nav_main);
 
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -74,94 +72,5 @@ public class MainActivity extends AppCompatActivity {
         else {
             navigationView.setSelectedItemId(R.id.menu_home);
         }
-        //TODO calcular puntuaciones del usuario.
     }
-
-    /*private void agregarAmigos() {      //TODO función de pruebas eliminar
-        LoginActivity.usuario.setListaAmigos(new ArrayList<Usuario>());
-        LoginActivity.usuario.getListaAmigos().add(new Usuario("d@mail.es","","dimitri","Male","aaa111",new Date(),new Date(),4,4,"d.jpg"));
-        LoginActivity.usuario.getListaAmigos().add(new Usuario("e@mail.es","","antonio","Male","aaa111",new Date(),new Date(),4,4,"d.jpg"));
-        LoginActivity.usuario.getListaAmigos().add(new Usuario("f@mail.es","","petra","Female","aaa111",new Date(),new Date(),4,4,"d.jpg"));
-        LoginActivity.usuario.getListaAmigos().add(new Usuario("q@mail.es","","juan","Male","aaa111",new Date(),new Date(),4,4,"d.jpg"));
-        LoginActivity.usuario.getListaAmigos().add(new Usuario("a@mail.es","","luisa","Female","aaa111",new Date(),new Date(),4,4,"d.jpg"));
-        LoginActivity.usuario.getListaAmigos().add(new Usuario("w@mail.es","","felipe","Male","aaa111",new Date(),new Date(),4,4,"d.jpg"));
-        LoginActivity.usuario.getListaAmigos().add(new Usuario("z@mail.es","","maria","Female","aaa111",new Date(),new Date(),4,4,"d.jpg"));
-    }
-
-    private void agregarEventos() {     //TODO función de pruebas eliminar
-        listaEventos = new ArrayList<>();
-        Evento evento = new Evento();
-        evento.setDeporte("Futbol");
-        evento.setLocalidad("Fuenlabrada");
-        evento.setOrganizadorEvento(LoginActivity.usuario.getListaAmigos().get(4));
-        evento.setMaximoParticipantes(22);
-        evento.setFechaEvento(new Date(120,6,12));
-        evento.getListaSolicitantes().add(LoginActivity.usuario);
-        listaEventos.add(evento);
-        evento = new Evento();
-        evento.setDeporte("Baloncesto");
-        evento.setLocalidad("Madrid");
-        evento.setOrganizadorEvento(LoginActivity.usuario.getListaAmigos().get(5));
-        evento.setMaximoParticipantes(10);
-        evento.setInstalacionesReservadas(true);
-        evento.setPrecioPorParticipante(3.5f);
-        evento.getListaDescartados().add(LoginActivity.usuario);
-        listaEventos.add(evento);
-        evento = new Evento();
-        evento.setDeporte("Padel");
-        evento.setLocalidad("Alcorcón");
-        evento.setOrganizadorEvento(LoginActivity.usuario.getListaAmigos().get(6));
-        evento.setMaximoParticipantes(4);
-        evento.setInstalacionesReservadas(true);
-        evento.setPrecioPorParticipante(3f);
-        listaEventos.add(evento);
-        evento = new Evento();
-        evento.setDeporte("Tenis");
-        evento.setLocalidad("Móstoles");
-        //evento.setOrganizadorEvento(listaAmigos.get(2));
-        evento.setOrganizadorEvento(LoginActivity.usuario);
-        evento.setMaximoParticipantes(1);
-        evento.getListaParticipantes().add(LoginActivity.usuario);
-        evento.getListaParticipantes().add(LoginActivity.usuario.getListaAmigos().get(2));
-        evento.getListaParticipantes().add(LoginActivity.usuario.getListaAmigos().get(1));
-        evento.getListaParticipantes().add(LoginActivity.usuario.getListaAmigos().get(0));
-        evento.getListaParticipantes().add(LoginActivity.usuario.getListaAmigos().get(6));
-        evento.getListaSolicitantes().add(LoginActivity.usuario.getListaAmigos().get(3));
-        evento.getListaSolicitantes().add(LoginActivity.usuario.getListaAmigos().get(4));
-        evento.getListaSolicitantes().add(LoginActivity.usuario.getListaAmigos().get(5));
-        evento.setFechaEvento(new Date(120,5,30));
-        //evento.setTerminado(true);
-        listaEventos.add(evento);
-        evento = new Evento();
-        evento.setDeporte("Correr");
-        evento.setLocalidad("Fuenlabrada");
-        evento.setOrganizadorEvento(LoginActivity.usuario);
-        evento.setMaximoParticipantes(-1);
-        evento.setFechaEvento(new Date(120,6,2));
-        listaEventos.add(evento);
-        evento = new Evento();
-        evento.setDeporte("Bicicleta");
-        evento.setLocalidad("Fuenlabrada");
-        evento.setOrganizadorEvento(LoginActivity.usuario);
-        evento.setMaximoParticipantes(-1);
-        evento.setFechaEvento(new Date());
-        evento.setTerminado(true);
-        listaEventos.add(evento);
-        evento = new Evento();
-        evento.setDeporte("Waterpolo");
-        evento.setLocalidad("Carranque");
-        evento.setOrganizadorEvento(LoginActivity.usuario);
-        evento.setMaximoParticipantes(-1);
-        evento.setFechaEvento(new Date());
-        evento.setTerminado(true);
-        listaEventos.add(evento);
-        evento = new Evento();
-        evento.setDeporte("Badminton");
-        evento.setLocalidad("Madrid");
-        evento.setOrganizadorEvento(LoginActivity.usuario);
-        evento.setMaximoParticipantes(-1);
-        evento.setFechaEvento(new Date());
-        evento.setTerminado(true);
-        listaEventos.add(evento);
-    }*/
 }

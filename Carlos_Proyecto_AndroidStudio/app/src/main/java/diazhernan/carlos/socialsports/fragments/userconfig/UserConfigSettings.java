@@ -2,10 +2,7 @@ package diazhernan.carlos.socialsports.fragments.userconfig;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -16,7 +13,6 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,25 +20,12 @@ import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
 
-import diazhernan.carlos.socialsports.APIService;
 import diazhernan.carlos.socialsports.Funcionalidades;
 import diazhernan.carlos.socialsports.LoginActivity;
 import diazhernan.carlos.socialsports.R;
-import diazhernan.carlos.socialsports.RETROFIT;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class UserConfigSettings extends Fragment {
 
