@@ -131,9 +131,12 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
+    private void cargarReputacionUsuario(){
+        calcularReputaciónParticipanteBBDD(usuario.getEmailUsuario());
+        calcularReputaciónOrganizadorBBDD(usuario.getEmailUsuario());
+    }
+
     private void cargarAplicacionUsuario(){
-        Funcionalidades.calcularReputacionParticipante(usuario.getEmailUsuario());
-        Funcionalidades.calcularReputacionOrganizador(usuario.getEmailUsuario());
         Intent i = new Intent(getBaseContext(), MainActivity.class);
         startActivity(i);
     }
@@ -159,7 +162,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     if(usuario != null){
                         usuario.inicializarValoresNulos();
-                        cargarAplicacionUsuario();
+                        cargarReputacionUsuario();
                     }
 
                 }else{
@@ -189,7 +192,7 @@ public class LoginActivity extends AppCompatActivity {
                     String authorizationHeader = response.headers().get("Authorization");
                     token = authorizationHeader.substring("Bearer".length()).trim();
                     Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_creado_nuevo_usuario), getApplicationContext());
-                    cargarAplicacionUsuario();
+                    cargarReputacionUsuario();
                 } else if (code == 409) {
                     Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_usuario_existe), getApplicationContext());
                     limpiarCajas();
@@ -202,6 +205,42 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e("ONFAILURE", t.getMessage());
+            }
+        });
+    }
+
+    public void calcularReputaciónParticipanteBBDD(String email) {
+        service.getReputacionParticipante("Bearer " + token, email).enqueue(new Callback<Float>() {
+            @Override
+            public void onResponse(Call<Float> call, Response<Float> response) {
+
+                if(response.isSuccessful()){
+                    usuario.setReputacionParticipanteUsuario(response.body());
+                    cargarAplicacionUsuario();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Float> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void calcularReputaciónOrganizadorBBDD(String email) {
+        service.getReputacionOrganizador("Bearer " + token, email).enqueue(new Callback<Float>() {
+            @Override
+            public void onResponse(Call<Float> call, Response<Float> response) {
+
+                if(response.isSuccessful()){
+                    usuario.setReputacionOrganizadorUsuario(response.body());
+                    cargarAplicacionUsuario();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Float> call, Throwable t) {
+                t.printStackTrace();
             }
         });
     }
