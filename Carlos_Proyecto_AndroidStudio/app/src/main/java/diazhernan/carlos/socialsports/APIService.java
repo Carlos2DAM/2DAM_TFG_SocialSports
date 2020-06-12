@@ -63,16 +63,25 @@ public interface APIService {
     @DELETE("perfil/borrarusuario/{correo}")
     Call<ResponseBody> borrarUsuario(@Header("Authorization") String authHeader, @Path("correo") String correo);
 
-    /******AMIGOS******/
+    /******USUARIOS******/
 
     @GET("perfil/amigos/{correo}")
     Call<ArrayList<Usuario>> listaAmigos(@Header("Authorization") String authHeader, @Path("correo") String correo);
+
+    @GET("perfil/bloqueados/{correo}")
+    Call<ArrayList<Usuario>> listaBloqueados(@Header("Authorization") String authHeader, @Path("correo") String correo);
 
     @POST("perfil/amigos/agregar/{correo}/{correoAmigo}")
     Call<ResponseBody> agregarAmigo(@Header("Authorization") String authHeader, @Path("correo") String correo, @Path("correoAmigo") String correoAmigo);
 
     @DELETE("perfil/amigos/eliminar/{correo}/{correoAmigo}")
     Call<ResponseBody> eliminarAmigo(@Header("Authorization") String authHeader, @Path("correo") String correo, @Path("correoAmigo") String correoAmigo);
+
+    @POST("perfil/bloquearusuario/{correo}/{correoBloqueado}")
+    Call<ResponseBody> bloquearUsuario(@Header("Authorization") String authHeader, @Path("correo") String correo, @Path("correoBloqueado") String correoBloqueado);
+
+    @DELETE("perfil/quitarbloqueo/{correo}/{correoBloqueado}")
+    Call<ResponseBody> quitarBloqueo(@Header("Authorization") String authHeader, @Path("correo") String correo, @Path("correoBloqueado") String correoBloqueado);
 
     /******OBTENER EVENTOS******/
 
@@ -91,23 +100,61 @@ public interface APIService {
     /******MODIFICAR EVENTOS******/
 
     @FormUrlEncoded
-    @PUT("eventos/fecha")
+    @PUT("eventos/actualizar/fecha")
     Call<ResponseBody> actualizarFechaEvento(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("fecha") String fecha);
 
     @FormUrlEncoded
-    @PUT("eventos/hora")
+    @PUT("eventos/actualizar/hora")
     Call<ResponseBody> actualizarHoraEvento(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("hora") String hora);
 
     @FormUrlEncoded
-    @PUT("eventos/direccion")
+    @PUT("eventos/actualizar/direccion")
     Call<ResponseBody> actualizarDireccionEvento(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("direccion") String direccion);
 
     @FormUrlEncoded
-    @PUT("eventos/maximoparticipantes")
+    @PUT("eventos/actualizar/maximoparticipantes")
     Call<ResponseBody> actualizarMaxParticipantesEvento(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("maxParticipantes") int maxParticipantes);
 
     @FormUrlEncoded
-    @PUT("eventos/terminarevento")
+    @PUT("eventos/actualizar/terminado")
     Call<ResponseBody> actualizarTerminarEvento(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("terminado") boolean terminado);
 
+    @FormUrlEncoded
+    @PUT("eventos/actualizar/reserva")
+    Call<ResponseBody> actualizarReserva(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("reserva") boolean reserva);
+
+    @FormUrlEncoded
+    @PUT("eventos/actualizar/coste")
+    Call<ResponseBody> actualizarCoste(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("coste") float coste);
+
+    @FormUrlEncoded
+    @PUT("eventos/actualizar/precio")
+    Call<ResponseBody> actualizarPrecio(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("precio") float precio);
+
+    @FormUrlEncoded
+    @PUT("eventos/actualizar/comentarios")
+    Call<ResponseBody> actualizarComentarios(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("comentarios") String comentarios);
+
+    @FormUrlEncoded
+    @PUT("eventos/actualizar/edadminima")
+    Call<ResponseBody> actualizarEdadMinima(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("edad") int edad);
+
+    @FormUrlEncoded
+    @PUT("eventos/actualizar/edadmaxima")
+    Call<ResponseBody> actualizarEdadMaxima(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("edad") int edad);
+
+    @FormUrlEncoded
+    @PUT("eventos/actualizar/genero")
+    Call<ResponseBody> actualizarGenero(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("genero") String genero);
+
+    @FormUrlEncoded
+    @PUT("eventos/actualizar/reputacion")
+    Call<ResponseBody> actualizarReputacion(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("reputacion") float reputacion);
+
+    @DELETE("eventos/eliminarparticipante/{idEvento}/{correo}")
+    Call<ResponseBody> eliminarParticipante(@Header("Authorization") String authHeader, @Path("idEvento") String idEvento, @Path("correo") String correo);
+
+    @FormUrlEncoded
+    @POST("eventos/insertarparticipante")
+    Call<ResponseBody> insertarParticipante(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("correo") String correo);
 }

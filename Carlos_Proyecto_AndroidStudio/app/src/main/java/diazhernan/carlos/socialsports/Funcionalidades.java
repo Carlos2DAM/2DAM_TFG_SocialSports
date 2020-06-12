@@ -419,7 +419,19 @@ public class Funcionalidades extends AppCompatActivity {
     public static void bloquearUsuarioPermanentemente(Usuario usuario) {
         if (!LoginActivity.usuario.getListaBloqueados().contains(usuario))
             LoginActivity.usuario.getListaBloqueados().add(usuario);
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.bloquearUsuario("Bearer " + LoginActivity.token, LoginActivity.usuario.getEmailUsuario(), usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
         //TODO insertar un usuarioBloqueado en la lista de Bloqueados de otro Usuario.
         //serverBloquearUsuario(emailBloqueado, emailUsuario);
     }
@@ -438,7 +450,6 @@ public class Funcionalidades extends AppCompatActivity {
     public static void eliminarAmigo(Usuario usuario) {
         if (LoginActivity.usuario.getListaAmigos().contains(usuario))
             LoginActivity.usuario.getListaAmigos().remove(usuario);
-
         //TODO elimina un usuario de la lista de amigos del Usuario actual.
         //serverEliminarAmigo(emailUsuario, emailEliminado);
 
@@ -449,6 +460,7 @@ public class Funcionalidades extends AppCompatActivity {
                 usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
@@ -460,6 +472,21 @@ public class Funcionalidades extends AppCompatActivity {
     public static void eliminarBloqueoPermanentemente(Usuario usuario) {
         if (LoginActivity.usuario.getListaBloqueados().contains(usuario))
             LoginActivity.usuario.getListaBloqueados().remove(usuario);
+
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.quitarBloqueo("Bearer " + LoginActivity.token,
+                LoginActivity.usuario.getEmailUsuario(),
+                usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
 
         //TODO eliminar un usuario de la lista de personas bloqueadas del Usuario actual.
         //serverEliminarBloqueado(emailEliminado, emailUsuario);
@@ -566,6 +593,19 @@ public class Funcionalidades extends AppCompatActivity {
 
             //TODO eliminar un usuario de la lista de participantes del evento.
             //serverEliminarParticipante(evento.getIdEvento(), usuario.getEmailUsuario());
+            RETROFIT retrofit = new RETROFIT();
+            APIService service = retrofit.getAPIService();
+            service.eliminarParticipante("Bearer " + LoginActivity.token, evento.getIdEvento(), usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
         }
     }
 
@@ -575,47 +615,164 @@ public class Funcionalidades extends AppCompatActivity {
 
             //TODO insertar un usuario en la lista de participantes del evento.
             //serverInsertarParticipante(evento.getIdEvento(), usuario.getEmailUsuario());
+            RETROFIT retrofit = new RETROFIT();
+            APIService service = retrofit.getAPIService();
+            service.insertarParticipante("Bearer " + LoginActivity.token, evento.getIdEvento(), usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
         }
     }
 
     public static void actualizarReservaEvento(String idEvento, boolean reserva) {
         //TODO Actualiza en la BBDD el estado de reserva de instalaciones para el evento.
         //serverActualizarReservaEvento(idEvento, reserva)
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.actualizarReserva("Bearer " + LoginActivity.token, idEvento, reserva).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     public static void actualizarCosteEvento(String idEvento, float coste) {
         //TODO Actualiza en la BBDD el coste del evento.
         //serverActualizarCosteEvento(idEvento, coste)
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.actualizarCoste("Bearer " + LoginActivity.token, idEvento, coste).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     public static void actualizarPrecioEvento(String idEvento, float precio) {
         //TODO Actualiza en la BBDD el precio individual que tendrá que pagar cada participante del evento.
         //serverActualizarPrecioEvento(idEvento, precio)
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.actualizarPrecio("Bearer " + LoginActivity.token, idEvento, precio).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     public static void actualizarComentariosEvento(String idEvento, String comment) {
         //TODO Actualiza en la BBDD los comentarios del evento.
         //serverActualizarComentariosEvento(idEvento, comment)
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.actualizarComentarios("Bearer " + LoginActivity.token, idEvento, comment).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     public static void actualizarEdadMinEvento(String idEvento, int edad) {
         //TODO Actualiza en la BBDD el requisito de edad mínima para acceder al evento.
         //serverActualizarEdadMinEvento(idEvento, edad)
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.actualizarEdadMinima("Bearer " + LoginActivity.token, idEvento, edad).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     public static void actualizarEdadMaxEvento(String idEvento, int edad) {
         //TODO Actualiza en la BBDD el requisito de edad máxima para acceder al evento.
         //serverActualizarEdadMaxEvento(idEvento, edad)
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.actualizarEdadMaxima("Bearer " + LoginActivity.token, idEvento, edad).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     public static void actualizarGeneroEvento(String idEvento, String genero) {
         //TODO Actualiza en la BBDD el requisito de genero para acceder al evento.
         //serverActualizarGeneroEvento(idEvento, genero)
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.actualizarGenero("Bearer " + LoginActivity.token, idEvento, genero).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     public static void actualizarReputacionEvento(String idEvento, float reputacion) {
         //TODO Actualiza en la BBDD el requisito de reputacion necesario para acceder al evento.
         //serverActualizarReputacionEvento(idEvento, reputacion)
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.actualizarReputacion("Bearer " + LoginActivity.token, idEvento, reputacion).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     public static void insertarSolicitante(Evento evento,Usuario usuario) {

@@ -150,9 +150,13 @@ public class SearchEvent extends Fragment {
                             }
                         }
                         //eventosNoCumploRequisitoReputacion
-                        if(LoginActivity.usuario.getReputacionParticipanteUsuario() < evento.getRequisitos().getReputacionNecesaria()){
+                        if(LoginActivity.usuario.getReputacionParticipanteUsuario() < evento.getRequisitos().getReputacionNecesaria() && evento.getRequisitos().getReputacionNecesaria() != -1){
                             listaEventos.remove(evento);
                             break;
+                        }
+
+                        if(evento.getMaximoParticipantes() != -1 && evento.getMaximoParticipantes() < evento.getListaParticipantes().size()){
+                            listaEventos.remove(evento);
                         }
                     }
 
