@@ -19,6 +19,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface APIService {
 
@@ -29,6 +30,11 @@ public interface APIService {
     @FormUrlEncoded
     @POST("login")
     Call<Usuario> postLogin(@Field("emailUsuario") String emailUsuario, @Field("passwordUsuario") String passwordUsuario);
+
+    @POST("eventos/crear")
+    Call<ResponseBody> crearEvento(@Header("Authorization") String authHeader, @Body Evento evento);
+
+    /******MODIFICAR USUARIO******/
 
     @FormUrlEncoded
     @PUT("perfil/nombre")
@@ -57,11 +63,7 @@ public interface APIService {
     @DELETE("perfil/borrarusuario/{correo}")
     Call<ResponseBody> borrarUsuario(@Header("Authorization") String authHeader, @Path("correo") String correo);
 
-    @POST("eventos/crear")
-    Call<ResponseBody> crearEvento(@Header("Authorization") String authHeader, @Body Evento evento);
-
-    @POST("eventos/invitaciones/{idEvento}")
-    Call<ResponseBody> enviarInvitaciones(@Header("Authorization") String authHeader, @Path("idEvento") String idEvento, @Body ArrayList<String> listaInvitados);
+    /******AMIGOS******/
 
     @GET("perfil/amigos/{correo}")
     Call<ArrayList<Usuario>> listaAmigos(@Header("Authorization") String authHeader, @Path("correo") String correo);
@@ -72,11 +74,21 @@ public interface APIService {
     @DELETE("perfil/amigos/eliminar/{correo}/{correoAmigo}")
     Call<ResponseBody> eliminarAmigo(@Header("Authorization") String authHeader, @Path("correo") String correo, @Path("correoAmigo") String correoAmigo);
 
+    /******OBTENER EVENTOS******/
+
     @GET("eventos/pendientes/{correo}")
     Call<ArrayList<Evento>> listaEventosPendientes(@Header("Authorization") String authHeader, @Path("correo") String correo);
 
     @GET("eventos/finalizados/{correo}")
     Call<ArrayList<Evento>> listaEventosFinalizados(@Header("Authorization") String authHeader, @Path("correo") String correo);
+
+    @GET("eventos/buscar")
+    Call<ArrayList<Evento>> buscarEventos(@Header("Authorization") String authHeader,
+                                          @Query("deporte") String deporte, @Query("localidad") String localidad, @Query("fecha") String fecha,
+                                          @Query("hora") String hora, @Query("reservado") boolean reservado, @Query("reputacion") float reputacion);
+
+
+    /******MODIFICAR EVENTOS******/
 
     @FormUrlEncoded
     @PUT("eventos/fecha")
@@ -93,4 +105,9 @@ public interface APIService {
     @FormUrlEncoded
     @PUT("eventos/maximoparticipantes")
     Call<ResponseBody> actualizarMaxParticipantesEvento(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("maxParticipantes") int maxParticipantes);
+
+    @FormUrlEncoded
+    @PUT("eventos/terminarevento")
+    Call<ResponseBody> actualizarTerminarEvento(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("terminado") boolean terminado);
+
 }

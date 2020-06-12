@@ -214,7 +214,9 @@ public class Funcionalidades extends AppCompatActivity {
     }
 
     public static ArrayList<Evento> buscarEventosFiltrados(Usuario usuario, FiltroDeEvento filtro) {
+
         ArrayList<Evento> listaFiltrada = eventosFuturosVacantes();
+
         int edad = calcularEdad(LoginActivity.usuario.getFechaNacimientoUsuario());
 
         if (!listaFiltrada.isEmpty())
@@ -365,6 +367,18 @@ public class Funcionalidades extends AppCompatActivity {
     public static void actualizarTerminarEvento(String idEvento, boolean terminado) {
         //TODO Actualiza en la BBDD el atributo "terminado" del evento.
         //serverActualizarTerminado(idEvento, terminado)
+        RETROFIT retrofit = new RETROFIT();
+        retrofit.getAPIService().actualizarTerminarEvento("Bearer " + LoginActivity.token, idEvento, terminado).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     public static ArrayList<Evento> obtenerEventosPendientes(String email) {
@@ -394,7 +408,7 @@ public class Funcionalidades extends AppCompatActivity {
     public static void enviarPuntuacionParticipante(PuntuacionParticipante puntuacionP) {
         //TODO insertar en la TablaPuntuacionesParticipantes la puntuacion enviada por un usuario a
         // otro en un evento.
-        //serverPuntuarParticipante(puntuacionP);
+
     }
 
     public static void enviarPuntuacionEvento(PuntuacionEvento puntuacionE) {
@@ -426,7 +440,21 @@ public class Funcionalidades extends AppCompatActivity {
             LoginActivity.usuario.getListaAmigos().remove(usuario);
 
         //TODO elimina un usuario de la lista de amigos del Usuario actual.
-        //serverEliminarAmigo(emailEliminado, emailUsuario);
+        //serverEliminarAmigo(emailUsuario, emailEliminado);
+
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.eliminarAmigo("Bearer " + LoginActivity.token,
+                LoginActivity.usuario.getEmailUsuario(),
+                usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
     public static void eliminarBloqueoPermanentemente(Usuario usuario) {
@@ -448,9 +476,7 @@ public class Funcionalidades extends AppCompatActivity {
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if(response.isSuccessful()){
 
-                        }
                     }
 
                     @Override
@@ -470,9 +496,7 @@ public class Funcionalidades extends AppCompatActivity {
         service.actualizarFechaEvento("Bearer " + LoginActivity.token, idEvento, dateToString2(fecha)).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(response.isSuccessful()){
 
-                }
             }
 
             @Override
@@ -490,9 +514,7 @@ public class Funcionalidades extends AppCompatActivity {
         service.actualizarHoraEvento("Bearer " + LoginActivity.token, idEvento, hora).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(response.isSuccessful()){
 
-                }
             }
 
             @Override
@@ -510,9 +532,7 @@ public class Funcionalidades extends AppCompatActivity {
         service.actualizarDireccionEvento("Bearer " + LoginActivity.token, idEvento, direccion).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(response.isSuccessful()){
 
-                }
             }
 
             @Override
@@ -530,9 +550,7 @@ public class Funcionalidades extends AppCompatActivity {
         service.actualizarMaxParticipantesEvento("Bearer " + LoginActivity.token, idEvento, maxParticipants).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(response.isSuccessful()){
 
-                }
             }
 
             @Override
