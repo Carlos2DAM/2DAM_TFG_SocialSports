@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,12 +17,17 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
+import diazhernan.carlos.socialsports.APIService;
 import diazhernan.carlos.socialsports.Clases.Evento;
 import diazhernan.carlos.socialsports.Clases.FiltroDeEvento;
 import diazhernan.carlos.socialsports.Funcionalidades;
 import diazhernan.carlos.socialsports.LoginActivity;
 import diazhernan.carlos.socialsports.MainActivity;
 import diazhernan.carlos.socialsports.R;
+import diazhernan.carlos.socialsports.RETROFIT;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SearchEvent extends Fragment {
 
@@ -30,6 +36,7 @@ public class SearchEvent extends Fragment {
     private ArrayList<Evento> listaEventosFiltrados;
     private SearchEventsFilters searchEventsFilters;
     private SearchEventsResults searchEventsResults;
+    private static FiltroDeEvento filtro;
 
     public SearchEvent() {
         listaEventosFiltrados = new ArrayList<>();
@@ -80,8 +87,8 @@ public class SearchEvent extends Fragment {
                     case R.id.itemSearchMenuSearch:
                         Funcionalidades.esconderTeclado(getActivity(),getContext(),tabLayout);
                         buscarEventosFiltrados();
-                        searchEventsResults = new SearchEventsResults(listaEventosFiltrados);
-                        tabLayout.getTabAt(1).select();
+                        /*searchEventsResults = new SearchEventsResults(listaEventosFiltrados);
+                        tabLayout.getTabAt(1).select();*/
                         break;
                     case R.id.itemSearchMenuClean:
                         Funcionalidades.esconderTeclado(getActivity(),getContext(),tabLayout);
@@ -97,8 +104,73 @@ public class SearchEvent extends Fragment {
     }
 
     private void buscarEventosFiltrados() {
-        FiltroDeEvento filtro = obtenerFiltros();
-        listaEventosFiltrados = Funcionalidades.buscarEventosFiltrados(LoginActivity.usuario, filtro);
+        filtro = obtenerFiltros();
+        //listaEventosFiltrados = Funcionalidades.buscarEventosFiltrados(LoginActivity.usuario, filtro);
+
+        /*
+        Te envio una lista con aquellos eventos que CUMPLEN con los datos que has introducido
+        (si no has introducido algunos datos se controla en el servidor) y una vez que has recibido esa lista
+        voy quitando aquellos eventos con los que el usuario no cumple los requisitos
+         */
+
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+
+        service.buscarEventos("Bearer " + LoginActivity.token,
+                filtro.getSport(),
+                filtro.getLocation(),
+                Funcionalidades.dateToString2(filtro.getFechaDelEvento()),
+                filtro.getHoraDelEvento(),
+                filtro.isReserved(),
+                filtro.getReputation()).enqueue(new Callback<ArrayList<Evento>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {
+                if(response.isSuccessful()){
+
+                    ArrayList<Evento> listaEventos = response.body();
+                    int edad = Funcionalidades.calcularEdad(LoginActivity.usuario.getFechaNacimientoUsuario());
+
+                    for(Evento evento:listaEventos){
+
+                        //eventosNoCumploRequisitoEdadMaxima
+                        if(evento.getRequisitos().getEdadMaxima() != -1 && edad > evento.getRequisitos().getEdadMaxima()){
+                            listaEventos.remove(evento);
+                            break;
+                        }
+                        //eventosNoCumploRequisitoEdadMinima
+                        if(evento.getRequisitos().getEdadMinima() != -1 && edad < evento.getRequisitos().getEdadMinima()){
+                            listaEventos.remove(evento);
+                            break;
+                        }
+                        //eventosNoCumploRequisitoDeGenero
+                        if(!evento.getRequisitos().getRequisitoDeGenero().equals("")){
+                            if(!evento.getRequisitos().getRequisitoDeGenero().equals(LoginActivity.usuario.getGeneroUsuario())){
+                                listaEventos.remove(evento);
+                                break;
+                            }
+                        }
+                        //eventosNoCumploRequisitoReputacion
+                        if(LoginActivity.usuario.getReputacionParticipanteUsuario() < evento.getRequisitos().getReputacionNecesaria() && evento.getRequisitos().getReputacionNecesaria() != -1){
+                            listaEventos.remove(evento);
+                            break;
+                        }
+
+                        if(evento.getMaximoParticipantes() != -1 && evento.getMaximoParticipantes() < evento.getListaParticipantes().size()){
+                            listaEventos.remove(evento);
+                        }
+                    }
+
+                    listaEventosFiltrados = listaEventos;
+                    searchEventsResults = new SearchEventsResults(listaEventosFiltrados);
+                    tabLayout.getTabAt(1).select();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Evento>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
     private FiltroDeEvento obtenerFiltros() {

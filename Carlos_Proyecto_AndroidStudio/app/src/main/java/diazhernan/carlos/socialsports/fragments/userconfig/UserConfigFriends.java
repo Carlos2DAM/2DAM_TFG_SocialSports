@@ -113,10 +113,28 @@ public class UserConfigFriends extends Fragment {
     }
 
     private void bloqueaoPermanebte() {
-        if (LoginActivity.usuario.getListaAmigos().contains(usuarioSeleccionado))
+        /*if (LoginActivity.usuario.getListaAmigos().contains(usuarioSeleccionado))
             LoginActivity.usuario.getListaAmigos().remove(usuarioSeleccionado);
-        LoginActivity.usuario.getListaBloqueados().add(usuarioSeleccionado);
+        LoginActivity.usuario.getListaBloqueados().add(usuarioSeleccionado);*/
         //TODO actualizar lista de amigos y de bloqueados del usuario de la BBDD
+
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.bloquearUsuario("Bearer " + LoginActivity.token,
+                LoginActivity.usuario.getEmailUsuario(),
+                usuarioSeleccionado.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.code() == 204){
+                        LoginActivity.usuario.getListaAmigos().remove(usuarioSeleccionado);
+                        LoginActivity.usuario.getListaBloqueados().add(usuarioSeleccionado);
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
     private void obtenerListaAmigos(String correo){
