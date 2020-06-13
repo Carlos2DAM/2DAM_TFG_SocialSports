@@ -15,17 +15,11 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import diazhernan.carlos.socialsports.APIService;
-import diazhernan.carlos.socialsports.LoginActivity;
-import diazhernan.carlos.socialsports.RETROFIT;
 import diazhernan.carlos.socialsports.Clases.AdaptadorListaUsuarios;
 import diazhernan.carlos.socialsports.Clases.Usuario;
 import diazhernan.carlos.socialsports.Funcionalidades;
 import diazhernan.carlos.socialsports.R;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
 
 public class EventSettingsParticipants extends Fragment {
 

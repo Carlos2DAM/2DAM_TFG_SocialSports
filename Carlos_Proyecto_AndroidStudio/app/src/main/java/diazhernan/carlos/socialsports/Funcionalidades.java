@@ -475,19 +475,18 @@ public class Funcionalidades extends AppCompatActivity {
 
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
-        service.quitarBloqueo("Bearer " + LoginActivity.token,
+                service.quitarBloqueo("Bearer " + LoginActivity.token,
                 LoginActivity.usuario.getEmailUsuario(),
                 usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response){
 
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 t.printStackTrace();
             }
-        });
-
+       });
         //TODO eliminar un usuario de la lista de personas bloqueadas del Usuario actual.
         //serverEliminarBloqueado(emailEliminado, emailUsuario);
     }
@@ -503,7 +502,9 @@ public class Funcionalidades extends AppCompatActivity {
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if(response.isSuccessful()) {
 
+                        }
                     }
 
                     @Override
@@ -587,7 +588,7 @@ public class Funcionalidades extends AppCompatActivity {
         });
     }
 
-    public static void eliminarParticipante(Evento evento,Usuario usuario) {
+    public static void eliminarParticipante(Evento evento, Usuario usuario) {
         if (evento.getListaParticipantes().contains(usuario)) {
             evento.getListaParticipantes().remove(usuario);
 

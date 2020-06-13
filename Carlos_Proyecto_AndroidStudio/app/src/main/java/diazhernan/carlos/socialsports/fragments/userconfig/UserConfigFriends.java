@@ -1,14 +1,12 @@
 package diazhernan.carlos.socialsports.fragments.userconfig;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +16,8 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import diazhernan.carlos.socialsports.APIService;
-import diazhernan.carlos.socialsports.Clases.AdaptadorListaEventos;
 import diazhernan.carlos.socialsports.Clases.AdaptadorListaUsuarios;
-import diazhernan.carlos.socialsports.Clases.Evento;
 import diazhernan.carlos.socialsports.Clases.Usuario;
-import diazhernan.carlos.socialsports.EventSettings;
-import diazhernan.carlos.socialsports.Funcionalidades;
 import diazhernan.carlos.socialsports.LoginActivity;
 import diazhernan.carlos.socialsports.R;
 import diazhernan.carlos.socialsports.RETROFIT;

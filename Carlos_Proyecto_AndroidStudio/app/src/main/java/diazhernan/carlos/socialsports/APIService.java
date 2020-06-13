@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import diazhernan.carlos.socialsports.Clases.Evento;
 import diazhernan.carlos.socialsports.Clases.Usuario;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -14,10 +12,8 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -34,7 +30,11 @@ public interface APIService {
     @POST("eventos/crear")
     Call<ResponseBody> crearEvento(@Header("Authorization") String authHeader, @Body Evento evento);
 
-    /******MODIFICAR USUARIO******/
+    @GET("perfil/puntuacionparticipante/{correo}")
+    Call<Float> getReputacionParticipante(@Header("Authorization") String authHeader, @Path("correo") String correo);
+
+    @GET("perfil/puntuacionorganizador/{correo}")
+    Call<Float> getReputacionOrganizador(@Header("Authorization") String authHeader, @Path("correo") String correo);
 
     @FormUrlEncoded
     @PUT("perfil/nombre")
@@ -63,8 +63,6 @@ public interface APIService {
     @DELETE("perfil/borrarusuario/{correo}")
     Call<ResponseBody> borrarUsuario(@Header("Authorization") String authHeader, @Path("correo") String correo);
 
-    /******USUARIOS******/
-
     @GET("perfil/amigos/{correo}")
     Call<ArrayList<Usuario>> listaAmigos(@Header("Authorization") String authHeader, @Path("correo") String correo);
 
@@ -83,8 +81,6 @@ public interface APIService {
     @DELETE("perfil/quitarbloqueo/{correo}/{correoBloqueado}")
     Call<ResponseBody> quitarBloqueo(@Header("Authorization") String authHeader, @Path("correo") String correo, @Path("correoBloqueado") String correoBloqueado);
 
-    /******OBTENER EVENTOS******/
-
     @GET("eventos/pendientes/{correo}")
     Call<ArrayList<Evento>> listaEventosPendientes(@Header("Authorization") String authHeader, @Path("correo") String correo);
 
@@ -95,9 +91,6 @@ public interface APIService {
     Call<ArrayList<Evento>> buscarEventos(@Header("Authorization") String authHeader,
                                           @Query("deporte") String deporte, @Query("localidad") String localidad, @Query("fecha") String fecha,
                                           @Query("hora") String hora, @Query("reservado") boolean reservado, @Query("reputacion") float reputacion);
-
-
-    /******MODIFICAR EVENTOS******/
 
     @FormUrlEncoded
     @PUT("eventos/actualizar/fecha")

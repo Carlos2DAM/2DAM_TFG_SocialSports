@@ -142,5 +142,6 @@ public class EventRate extends AppCompatActivity {
     private void agregarAmigo() {
         Funcionalidades.eliminarBloqueoPermanentemente(usuarioSeleccionado);
         Funcionalidades.insertarAmigo(usuarioSeleccionado);
+
     }
 }

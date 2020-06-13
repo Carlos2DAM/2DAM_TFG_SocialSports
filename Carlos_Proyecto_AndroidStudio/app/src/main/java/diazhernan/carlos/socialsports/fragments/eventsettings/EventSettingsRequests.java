@@ -20,6 +20,7 @@ import diazhernan.carlos.socialsports.Clases.Usuario;
 import diazhernan.carlos.socialsports.Funcionalidades;
 import diazhernan.carlos.socialsports.R;
 
+
 public class EventSettingsRequests extends Fragment {
 
     private Usuario usuarioSeleccionado;
