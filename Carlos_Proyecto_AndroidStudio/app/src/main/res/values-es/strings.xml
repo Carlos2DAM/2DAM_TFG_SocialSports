@@ -152,6 +152,7 @@
     <string name="mensaje_usuario_no_eliminado">La cuenta del usuario no se ha podido eliminar</string>
     <string name="mensaje_cambios_guardados">Datos actualizados</string>
     <string name="mensaje_cambios_no_guardados">Los datos no han podido actualizarse</string>
+    <string name="mensaje_cambios_finalizados">Guardado finalizado</string>
     <string name="mensaje_passwords_diferentes">Las contraseñas son distintas</string>
 
     <!-- Strings related to Home -->

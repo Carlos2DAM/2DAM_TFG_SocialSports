@@ -202,7 +202,7 @@ public class UserConfig extends Fragment {
 
         //TODO cargar foto de perfil.
 
-        //Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_guardados),getContext());
+        Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_finalizados),getContext()); //He cambiado el menssaje para que sea más genérico falle o no falle el guardado.
     }
 
     private void logout() {
