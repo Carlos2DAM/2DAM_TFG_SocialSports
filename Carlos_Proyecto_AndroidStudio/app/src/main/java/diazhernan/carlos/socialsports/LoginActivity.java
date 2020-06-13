@@ -108,7 +108,6 @@ public class LoginActivity extends AppCompatActivity {
         if (comprobarDatosLoginCorrectos(getResources().getString(R.string.action_sign_in_short))) {
             cargarUsuarioDeLaBBDD(emailEditText.getText().toString(), passwordEditText.getText().toString());
         }
-        loadingProgressBar.setVisibility(View.GONE);
     }
 
     private void iniciarRegistro() {
@@ -116,7 +115,6 @@ public class LoginActivity extends AppCompatActivity {
         if (comprobarDatosLoginCorrectos(getResources().getString(R.string.action_register))) {
             registrarUsuarioEnLaBBDD(emailEditText.getText().toString(), passwordEditText.getText().toString());
         }
-        loadingProgressBar.setVisibility(View.GONE);
     }
 
     private boolean comprobarDatosLoginCorrectos(String botonPulsado){
@@ -131,14 +129,10 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    private void cargarReputacionUsuario(){
-        calcularReputaciónParticipanteBBDD(usuario.getEmailUsuario());
-        calcularReputaciónOrganizadorBBDD(usuario.getEmailUsuario());
-    }
-
     private void cargarAplicacionUsuario(){
         Intent i = new Intent(getBaseContext(), MainActivity.class);
         startActivity(i);
+        loadingProgressBar.setVisibility(View.GONE);
     }
 
     private void limpiarCajas() {
@@ -162,7 +156,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     if(usuario != null){
                         usuario.inicializarValoresNulos();
-                        cargarReputacionUsuario();
+                        cargarAplicacionUsuario();
                     }
 
                 }else{
@@ -179,20 +173,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void registrarUsuarioEnLaBBDD(String email, String password) {
-        Call<ResponseBody> registro = service.postRegistro(email, password);
+        Call<Usuario> registro = service.postRegistro(email, password);
 
-        registro.enqueue(new Callback<ResponseBody>() {
+        registro.enqueue(new Callback<Usuario>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 int code = response.code();
 
                 if (code == 201) {
-                    usuario = new Usuario();
-                    usuario.setEmailUsuario(emailEditText.getText().toString());
                     String authorizationHeader = response.headers().get("Authorization");
                     token = authorizationHeader.substring("Bearer".length()).trim();
                     Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_creado_nuevo_usuario), getApplicationContext());
-                    cargarReputacionUsuario();
+                    usuario = response.body();
+                    cargarAplicacionUsuario();
                 } else if (code == 409) {
                     Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_usuario_existe), getApplicationContext());
                     limpiarCajas();
@@ -203,44 +196,8 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<Usuario> call, Throwable t) {
                 Log.e("ONFAILURE", t.getMessage());
-            }
-        });
-    }
-
-    public void calcularReputaciónParticipanteBBDD(String email) {
-        service.getReputacionParticipante("Bearer " + token, email).enqueue(new Callback<Float>() {
-            @Override
-            public void onResponse(Call<Float> call, Response<Float> response) {
-
-                if(response.isSuccessful()){
-                    usuario.setReputacionParticipanteUsuario(response.body());
-                    cargarAplicacionUsuario();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Float> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
-    }
-
-    public void calcularReputaciónOrganizadorBBDD(String email) {
-        service.getReputacionOrganizador("Bearer " + token, email).enqueue(new Callback<Float>() {
-            @Override
-            public void onResponse(Call<Float> call, Response<Float> response) {
-
-                if(response.isSuccessful()){
-                    usuario.setReputacionOrganizadorUsuario(response.body());
-                    cargarAplicacionUsuario();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Float> call, Throwable t) {
-                t.printStackTrace();
             }
         });
     }
