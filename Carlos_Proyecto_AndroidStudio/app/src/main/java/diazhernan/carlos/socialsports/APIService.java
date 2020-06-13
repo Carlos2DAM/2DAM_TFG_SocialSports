@@ -148,6 +148,10 @@ public interface APIService {
     Call<ResponseBody> eliminarParticipante(@Header("Authorization") String authHeader, @Path("idEvento") String idEvento, @Path("correo") String correo);
 
     @FormUrlEncoded
-    @POST("eventos/insertarparticipante")
+    @POST("eventos/insertarParticipante")
     Call<ResponseBody> insertarParticipante(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("correo") String correo);
+
+    @FormUrlEncoded
+    @POST("eventos/insertarsolicitante")
+    Call<ResponseBody> insertarSolicitante(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("correo") String correo);
 }

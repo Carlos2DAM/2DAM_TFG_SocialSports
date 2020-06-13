@@ -779,10 +779,25 @@ public class Funcionalidades extends AppCompatActivity {
     public static void insertarSolicitante(Evento evento,Usuario usuario) {
         if (!evento.getListaSolicitantes().contains(usuario)) {
             evento.getListaSolicitantes().add(usuario);
-
-            //TODO insertar usuario de la lista de solicitantes del evento.
-            //serverInsertarSolicitante(evento.getIdEvento(), usuario.getEmailUsuario());
         }
+
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.insertarSolicitante("Bearer " + LoginActivity.token,
+                evento.getIdEvento(), usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+        //TODO insertar usuario de la lista de solicitantes del evento.
+        //serverInsertarSolicitante(evento.getIdEvento(), usuario.getEmailUsuario());
+
     }
 
     public static void eliminarSolicitante(Evento evento,Usuario usuario) {
