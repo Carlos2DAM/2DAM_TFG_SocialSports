@@ -128,11 +128,6 @@ public class LoginActivity extends AppCompatActivity {
         }
         return true;
     }
-    /*
-    private void cargarReputacionUsuario(){
-        calcularReputaciónParticipanteBBDD(usuario.getEmailUsuario());
-        calcularReputaciónOrganizadorBBDD(usuario.getEmailUsuario());
-    }*/
 
     private void cargarAplicacionUsuario(){
         Intent i = new Intent(getBaseContext(), MainActivity.class);
@@ -206,39 +201,4 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-/*
-    public void calcularReputaciónParticipanteBBDD(String email) {
-        service.getReputacionParticipante("Bearer " + token, email).enqueue(new Callback<Float>() {
-            @Override
-            public void onResponse(Call<Float> call, Response<Float> response) {
-
-                if(response.isSuccessful()){
-                    usuario.setReputacionParticipanteUsuario(response.body());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Float> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
-    }
-
-    public void calcularReputaciónOrganizadorBBDD(String email) {
-        service.getReputacionOrganizador("Bearer " + token, email).enqueue(new Callback<Float>() {
-            @Override
-            public void onResponse(Call<Float> call, Response<Float> response) {
-
-                if(response.isSuccessful()){
-                    usuario.setReputacionOrganizadorUsuario(response.body());
-                    cargarAplicacionUsuario();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Float> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
-    }*/
 }

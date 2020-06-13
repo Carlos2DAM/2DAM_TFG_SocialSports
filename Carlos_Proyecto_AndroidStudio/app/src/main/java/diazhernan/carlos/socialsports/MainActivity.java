@@ -41,8 +41,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case (R.id.menu_home):
-                        if (home == null)
-                            home = new Home();
+                        home = new Home();
                         Funcionalidades.showSelectedFragment(R.id.container,getSupportFragmentManager(),home);
                         break;
                     case (R.id.menu_new_event):
