@@ -20,7 +20,7 @@ public interface APIService {
 
     @FormUrlEncoded
     @POST("registro")
-    Call<ResponseBody> postRegistro(@Field("emailUsuario") String emailUsuario, @Field("passwordUsuario") String passwordUsuario);
+    Call<Usuario> postRegistro(@Field("emailUsuario") String emailUsuario, @Field("passwordUsuario") String passwordUsuario);
 
     @FormUrlEncoded
     @POST("login")

@@ -151,6 +151,7 @@
     <string name="mensaje_usuario_no_eliminado">The user account could not be deleted</string>
     <string name="mensaje_cambios_guardados">Updated data</string>
     <string name="mensaje_cambios_no_guardados">The data could not be updated</string>
+    <string name="mensaje_cambios_finalizados">Save finished</string>
     <string name="mensaje_passwords_diferentes">Passwords are different</string>
 
     <!-- Strings related to Home -->
