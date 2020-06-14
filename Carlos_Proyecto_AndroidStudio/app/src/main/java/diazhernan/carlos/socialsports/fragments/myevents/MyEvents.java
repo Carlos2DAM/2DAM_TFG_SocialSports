@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,6 @@ import diazhernan.carlos.socialsports.EventRate;
 import diazhernan.carlos.socialsports.EventSettings;
 import diazhernan.carlos.socialsports.Funcionalidades;
 import diazhernan.carlos.socialsports.LoginActivity;
-import diazhernan.carlos.socialsports.MainActivity;
 import diazhernan.carlos.socialsports.R;
 import diazhernan.carlos.socialsports.RETROFIT;
 import retrofit2.Call;

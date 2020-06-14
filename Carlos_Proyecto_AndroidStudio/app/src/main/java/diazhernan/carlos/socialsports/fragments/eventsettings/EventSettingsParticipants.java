@@ -125,22 +125,7 @@ public class EventSettingsParticipants extends Fragment {
     }
 
     private void eliminarParticipante() {
-        //Funcionalidades.eliminarParticipante(Funcionalidades.eventoSeleccionado,usuarioSeleccionado);
-        RETROFIT retrofit = new RETROFIT();
-        APIService service = retrofit.getAPIService();
-        service.eliminarParticipante("Bearer " + LoginActivity.token, Funcionalidades.eventoSeleccionado.getIdEvento(), usuarioSeleccionado.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(response.isSuccessful()){
-                    Funcionalidades.eventoSeleccionado.getListaParticipantes().remove(usuarioSeleccionado);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
+        Funcionalidades.eliminarParticipante(Funcionalidades.eventoSeleccionado,usuarioSeleccionado);
     }
 
     private void bloquearSolicitud() {
