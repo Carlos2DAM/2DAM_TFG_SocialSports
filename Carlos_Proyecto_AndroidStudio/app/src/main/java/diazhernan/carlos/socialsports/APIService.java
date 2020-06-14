@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import diazhernan.carlos.socialsports.Clases.Evento;
 import diazhernan.carlos.socialsports.Clases.Usuario;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -12,8 +14,10 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -30,11 +34,7 @@ public interface APIService {
     @POST("eventos/crear")
     Call<ResponseBody> crearEvento(@Header("Authorization") String authHeader, @Body Evento evento);
 
-    @GET("perfil/puntuacionparticipante/{correo}")
-    Call<Float> getReputacionParticipante(@Header("Authorization") String authHeader, @Path("correo") String correo);
-
-    @GET("perfil/puntuacionorganizador/{correo}")
-    Call<Float> getReputacionOrganizador(@Header("Authorization") String authHeader, @Path("correo") String correo);
+    /************************USUARIOS************************/
 
     @FormUrlEncoded
     @PUT("perfil/nombre")
@@ -80,6 +80,9 @@ public interface APIService {
 
     @DELETE("perfil/quitarbloqueo/{correo}/{correoBloqueado}")
     Call<ResponseBody> quitarBloqueo(@Header("Authorization") String authHeader, @Path("correo") String correo, @Path("correoBloqueado") String correoBloqueado);
+
+
+    /************************EVENTOS************************/
 
     @GET("eventos/pendientes/{correo}")
     Call<ArrayList<Evento>> listaEventosPendientes(@Header("Authorization") String authHeader, @Path("correo") String correo);
@@ -150,6 +153,22 @@ public interface APIService {
     @FormUrlEncoded
     @POST("eventos/insertarparticipante")
     Call<ResponseBody> insertarParticipante(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("correo") String correo);
+
+    @FormUrlEncoded
+    @POST("eventos/insertarsolicitante")
+    Call<ResponseBody> insertarSolicitante(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("correo") String correo);
+
+    @DELETE("eventos/eliminarsolicitante/{idEvento}/{correo}")
+    Call<ResponseBody> eliminarSolicitante(@Header("Authorization") String authHeader, @Path("idEvento") String idEvento, @Path("correo") String correo);
+
+    @DELETE("eventos/eliminar/{idEvento}")
+    Call<ResponseBody> eliminarEvento(@Header("Authorization") String authHeader, @Path("idEvento") String idEvento);
+
+    @GET("perfil/puntuacionparticipante/{correo}")
+    Call<Float> getReputacionParticipante(@Header("Authorization") String authHeader, @Path("correo") String correo);
+
+    @GET("perfil/puntuacionorganizador/{correo}")
+    Call<Float> getReputacionOrganizador(@Header("Authorization") String authHeader, @Path("correo") String correo);
 
     @GET("eventos/hasidopuntuado/{idevento}")
     Call<Boolean> getHaSidoPuntuado(@Header("Authorization") String authHeader, @Path("idevento") String idevento);

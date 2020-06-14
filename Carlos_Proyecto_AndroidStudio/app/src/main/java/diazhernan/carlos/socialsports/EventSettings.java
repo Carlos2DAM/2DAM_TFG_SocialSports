@@ -13,6 +13,10 @@ import com.google.android.material.tabs.TabLayout;
 import diazhernan.carlos.socialsports.fragments.eventsettings.EventSettingsParticipants;
 import diazhernan.carlos.socialsports.fragments.eventsettings.EventSettingsRequests;
 import diazhernan.carlos.socialsports.fragments.eventsettings.EventSettingsSettings;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EventSettings extends AppCompatActivity {
 
@@ -216,9 +220,25 @@ public class EventSettings extends AppCompatActivity {
     }
 
     private void eliminarEvento() {
-        Funcionalidades.eliminarEvento(Funcionalidades.eventoSeleccionado.getIdEvento());
+        /*Funcionalidades.eliminarEvento(Funcionalidades.eventoSeleccionado.getIdEvento());
         Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_event_removed),this);
         MainActivity.listaEventos.remove(Funcionalidades.eventoSeleccionado); //TODO eliminar fila provisional
-        finish();
+        finish();*/
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.eliminarEvento("Bearer " + LoginActivity.token, Funcionalidades.eventoSeleccionado.getIdEvento()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_event_removed),getApplicationContext());
+                    MainActivity.listaEventos.remove(Funcionalidades.eventoSeleccionado);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }

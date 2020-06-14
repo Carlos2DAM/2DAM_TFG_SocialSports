@@ -210,10 +210,11 @@ public class Usuario implements Serializable {
             direccionUsuario = "";
         if (fechaAltaUsuario == null)
             fechaAltaUsuario = new Date();
-        if (fotoPerfilUsuario == null)
-            fotoPerfilUsuario = "";
         if (listaAmigos == null)
             listaAmigos = new ArrayList<>();
+        if(fotoPerfilUsuario == null){
+            fotoPerfilUsuario = "";
+        }
         if (listaBloqueados == null)
             listaBloqueados = new ArrayList<>();
         //isOnlineNow = true;

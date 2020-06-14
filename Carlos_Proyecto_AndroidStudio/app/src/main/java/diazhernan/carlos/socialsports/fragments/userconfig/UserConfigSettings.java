@@ -3,6 +3,8 @@ package diazhernan.carlos.socialsports.fragments.userconfig;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -20,6 +22,10 @@ import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -45,6 +51,7 @@ public class UserConfigSettings extends Fragment {
     private Calendar newCalendar;
     private ImageView image;
     private Uri uri;
+    private InputStream is;
 
     public UserConfigSettings() {
 
@@ -104,6 +111,7 @@ public class UserConfigSettings extends Fragment {
         editApellido.setText(LoginActivity.usuario.getApellidosUsuario());
         editDireccion.setText(LoginActivity.usuario.getDireccionUsuario());
         editNacimiento.setText(Funcionalidades.dateToString(LoginActivity.usuario.getFechaNacimientoUsuario()));
+        //image.setImageBitmap(BitmapFactory.decodeStream(new ByteArrayInputStream(LoginActivity.usuario.getFotoPerfilUsuario().getBytes())));
 
         if (LoginActivity.usuario.getGeneroUsuario().toUpperCase().equals("MALE"))
             radioMale.setChecked(true);
@@ -144,7 +152,11 @@ public class UserConfigSettings extends Fragment {
         return birthdate;
     }
 
-    //Abre la galería, carga una imagen en el imageView y selecciona su URI
+    public Uri getUri(){ return uri; }
+
+    public InputStream getInputStream(){ return is; }
+
+    //Abre la galería, carga una imagen en el imageView y selecciona su URI y su InputStream
 
     public void abrirGaleria(){
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
@@ -155,8 +167,13 @@ public class UserConfigSettings extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if(resultCode == Activity.RESULT_OK && requestCode == 100){
-            uri = data.getData();
-            image.setImageURI(uri);
+            try {
+                uri = data.getData();
+                is = getContext().getContentResolver().openInputStream(data.getData());
+                image.setImageURI(uri);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

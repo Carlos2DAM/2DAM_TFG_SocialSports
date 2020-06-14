@@ -136,11 +136,12 @@ public class EventRate extends AppCompatActivity {
 
     private void bloquearSolicitantePermanentemente() {
         Funcionalidades.bloquearUsuarioPermanentemente(usuarioSeleccionado);
-        Funcionalidades.eliminarAmigo(usuarioSeleccionado);
+        //Funcionalidades.eliminarAmigo(usuarioSeleccionado);
+
     }
 
     private void agregarAmigo() {
-        Funcionalidades.eliminarBloqueoPermanentemente(usuarioSeleccionado);
+        //Funcionalidades.eliminarBloqueoPermanentemente(usuarioSeleccionado);
         Funcionalidades.insertarAmigo(usuarioSeleccionado);
     }
 

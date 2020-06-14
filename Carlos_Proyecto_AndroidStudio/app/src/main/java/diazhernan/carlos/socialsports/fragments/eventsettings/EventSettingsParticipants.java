@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +16,17 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import diazhernan.carlos.socialsports.APIService;
 import diazhernan.carlos.socialsports.Clases.AdaptadorListaUsuarios;
 import diazhernan.carlos.socialsports.Clases.Usuario;
 import diazhernan.carlos.socialsports.Funcionalidades;
+import diazhernan.carlos.socialsports.LoginActivity;
 import diazhernan.carlos.socialsports.R;
+import diazhernan.carlos.socialsports.RETROFIT;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class EventSettingsParticipants extends Fragment {
@@ -101,7 +109,22 @@ public class EventSettingsParticipants extends Fragment {
     }
 
     private void eliminarParticipante() {
-        Funcionalidades.eliminarParticipante(Funcionalidades.eventoSeleccionado,usuarioSeleccionado);
+        //Funcionalidades.eliminarParticipante(Funcionalidades.eventoSeleccionado,usuarioSeleccionado);
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.eliminarParticipante("Bearer " + LoginActivity.token, Funcionalidades.eventoSeleccionado.getIdEvento(), usuarioSeleccionado.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Funcionalidades.eventoSeleccionado.getListaParticipantes().remove(usuarioSeleccionado);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     private void bloquearSolicitud() {
