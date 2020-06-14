@@ -72,18 +72,21 @@ public class EventSettingsParticipants extends Fragment {
                         agregarAmigo();
                         break;
                 }
-                mostrarListaUsuarios(listaParticipantes);
+                if (listaParticipantes != null)
+                    mostrarListaUsuarios(listaParticipantes);
             }
         });
         listViewParticipantes = getActivity().findViewById(R.id.listEventSettingsParticipants);
         listaParticipantes = Funcionalidades.eventoSeleccionado.getListaParticipantes();
-        mostrarListaUsuarios(listaParticipantes);
+        if (listaParticipantes != null)
+            mostrarListaUsuarios(listaParticipantes);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mostrarListaUsuarios(listaParticipantes);
+        if (listaParticipantes != null)
+            mostrarListaUsuarios(listaParticipantes);
     }
 
     private void mostrarListaUsuarios(ArrayList<Usuario> arrayList) {

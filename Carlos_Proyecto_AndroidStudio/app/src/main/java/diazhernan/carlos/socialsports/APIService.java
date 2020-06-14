@@ -169,4 +169,7 @@ public interface APIService {
 
     @GET("perfil/puntuacionorganizador/{correo}")
     Call<Float> getReputacionOrganizador(@Header("Authorization") String authHeader, @Path("correo") String correo);
+
+    @GET("eventos/hasidopuntuado/{idevento}")
+    Call<Boolean> getHaSidoPuntuado(@Header("Authorization") String authHeader, @Path("idevento") String idevento);
 }
