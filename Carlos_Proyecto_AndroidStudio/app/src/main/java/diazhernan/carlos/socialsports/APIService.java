@@ -150,4 +150,7 @@ public interface APIService {
     @FormUrlEncoded
     @POST("eventos/insertarparticipante")
     Call<ResponseBody> insertarParticipante(@Header("Authorization") String authHeader, @Field("idEvento") String idEvento, @Field("correo") String correo);
+
+    @GET("eventos/hasidopuntuado/{idevento}")
+    Call<Boolean> getHaSidoPuntuado(@Header("Authorization") String authHeader, @Path("idevento") String idevento);
 }

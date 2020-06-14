@@ -44,13 +44,15 @@ public class SearchEventsResults extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         listViewEventos = getActivity().findViewById(R.id.listSearchEventsResults);
-        mostrarListaEventos(listaEventosFiltrados);
+        if (listaEventosFiltrados != null)
+            mostrarListaEventos(listaEventosFiltrados);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mostrarListaEventos(listaEventosFiltrados);
+        if (listaEventosFiltrados != null)
+            mostrarListaEventos(listaEventosFiltrados);
     }
 
     private void mostrarListaEventos(final ArrayList<Evento> arrayList)
