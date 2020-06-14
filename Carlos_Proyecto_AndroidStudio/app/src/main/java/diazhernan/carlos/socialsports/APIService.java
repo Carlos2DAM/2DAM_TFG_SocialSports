@@ -3,6 +3,8 @@ package diazhernan.carlos.socialsports;
 import java.util.ArrayList;
 
 import diazhernan.carlos.socialsports.Clases.Evento;
+import diazhernan.carlos.socialsports.Clases.PuntuacionEvento;
+import diazhernan.carlos.socialsports.Clases.PuntuacionParticipante;
 import diazhernan.carlos.socialsports.Clases.Usuario;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -170,6 +172,12 @@ public interface APIService {
     @GET("perfil/puntuacionorganizador/{correo}")
     Call<Float> getReputacionOrganizador(@Header("Authorization") String authHeader, @Path("correo") String correo);
 
-    @GET("eventos/hasidopuntuado/{idevento}")
-    Call<Boolean> getHaSidoPuntuado(@Header("Authorization") String authHeader, @Path("idevento") String idevento);
+    @GET("eventos/hasidopuntuado/{idevento}/{email}")
+    Call<Boolean> getHaSidoPuntuado(@Header("Authorization") String authHeader, @Path("idevento") String idevento, @Path("email") String email);
+
+    @POST("perfil/insertarpuntuacion")
+    Call<ResponseBody> insertarPuntuacionParticipante(@Header("Authorization") String authHeader, @Body PuntuacionParticipante puntuacion);
+
+    @POST("eventos/insertarpuntuacion")
+    Call<ResponseBody> insertarPuntuacionEvento(@Header("Authorization") String authHeader, @Body PuntuacionEvento puntuacion);
 }
