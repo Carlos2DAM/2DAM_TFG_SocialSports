@@ -186,11 +186,11 @@ public class NewEvent extends Fragment {
         requisitos.setEdadMaxima(newEventRequirements.getEdadMaxima());
         requisitos.setRequisitoDeGenero(newEventRequirements.getGenero().toUpperCase());
         requisitos.setReputacionNecesaria(newEventRequirements.getReputacion());
-        idEv = LoginActivity.usuario.getEmailUsuario()+"_"+Funcionalidades.dateToStringLargo(fechaCreado);
+        //idEv = LoginActivity.usuario.getEmailUsuario()+"_"+Funcionalidades.dateToStringLargo(fechaCreado);
+        idEv = "";
         ArrayList<Usuario> listaP = new ArrayList<>();
         if (newEventSpecify.getElOrganizadorEsParticipante())
             listaP.add(LoginActivity.usuario);
-
 
         for (Usuario usuario: LoginActivity.usuario.getListaAmigos()) {
             if (newEventInvite.getListaInvitarAmigos().contains(usuario.getEmailUsuario())) {
