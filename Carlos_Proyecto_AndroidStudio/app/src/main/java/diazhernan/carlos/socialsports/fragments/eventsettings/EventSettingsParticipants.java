@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +34,7 @@ public class EventSettingsParticipants extends Fragment {
     private ListView listViewParticipantes;
     private ArrayList<Usuario> listaParticipantes;
     private AlertDialog.Builder menuOpciones;
-    private String[] opcionesOrganizador;
+    private String[] opciones;
 
     public EventSettingsParticipants() {
         listaParticipantes = new ArrayList<>();
@@ -50,32 +49,51 @@ public class EventSettingsParticipants extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        opcionesOrganizador = new String[]{getResources().getString(R.string.opcion_eliminar_participante)
-                ,getResources().getString(R.string.opcion_bloqueo_de_evento)
-                ,getResources().getString(R.string.opcion_bloqueo_permanente)
-                ,getResources().getString(R.string.opcion_solicitud_de_amistad)};
+        if (Funcionalidades.eresOrganizador(Funcionalidades.eventoSeleccionado)) {
+            opciones = new String[]{getResources().getString(R.string.opcion_eliminar_participante)
+                    , getResources().getString(R.string.opcion_bloqueo_de_evento)
+                    , getResources().getString(R.string.opcion_bloqueo_permanente)
+                    , getResources().getString(R.string.opcion_solicitud_de_amistad)};
+        }
+        else {
+            opciones = new String[]{getResources().getString(R.string.opcion_solicitud_de_amistad)};
+        }
         menuOpciones = new AlertDialog.Builder(getContext());
-        menuOpciones.setItems(opcionesOrganizador, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0:
-                        eliminarParticipante();
-                        break;
-                    case 1:
-                        bloquearSolicitud();
-                        break;
-                    case 2:
-                        bloquearSolicitantePermanentemente();
-                        break;
-                    case 3:
-                        agregarAmigo();
-                        break;
+        if (Funcionalidades.eresOrganizador(Funcionalidades.eventoSeleccionado)) {
+            menuOpciones.setItems(opciones, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case 0:
+                            eliminarParticipante();
+                            break;
+                        case 1:
+                            bloquearSolicitud();
+                            break;
+                        case 2:
+                            bloquearSolicitantePermanentemente();
+                            break;
+                        case 3:
+                            agregarAmigo();
+                            break;
+                    }
+                    if (listaParticipantes != null)
+                        mostrarListaUsuarios(listaParticipantes);
                 }
-                if (listaParticipantes != null)
-                    mostrarListaUsuarios(listaParticipantes);
-            }
-        });
+            });
+        }
+        else {
+            menuOpciones.setItems(opciones, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case 0:
+                            agregarAmigo();
+                            break;
+                    }
+                }
+            });
+        }
         listViewParticipantes = getActivity().findViewById(R.id.listEventSettingsParticipants);
         listaParticipantes = Funcionalidades.eventoSeleccionado.getListaParticipantes();
         if (listaParticipantes != null)
@@ -93,19 +111,17 @@ public class EventSettingsParticipants extends Fragment {
         AdaptadorListaUsuarios adapter = new AdaptadorListaUsuarios(getContext(), R.layout.item_lista_usuarios,
                 R.id.textItemUsuarioNombre, arrayList);
         listViewParticipantes.setAdapter(adapter);
-        if (Funcionalidades.eresOrganizador(Funcionalidades.eventoSeleccionado)) {
-            listViewParticipantes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    usuarioSeleccionado = listaParticipantes.get(position);
-                    if (!Funcionalidades.soyYo(usuarioSeleccionado)) {
-                        menuOpciones.setTitle(usuarioSeleccionado.getNombreUsuario() +
-                                " " + usuarioSeleccionado.getApellidosUsuario());
-                        menuOpciones.show();
-                    }
+        listViewParticipantes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                usuarioSeleccionado = listaParticipantes.get(position);
+                if (!Funcionalidades.soyYo(usuarioSeleccionado)) {
+                    menuOpciones.setTitle(usuarioSeleccionado.getNombreUsuario() +
+                            " " + usuarioSeleccionado.getApellidosUsuario());
+                    menuOpciones.show();
                 }
-            });
-        }
+            }
+        });
     }
 
     private void eliminarParticipante() {

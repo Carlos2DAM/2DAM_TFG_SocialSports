@@ -27,7 +27,7 @@ public class EventSettingsRequests extends Fragment {
     private ListView listViewSolicitudes;
     private ArrayList<Usuario> listaSolicitantes;
     private AlertDialog.Builder menuOpciones;
-    private String[] opcionesOrganizador;
+    private String[] opciones;
 
     public EventSettingsRequests() {
         listaSolicitantes = new ArrayList<>();
@@ -42,36 +42,55 @@ public class EventSettingsRequests extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        opcionesOrganizador = new String[]{getResources().getString(R.string.opcion_aceptar_solicitud)
-                ,getResources().getString(R.string.opcion_rechazar_solicitud)
-                ,getResources().getString(R.string.opcion_bloqueo_de_evento)
-                ,getResources().getString(R.string.opcion_bloqueo_permanente)
-                ,getResources().getString(R.string.opcion_solicitud_de_amistad)};
+        if (Funcionalidades.eresOrganizador(Funcionalidades.eventoSeleccionado)) {
+            opciones = new String[]{getResources().getString(R.string.opcion_aceptar_solicitud)
+                    , getResources().getString(R.string.opcion_rechazar_solicitud)
+                    , getResources().getString(R.string.opcion_bloqueo_de_evento)
+                    , getResources().getString(R.string.opcion_bloqueo_permanente)
+                    , getResources().getString(R.string.opcion_solicitud_de_amistad)};
+        }
+        else {
+            opciones = new String[]{getResources().getString(R.string.opcion_solicitud_de_amistad)};
+        }
         menuOpciones = new AlertDialog.Builder(getContext());
-        menuOpciones.setItems(opcionesOrganizador, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0:
-                        aceptarSolicitud();
-                        break;
-                    case 1:
-                        eliminarSolicitud();
-                        break;
-                    case 2:
-                        bloquearSolicitud();
-                        break;
-                    case 3:
-                        bloquearSolicitantePermanentemente();
-                        break;
-                    case 4:
-                        agregarAmigo();
-                        break;
+        if (Funcionalidades.eresOrganizador(Funcionalidades.eventoSeleccionado)) {
+            menuOpciones.setItems(opciones, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case 0:
+                            aceptarSolicitud();
+                            break;
+                        case 1:
+                            eliminarSolicitud();
+                            break;
+                        case 2:
+                            bloquearSolicitud();
+                            break;
+                        case 3:
+                            bloquearSolicitantePermanentemente();
+                            break;
+                        case 4:
+                            agregarAmigo();
+                            break;
+                    }
+                    if (listaSolicitantes != null)
+                        mostrarListaUsuarios(listaSolicitantes);
                 }
-                if (listaSolicitantes != null)
-                    mostrarListaUsuarios(listaSolicitantes);
-            }
-        });
+            });
+        }
+        else {
+            menuOpciones.setItems(opciones, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case 0:
+                            agregarAmigo();
+                            break;
+                    }
+                }
+            });
+        }
         listViewSolicitudes = getActivity().findViewById(R.id.listEventSettingsRequest);
         listaSolicitantes = Funcionalidades.eventoSeleccionado.getListaSolicitantes();
         if (listaSolicitantes != null)
@@ -89,17 +108,17 @@ public class EventSettingsRequests extends Fragment {
         AdaptadorListaUsuarios adapter = new AdaptadorListaUsuarios(getContext(), R.layout.item_lista_usuarios,
                 R.id.textItemUsuarioNombre, arrayList);
         listViewSolicitudes.setAdapter(adapter);
-        if (Funcionalidades.eresOrganizador(Funcionalidades.eventoSeleccionado)) {
-            listViewSolicitudes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    usuarioSeleccionado = listaSolicitantes.get(position);
+        listViewSolicitudes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                usuarioSeleccionado = listaSolicitantes.get(position);
+                if (!Funcionalidades.soyYo(usuarioSeleccionado)) {
                     menuOpciones.setTitle(usuarioSeleccionado.getNombreUsuario() +
                             " " + usuarioSeleccionado.getApellidosUsuario());
                     menuOpciones.show();
                 }
-            });
-        }
+            }
+        });
     }
 
     private void aceptarSolicitud() {
