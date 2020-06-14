@@ -126,27 +126,29 @@ public class MyEvents extends Fragment {
 
     private void mostrarListaEventos(ArrayList<Evento> arrayList)
     {
-        AdaptadorListaEventos adapter = new AdaptadorListaEventos(getContext(), R.layout.item_lista_eventos,
-                R.id.textItemEventoDeporte, arrayList);
-        listaDeEventos = arrayList;
-        listViewEventos.setAdapter(adapter);
-        listViewEventos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Evento evento = listaDeEventos.get(position);
+        if (arrayList != null && getContext() != null) {
+            AdaptadorListaEventos adapter = new AdaptadorListaEventos(getContext(), R.layout.item_lista_eventos,
+                    R.id.textItemEventoDeporte, arrayList);
+            listaDeEventos = arrayList;
+            listViewEventos.setAdapter(adapter);
+            listViewEventos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Evento evento = listaDeEventos.get(position);
 
-                if (!Funcionalidades.estasBaneado(evento,getContext()) &&
-                        !Funcionalidades.usuarioBloqueadoPermanentemente(LoginActivity.usuario.getEmailUsuario()
-                                ,evento.getOrganizadorEvento().getEmailUsuario(),getContext()) ) {
-                    Intent intent = null;
-                    if (!evento.isTerminado())
-                        intent = new Intent(getContext(), EventSettings.class);
-                    else
-                        intent = new Intent(getContext(), EventRate.class);
-                    Funcionalidades.eventoSeleccionado = evento;
-                    startActivity(intent);
+                    if (!Funcionalidades.estasBaneado(evento, getContext()) &&
+                            !Funcionalidades.usuarioBloqueadoPermanentemente(LoginActivity.usuario.getEmailUsuario()
+                                    , evento.getOrganizadorEvento().getEmailUsuario(), getContext())) {
+                        Intent intent = null;
+                        if (!evento.isTerminado())
+                            intent = new Intent(getContext(), EventSettings.class);
+                        else
+                            intent = new Intent(getContext(), EventRate.class);
+                        Funcionalidades.eventoSeleccionado = evento;
+                        startActivity(intent);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }

@@ -201,4 +201,21 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    /*
+    public void calcularReputaciónOrganizadorBBDD(String idevento) {
+        service.getHaSidoPuntuado("Bearer " + token, idevento).enqueue(new Callback<Float>() {
+            @Override
+            public void onResponse(Call<Float> call, Response<Float> response) {
+                Funcionalidades.mostrarMensaje(Integer.toString(response.code()),getApplicationContext());
+                if(response.isSuccessful()){
+                    Funcionalidades.mostrarMensaje(Float.toString(response.body()),getApplicationContext());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Float> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }*/
 }

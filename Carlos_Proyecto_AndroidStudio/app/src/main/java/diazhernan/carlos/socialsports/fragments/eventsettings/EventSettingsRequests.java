@@ -68,18 +68,21 @@ public class EventSettingsRequests extends Fragment {
                         agregarAmigo();
                         break;
                 }
-                mostrarListaUsuarios(listaSolicitantes);
+                if (listaSolicitantes != null)
+                    mostrarListaUsuarios(listaSolicitantes);
             }
         });
         listViewSolicitudes = getActivity().findViewById(R.id.listEventSettingsRequest);
         listaSolicitantes = Funcionalidades.eventoSeleccionado.getListaSolicitantes();
-        mostrarListaUsuarios(listaSolicitantes);
+        if (listaSolicitantes != null)
+            mostrarListaUsuarios(listaSolicitantes);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mostrarListaUsuarios(listaSolicitantes);
+        if (listaSolicitantes != null)
+            mostrarListaUsuarios(listaSolicitantes);
     }
 
     private void mostrarListaUsuarios(ArrayList<Usuario> arrayList) {

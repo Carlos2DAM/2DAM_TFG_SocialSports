@@ -22,6 +22,10 @@ import diazhernan.carlos.socialsports.Clases.AdaptadorListaUsuarios;
 import diazhernan.carlos.socialsports.Clases.PuntuacionEvento;
 import diazhernan.carlos.socialsports.Clases.PuntuacionParticipante;
 import diazhernan.carlos.socialsports.Clases.Usuario;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EventRate extends AppCompatActivity {
 
@@ -69,9 +73,11 @@ public class EventRate extends AppCompatActivity {
                 return true;
             }
         });
-        haSidoPuntuado = eventoHasidoPuntuado();
+
+        haSidoPuntuado(Funcionalidades.eventoSeleccionado.getIdEvento());
+        /*
         if (haSidoPuntuado)
-            deshabilitarPuntuar();
+            deshabilitarPuntuar();*/
         menuOpciones = new AlertDialog.Builder(this);
         menuOpciones.setItems(opcionesOrganizador, new DialogInterface.OnClickListener() {
             @Override
@@ -86,8 +92,10 @@ public class EventRate extends AppCompatActivity {
                 }
             }
         });
+
         listaParticipantes = Funcionalidades.eventoSeleccionado.getListaParticipantes();
-        mostrarListaParticipantes(listaParticipantes);
+        if (listaParticipantes != null)
+            mostrarListaParticipantes(listaParticipantes);
     }
 
     private void mostrarListaParticipantes(ArrayList<Usuario> arrayList)
@@ -110,10 +118,6 @@ public class EventRate extends AppCompatActivity {
         }
     }
 
-    private boolean eventoHasidoPuntuado() {
-        return Funcionalidades.usuarioHaPuntuadoEvento(LoginActivity.usuario.getEmailUsuario(),Funcionalidades.eventoSeleccionado.getIdEvento());
-    }
-
     private void enviarPuntuaciones() {
         if (ratingBarOrganizer.isEnabled()) {
             PuntuacionEvento puntuacionEvento = new PuntuacionEvento(LoginActivity.usuario.getEmailUsuario(),
@@ -125,7 +129,8 @@ public class EventRate extends AppCompatActivity {
         }
         haSidoPuntuado = true;
         deshabilitarPuntuar();
-        mostrarListaParticipantes(listaParticipantes);
+        if (listaParticipantes != null)
+            mostrarListaParticipantes(listaParticipantes);
     }
 
     private void deshabilitarPuntuar() {
@@ -143,5 +148,28 @@ public class EventRate extends AppCompatActivity {
         Funcionalidades.eliminarBloqueoPermanentemente(usuarioSeleccionado);
         Funcionalidades.insertarAmigo(usuarioSeleccionado);
 
+    }
+
+    public void haSidoPuntuado(String idEvento) {
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+
+        service.getHaSidoPuntuado("Bearer " + LoginActivity.token, idEvento).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                Funcionalidades.mostrarMensaje(Integer.toString(response.code()),getApplicationContext());
+                if(response.isSuccessful()) {
+                    if (response.body())
+                        Funcionalidades.mostrarMensaje("Se ha puntuado",getApplicationContext());
+                    else
+                        Funcionalidades.mostrarMensaje("NO se ha puntuado",getApplicationContext());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Funcionalidades.mostrarMensaje("onFailure",getApplicationContext());
+            }
+        });
     }
 }
