@@ -421,6 +421,7 @@ public class Funcionalidades extends AppCompatActivity {
             LoginActivity.usuario.getListaBloqueados().add(usuario);
             LoginActivity.usuario.getListaAmigos().remove(usuario);
         }
+
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
         service.bloquearUsuario("Bearer " + LoginActivity.token, LoginActivity.usuario.getEmailUsuario(), usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
@@ -594,6 +595,20 @@ public class Funcionalidades extends AppCompatActivity {
         if (evento.getListaParticipantes().contains(usuario)) {
             evento.getListaParticipantes().remove(usuario);
         }
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.eliminarParticipante("Bearer " + LoginActivity.token, evento.getIdEvento(), usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
             //TODO eliminar un usuario de la lista de participantes del evento.
             //serverEliminarParticipante(evento.getIdEvento(), usuario.getEmailUsuario());
     }
@@ -820,6 +835,20 @@ public class Funcionalidades extends AppCompatActivity {
         if (!evento.getListaDescartados().contains(usuario)) {
             evento.getListaDescartados().add(usuario);
 
+            RETROFIT retrofit = new RETROFIT();
+            APIService service = retrofit.getAPIService();
+            service.bloquearSolicitud("Bearer " + LoginActivity.token, evento.getIdEvento(), usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if(response.isSuccessful()){
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
             //TODO insertar un usuario en la lista de descartados del evento.
             //serverBloquearParticipante(evento.getIdEvento(), usuario.getEmailUsuario());
         }

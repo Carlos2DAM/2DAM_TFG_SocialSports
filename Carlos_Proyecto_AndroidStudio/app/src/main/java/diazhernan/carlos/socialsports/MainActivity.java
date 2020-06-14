@@ -9,10 +9,8 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import diazhernan.carlos.socialsports.Clases.Evento;
-import diazhernan.carlos.socialsports.Clases.Usuario;
 import diazhernan.carlos.socialsports.fragments.home.Home;
 import diazhernan.carlos.socialsports.fragments.myevents.MyEvents;
 import diazhernan.carlos.socialsports.fragments.newevent.NewEvent;

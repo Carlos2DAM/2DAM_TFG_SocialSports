@@ -72,18 +72,21 @@ public class EventSettingsParticipants extends Fragment {
                         agregarAmigo();
                         break;
                 }
-                mostrarListaUsuarios(listaParticipantes);
+                if (listaParticipantes != null)
+                    mostrarListaUsuarios(listaParticipantes);
             }
         });
         listViewParticipantes = getActivity().findViewById(R.id.listEventSettingsParticipants);
         listaParticipantes = Funcionalidades.eventoSeleccionado.getListaParticipantes();
-        mostrarListaUsuarios(listaParticipantes);
+        if (listaParticipantes != null)
+            mostrarListaUsuarios(listaParticipantes);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mostrarListaUsuarios(listaParticipantes);
+        if (listaParticipantes != null)
+            mostrarListaUsuarios(listaParticipantes);
     }
 
     private void mostrarListaUsuarios(ArrayList<Usuario> arrayList) {
@@ -106,22 +109,7 @@ public class EventSettingsParticipants extends Fragment {
     }
 
     private void eliminarParticipante() {
-        //Funcionalidades.eliminarParticipante(Funcionalidades.eventoSeleccionado,usuarioSeleccionado);
-        RETROFIT retrofit = new RETROFIT();
-        APIService service = retrofit.getAPIService();
-        service.eliminarParticipante("Bearer " + LoginActivity.token, Funcionalidades.eventoSeleccionado.getIdEvento(), usuarioSeleccionado.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(response.isSuccessful()){
-                    Funcionalidades.eventoSeleccionado.getListaParticipantes().remove(usuarioSeleccionado);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
+        Funcionalidades.eliminarParticipante(Funcionalidades.eventoSeleccionado,usuarioSeleccionado);
     }
 
     private void bloquearSolicitud() {

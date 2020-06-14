@@ -78,7 +78,7 @@ public class Home extends Fragment {
             public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {
                 if(response.isSuccessful()){
                     ArrayList<Evento> listaEventos = response.body();
-                    if(listaEventos != null) {
+                    if(listaEventos != null && getContext() != null) {
 
                         for (Evento evento: listaEventos) {
                             ImageView imagen = new ImageView(getContext());

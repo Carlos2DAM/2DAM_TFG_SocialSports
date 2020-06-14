@@ -1,6 +1,7 @@
 package diazhernan.carlos.socialsports;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import diazhernan.carlos.socialsports.Clases.Evento;
 import diazhernan.carlos.socialsports.Clases.Usuario;
@@ -161,6 +162,9 @@ public interface APIService {
     @DELETE("eventos/eliminarsolicitante/{idEvento}/{correo}")
     Call<ResponseBody> eliminarSolicitante(@Header("Authorization") String authHeader, @Path("idEvento") String idEvento, @Path("correo") String correo);
 
+    @PUT("eventos/bloquearsolicitud/{idEvento}/{correo}")
+    Call<ResponseBody> bloquearSolicitud(@Header("Authorization") String authHeader, @Path("idEvento") String idEvento, @Path("correo") String correo);
+
     @DELETE("eventos/eliminar/{idEvento}")
     Call<ResponseBody> eliminarEvento(@Header("Authorization") String authHeader, @Path("idEvento") String idEvento);
 
@@ -169,4 +173,7 @@ public interface APIService {
 
     @GET("perfil/puntuacionorganizador/{correo}")
     Call<Float> getReputacionOrganizador(@Header("Authorization") String authHeader, @Path("correo") String correo);
+
+    @GET("eventos/hasidopuntuado/{idevento}")
+    Call<Boolean> getHaSidoPuntuado(@Header("Authorization") String authHeader, @Path("idevento") String idevento);
 }

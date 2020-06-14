@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,7 +17,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import diazhernan.carlos.socialsports.Clases.AdaptadorListaUsuarios;
 import diazhernan.carlos.socialsports.Clases.PuntuacionEvento;
@@ -73,9 +76,12 @@ public class EventRate extends AppCompatActivity {
                 return true;
             }
         });
-        haSidoPuntuado = eventoHasidoPuntuado();
+
+        haSidoPuntuado(Funcionalidades.eventoSeleccionado.getIdEvento());
+
+        /*
         if (haSidoPuntuado)
-            deshabilitarPuntuar();
+            deshabilitarPuntuar();*/
         menuOpciones = new AlertDialog.Builder(this);
         menuOpciones.setItems(opcionesOrganizador, new DialogInterface.OnClickListener() {
             @Override
@@ -90,8 +96,10 @@ public class EventRate extends AppCompatActivity {
                 }
             }
         });
+
         listaParticipantes = Funcionalidades.eventoSeleccionado.getListaParticipantes();
-        mostrarListaParticipantes(listaParticipantes);
+        if (listaParticipantes != null)
+            mostrarListaParticipantes(listaParticipantes);
     }
 
     private void mostrarListaParticipantes(ArrayList<Usuario> arrayList)
@@ -114,10 +122,6 @@ public class EventRate extends AppCompatActivity {
         }
     }
 
-    private boolean eventoHasidoPuntuado() {
-        return Funcionalidades.usuarioHaPuntuadoEvento(LoginActivity.usuario.getEmailUsuario(),Funcionalidades.eventoSeleccionado.getIdEvento());
-    }
-
     private void enviarPuntuaciones() {
         if (ratingBarOrganizer.isEnabled()) {
             PuntuacionEvento puntuacionEvento = new PuntuacionEvento(LoginActivity.usuario.getEmailUsuario(),
@@ -129,7 +133,8 @@ public class EventRate extends AppCompatActivity {
         }
         haSidoPuntuado = true;
         deshabilitarPuntuar();
-        mostrarListaParticipantes(listaParticipantes);
+        if (listaParticipantes != null)
+            mostrarListaParticipantes(listaParticipantes);
     }
 
     private void deshabilitarPuntuar() {
@@ -147,5 +152,33 @@ public class EventRate extends AppCompatActivity {
     private void agregarAmigo() {
         //Funcionalidades.eliminarBloqueoPermanentemente(usuarioSeleccionado);
         Funcionalidades.insertarAmigo(usuarioSeleccionado);
+    }
+
+    public void haSidoPuntuado(String idEvento) {
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+
+        service.getHaSidoPuntuado("Bearer " + LoginActivity.token, idEvento).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                Funcionalidades.mostrarMensaje(Integer.toString(response.code()),getApplicationContext());
+                if(response.isSuccessful()) {
+
+                    haSidoPuntuado = response.body();
+                    if (haSidoPuntuado)
+                        deshabilitarPuntuar();
+
+                    listaParticipantes = Funcionalidades.eventoSeleccionado.getListaParticipantes();
+                    if (listaParticipantes != null)
+                        mostrarListaParticipantes(listaParticipantes);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Funcionalidades.mostrarMensaje("onFailure",getApplicationContext());
+            }
+        });
+
     }
 }
