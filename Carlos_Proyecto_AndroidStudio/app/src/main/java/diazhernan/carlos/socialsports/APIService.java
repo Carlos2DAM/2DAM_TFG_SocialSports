@@ -176,4 +176,5 @@ public interface APIService {
 
     @GET("eventos/hasidopuntuado/{idevento}")
     Call<Boolean> getHaSidoPuntuado(@Header("Authorization") String authHeader, @Path("idevento") String idevento);
+
 }

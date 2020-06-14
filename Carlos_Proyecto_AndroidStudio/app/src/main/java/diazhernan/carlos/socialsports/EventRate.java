@@ -77,11 +77,9 @@ public class EventRate extends AppCompatActivity {
             }
         });
 
-        haSidoPuntuado(Funcionalidades.eventoSeleccionado.getIdEvento());
+        //haSidoPuntuado(Funcionalidades.eventoSeleccionado.getIdEvento());
+        haSidoPuntuado("0001");
 
-        /*
-        if (haSidoPuntuado)
-            deshabilitarPuntuar();*/
         menuOpciones = new AlertDialog.Builder(this);
         menuOpciones.setItems(opcionesOrganizador, new DialogInterface.OnClickListener() {
             @Override
@@ -96,10 +94,6 @@ public class EventRate extends AppCompatActivity {
                 }
             }
         });
-
-        listaParticipantes = Funcionalidades.eventoSeleccionado.getListaParticipantes();
-        if (listaParticipantes != null)
-            mostrarListaParticipantes(listaParticipantes);
     }
 
     private void mostrarListaParticipantes(ArrayList<Usuario> arrayList)
