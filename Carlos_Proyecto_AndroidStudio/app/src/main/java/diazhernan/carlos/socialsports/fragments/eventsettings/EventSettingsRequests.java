@@ -100,7 +100,7 @@ public class EventSettingsRequests extends Fragment {
     }
 
     private void aceptarSolicitud() {
-        Funcionalidades.eliminarSolicitante(Funcionalidades.eventoSeleccionado,usuarioSeleccionado);
+        //Funcionalidades.eliminarSolicitante(Funcionalidades.eventoSeleccionado,usuarioSeleccionado);
         Funcionalidades.insertarParticipante(Funcionalidades.eventoSeleccionado,usuarioSeleccionado);
     }
 
@@ -121,7 +121,7 @@ public class EventSettingsRequests extends Fragment {
     }
 
     private void agregarAmigo() {
-        Funcionalidades.eliminarBloqueoPermanentemente(usuarioSeleccionado);
+        //Funcionalidades.eliminarBloqueoPermanentemente(usuarioSeleccionado);
         Funcionalidades.insertarAmigo(usuarioSeleccionado);
     }
 }

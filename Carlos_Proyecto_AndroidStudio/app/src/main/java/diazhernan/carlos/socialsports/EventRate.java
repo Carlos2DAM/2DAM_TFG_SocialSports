@@ -22,6 +22,10 @@ import diazhernan.carlos.socialsports.Clases.AdaptadorListaUsuarios;
 import diazhernan.carlos.socialsports.Clases.PuntuacionEvento;
 import diazhernan.carlos.socialsports.Clases.PuntuacionParticipante;
 import diazhernan.carlos.socialsports.Clases.Usuario;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EventRate extends AppCompatActivity {
 
@@ -136,12 +140,12 @@ public class EventRate extends AppCompatActivity {
 
     private void bloquearSolicitantePermanentemente() {
         Funcionalidades.bloquearUsuarioPermanentemente(usuarioSeleccionado);
-        Funcionalidades.eliminarAmigo(usuarioSeleccionado);
+        //Funcionalidades.eliminarAmigo(usuarioSeleccionado);
+
     }
 
     private void agregarAmigo() {
-        Funcionalidades.eliminarBloqueoPermanentemente(usuarioSeleccionado);
+        //Funcionalidades.eliminarBloqueoPermanentemente(usuarioSeleccionado);
         Funcionalidades.insertarAmigo(usuarioSeleccionado);
-
     }
 }

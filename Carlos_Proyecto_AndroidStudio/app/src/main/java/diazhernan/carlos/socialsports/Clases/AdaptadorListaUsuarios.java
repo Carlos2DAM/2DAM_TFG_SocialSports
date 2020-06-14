@@ -1,16 +1,20 @@
 package diazhernan.carlos.socialsports.Clases;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.io.ByteArrayInputStream;
+import java.nio.charset.Charset;
 import java.util.List;
 
 import diazhernan.carlos.socialsports.EventRate;
@@ -71,11 +75,11 @@ public class AdaptadorListaUsuarios extends ArrayAdapter<Usuario> {
                 });
             }
             TextView textNombre = fila.findViewById(R.id.textItemUsuarioNombre);
-
             textNombre.setText(usuario.getNombreUsuario().toUpperCase() + " " + usuario.getApellidosUsuario().toUpperCase());
-
             TextView textGenero = fila.findViewById(R.id.textItemUsuarioGenero);
             TextView textEdad = fila.findViewById(R.id.textItemUsuarioEdad);
+            ImageView image = fila.findViewById(R.id.imageItemUsuario);
+
             if (usuario.getGeneroUsuario() != null)
                 textGenero.setText(usuario.getGeneroUsuario().toUpperCase());
             else

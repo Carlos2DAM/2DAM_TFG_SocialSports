@@ -417,8 +417,10 @@ public class Funcionalidades extends AppCompatActivity {
     }
 
     public static void bloquearUsuarioPermanentemente(Usuario usuario) {
-        if (!LoginActivity.usuario.getListaBloqueados().contains(usuario))
+        if (!LoginActivity.usuario.getListaBloqueados().contains(usuario)) {
             LoginActivity.usuario.getListaBloqueados().add(usuario);
+            LoginActivity.usuario.getListaAmigos().remove(usuario);
+        }
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
         service.bloquearUsuario("Bearer " + LoginActivity.token, LoginActivity.usuario.getEmailUsuario(), usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
@@ -475,25 +477,27 @@ public class Funcionalidades extends AppCompatActivity {
 
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
-                service.quitarBloqueo("Bearer " + LoginActivity.token,
-                LoginActivity.usuario.getEmailUsuario(),
-                usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
+        service.quitarBloqueo("Bearer " + LoginActivity.token,
+                LoginActivity.usuario.getEmailUsuario(),usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response){
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
             }
+
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                t.printStackTrace();
+
             }
-       });
+        });
         //TODO eliminar un usuario de la lista de personas bloqueadas del Usuario actual.
         //serverEliminarBloqueado(emailEliminado, emailUsuario);
     }
 
     public static void insertarAmigo(Usuario usuario) {
-        if (!LoginActivity.usuario.getListaAmigos().contains(usuario))
+        if (!LoginActivity.usuario.getListaAmigos().contains(usuario)) {
             LoginActivity.usuario.getListaAmigos().add(usuario);
+            LoginActivity.usuario.getListaBloqueados().remove(usuario);
+        }
 
         RETROFIT retrofit = new RETROFIT();
         retrofit.getAPIService().agregarAmigo("Bearer " + LoginActivity.token,
@@ -502,9 +506,7 @@ public class Funcionalidades extends AppCompatActivity {
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if(response.isSuccessful()) {
 
-                        }
                     }
 
                     @Override
@@ -591,28 +593,16 @@ public class Funcionalidades extends AppCompatActivity {
     public static void eliminarParticipante(Evento evento, Usuario usuario) {
         if (evento.getListaParticipantes().contains(usuario)) {
             evento.getListaParticipantes().remove(usuario);
-
+        }
             //TODO eliminar un usuario de la lista de participantes del evento.
             //serverEliminarParticipante(evento.getIdEvento(), usuario.getEmailUsuario());
-            RETROFIT retrofit = new RETROFIT();
-            APIService service = retrofit.getAPIService();
-            service.eliminarParticipante("Bearer " + LoginActivity.token, evento.getIdEvento(), usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                }
-            });
-        }
     }
 
     public static void insertarParticipante(Evento evento,Usuario usuario) {
         if (!evento.getListaParticipantes().contains(usuario)) {
             evento.getListaParticipantes().add(usuario);
+            evento.getListaSolicitantes().remove(usuario);
+        }
 
             //TODO insertar un usuario en la lista de participantes del evento.
             //serverInsertarParticipante(evento.getIdEvento(), usuario.getEmailUsuario());
@@ -629,7 +619,6 @@ public class Funcionalidades extends AppCompatActivity {
 
                 }
             });
-        }
     }
 
     public static void actualizarReservaEvento(String idEvento, boolean reserva) {
@@ -803,10 +792,23 @@ public class Funcionalidades extends AppCompatActivity {
     public static void eliminarSolicitante(Evento evento,Usuario usuario) {
         if (evento.getListaSolicitantes().contains(usuario)) {
             evento.getListaSolicitantes().remove(usuario);
+        }
 
             //TODO eliminar usuario de la lista de solicitantes del evento.
             //serverEliminarSolicitante(evento.getIdEvento(), usuario.getEmailUsuario());
-        }
+            RETROFIT retrofit = new RETROFIT();
+            APIService service = retrofit.getAPIService();
+            service.eliminarSolicitante("Bearer " + LoginActivity.token, evento.getIdEvento(), usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
     }
 
     public static void eliminarEvento(String idEvento) {

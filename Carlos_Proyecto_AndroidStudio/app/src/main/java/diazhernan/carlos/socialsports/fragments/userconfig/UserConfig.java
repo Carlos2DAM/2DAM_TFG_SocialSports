@@ -1,6 +1,10 @@
 package diazhernan.carlos.socialsports.fragments.userconfig;
 
 
+import android.content.ContentResolver;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,11 +16,14 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 
 import diazhernan.carlos.socialsports.APIService;
@@ -25,6 +32,9 @@ import diazhernan.carlos.socialsports.Funcionalidades;
 import diazhernan.carlos.socialsports.LoginActivity;
 import diazhernan.carlos.socialsports.R;
 import diazhernan.carlos.socialsports.RETROFIT;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -201,6 +211,14 @@ public class UserConfig extends Fragment {
         }
 
         //TODO cargar foto de perfil.
+        /*if(userConfigSettings.getInputStream() != null){
+            try {
+                String type = getFileExtension(userConfigSettings.getUri());
+                actualizarImagen(getBytes(userConfigSettings.getInputStream()) , type);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }*/
 
         Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_finalizados),getContext()); //He cambiado el menssaje para que sea más genérico falle o no falle el guardado.
     }
@@ -388,5 +406,55 @@ public class UserConfig extends Fragment {
 
             }
         });
+    }
+
+    private void actualizarImagen(byte[] bytes , String type) {
+
+        /*RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"),bytes);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file" , "myImage." + type ,requestFile);
+        RETROFIT retrofit = new RETROFIT();
+
+        retrofit.getAPIService().subirImagen("Bearer " + LoginActivity.token, body, requestFile, LoginActivity.usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    try {
+                        LoginActivity.usuario.setFotoPerfilUsuario(response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });*/
+
+    }
+
+    //------------- FUNCIONES PARA LAS IMAGENES -------------------------------------------------------------------------------------
+
+
+
+    private byte[] getBytes(InputStream is) throws IOException {
+        ByteArrayOutputStream byteBuff = new ByteArrayOutputStream();
+
+        int buffSize = 1024;
+        byte[] buff = new byte[buffSize];
+
+        int len = 0;
+        while ((len = is.read(buff)) != -1) {
+            byteBuff.write(buff, 0, len);
+        }
+
+        return byteBuff.toByteArray();
+    }
+
+    private String getFileExtension(Uri uri) {
+        ContentResolver cr = getContext().getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cr.getType(uri));
     }
 }
