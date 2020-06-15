@@ -1,7 +1,10 @@
 package diazhernan.carlos.socialsports.Clases;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,6 +94,12 @@ public class AdaptadorListaUsuarios extends ArrayAdapter<Usuario> {
                 textEdad.setText(edad + " " + context.getResources().getString(R.string.years_old).toUpperCase());
             else
                 textEdad.setText(context.getResources().getString(R.string.unknow_age).toUpperCase());
+
+            if(!usuario.getFotoPerfilUsuario().equals("") && usuario.getFotoPerfilUsuario() != null){
+                byte[] data = Base64.decode(usuario.getFotoPerfilUsuario().getBytes(), Base64.DEFAULT);
+                Bitmap decodedBitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                image.setImageBitmap(decodedBitmap);
+            }
 
             return fila;
         }

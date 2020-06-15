@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,7 +112,11 @@ public class UserConfigSettings extends Fragment {
         editApellido.setText(LoginActivity.usuario.getApellidosUsuario());
         editDireccion.setText(LoginActivity.usuario.getDireccionUsuario());
         editNacimiento.setText(Funcionalidades.dateToString(LoginActivity.usuario.getFechaNacimientoUsuario()));
-        //image.setImageBitmap(BitmapFactory.decodeStream(new ByteArrayInputStream(LoginActivity.usuario.getFotoPerfilUsuario().getBytes())));
+        if(LoginActivity.usuario.getFotoPerfilUsuario() != null && !LoginActivity.usuario.getFotoPerfilUsuario().equals("")){
+            byte[] data = Base64.decode(LoginActivity.usuario.getFotoPerfilUsuario().getBytes(), Base64.DEFAULT);
+            Bitmap decodedBitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+            image.setImageBitmap(decodedBitmap);
+        }
 
         if (LoginActivity.usuario.getGeneroUsuario().toUpperCase().equals("MALE"))
             radioMale.setChecked(true);

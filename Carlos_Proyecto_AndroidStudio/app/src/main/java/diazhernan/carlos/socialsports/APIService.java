@@ -184,4 +184,8 @@ public interface APIService {
 
     @POST("eventos/insertarpuntuacion")
     Call<ResponseBody> insertarPuntuacionEvento(@Header("Authorization") String authHeader, @Body PuntuacionEvento puntuacion);
+
+    @Multipart
+    @POST("imagenes/upload/{correo}")
+    Call<ResponseBody> subirImagen(@Header("Authorization") String authHeader, @Part MultipartBody.Part filePart, @Part("filename") RequestBody name, @Path("correo") String correo);
 }

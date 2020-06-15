@@ -211,14 +211,14 @@ public class UserConfig extends Fragment {
         }
 
         //TODO cargar foto de perfil.
-        /*if(userConfigSettings.getInputStream() != null){
+        if(userConfigSettings.getUri() != null){
             try {
                 String type = getFileExtension(userConfigSettings.getUri());
                 actualizarImagen(getBytes(userConfigSettings.getInputStream()) , type);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }*/
+        }
 
         Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_finalizados),getContext()); //He cambiado el menssaje para que sea más genérico falle o no falle el guardado.
     }
@@ -410,8 +410,8 @@ public class UserConfig extends Fragment {
 
     private void actualizarImagen(byte[] bytes , String type) {
 
-        /*RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"),bytes);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("file" , "myImage." + type ,requestFile);
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"),bytes);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file" , LoginActivity.usuario.getEmailUsuario().replace(".","") + "." + type ,requestFile);
         RETROFIT retrofit = new RETROFIT();
 
         retrofit.getAPIService().subirImagen("Bearer " + LoginActivity.token, body, requestFile, LoginActivity.usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
@@ -430,7 +430,7 @@ public class UserConfig extends Fragment {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 t.printStackTrace();
             }
-        });*/
+        });
 
     }
 
