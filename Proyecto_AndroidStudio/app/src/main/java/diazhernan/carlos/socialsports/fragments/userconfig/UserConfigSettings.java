@@ -111,7 +111,7 @@ public class UserConfigSettings extends Fragment {
         editApellido.setText(LoginActivity.usuario.getApellidosUsuario());
         editDireccion.setText(LoginActivity.usuario.getDireccionUsuario());
         editNacimiento.setText(Funcionalidades.dateToString(LoginActivity.usuario.getFechaNacimientoUsuario()));
-        
+
         if(LoginActivity.usuario.getFotoPerfilUsuario() != null && !LoginActivity.usuario.getFotoPerfilUsuario().equals("")){
             byte[] data = Base64.decode(LoginActivity.usuario.getFotoPerfilUsuario().getBytes(), Base64.DEFAULT);
             Bitmap decodedBitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
