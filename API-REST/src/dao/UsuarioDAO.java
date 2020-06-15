@@ -20,6 +20,7 @@ import modelo.PuntuacionParticipante;
 import modelo.Usuario;
 import seguridad.PasswordHash;
 import seguridad.Validaciones;
+import servicios.Imagenes;
 
 public class UsuarioDAO {
 	
@@ -467,7 +468,7 @@ public boolean registroUsuario(String correo, String contrasena) {
 				if(fechaAlta != null) usuario.setFechaAltaUsuario(fechaAlta.toString());
 				usuario.setReputacionOrganizadorUsuario(rs.getFloat("REPUTACIONORGANIZADORUSUARIO"));
 				usuario.setReputacionParticipanteUsuario(rs.getFloat("REPUTACIONPARTICIPANTEUSUARIO"));
-				usuario.setFotoPerfilUsuario(getFotoEnBase64(usuario.getEmailUsuario()));
+				usuario.setFotoPerfilUsuario(getFotoEnBase64(correo));
 				
 			}
 			
@@ -481,18 +482,16 @@ public boolean registroUsuario(String correo, String contrasena) {
 		return usuario;
 	}
 	
-	public String getFotoEnBase64(String name) {
+	public static String getFotoEnBase64(String name) {
 		String encoded = "";
 		try {
-			File fileJPG = new File("C:\\Users\\0xNea\\Pictures\\prueba\\" + name.replace(".", "") + ".jpg");
-			File filePNG = new File("C:\\Users\\0xNea\\Pictures\\prueba\\" + name.replace(".", "") + ".png");
+			File fileJPG = new File(Imagenes.path + name.replace(".", "") + ".jpg");
+			File filePNG = new File(Imagenes.path + name.replace(".", "") + ".png");
 			
 			if(fileJPG.exists()) {
-				System.out.println(name + "jpg");
 				byte[] fileContent = FileUtils.readFileToByteArray(fileJPG);
 				encoded = Base64.getEncoder().encodeToString(fileContent);
 			}else if (filePNG.exists()) {
-				System.out.println("png");
 				byte[] fileContent = FileUtils.readFileToByteArray(filePNG);
 				encoded = Base64.getEncoder().encodeToString(fileContent);
 			}
@@ -592,6 +591,7 @@ public boolean registroUsuario(String correo, String contrasena) {
 				bloqueado.setNombreUsuario(nombre);
 				bloqueado.setApellidosUsuario(apellidos);
 				bloqueado.setGeneroUsuario(genero);
+				bloqueado.setFotoPerfilUsuario(getFotoEnBase64(bloqueado.getEmailUsuario()));
 				if(date != null) bloqueado.setFechaNacimientoUsuario(date.toString());
 				
 				if(email != null) {

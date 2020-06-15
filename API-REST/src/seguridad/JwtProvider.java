@@ -18,6 +18,7 @@ public class JwtProvider {
 			.setHeaderParam("typ","JWT")
 			.setSubject(correo)
 		    .setIssuer("SocialSports.com")
+		    .setExpiration(new Date(System.currentTimeMillis() + 2064000))
 		    .setIssuedAt(new Date())
 		    .signWith(Keys.hmacShaKeyFor(secret))
 		    .compact();
