@@ -9,6 +9,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -17,17 +18,19 @@ import javax.ws.rs.core.Response.Status;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import dao.UsuarioDAO;
+
 @Path("/imagenes")
 public class Imagenes {
 	
-	private static String path = "C:\\Users\\0xNea\\Pictures\\prueba\\"; 
+	public static String path = "C:\\Users\\0xNea\\Pictures\\prueba\\"; 
 	
 	@POST  
-    @Path("/upload")  
+    @Path("/upload/{correo}")  
     @Consumes(MediaType.MULTIPART_FORM_DATA)  
     public Response uploadFile(  
             @FormDataParam("file") InputStream uploadedInputStream,  
-            @FormDataParam("file") FormDataContentDisposition fileDetail) {
+            @FormDataParam("file") FormDataContentDisposition fileDetail, @PathParam("correo") String correo) {
 			
             String fileLocation = path + fileDetail.getFileName(); 
             System.out.println(fileDetail.getFileName());
@@ -47,7 +50,7 @@ public class Imagenes {
             
             return Response
             		.status(Status.OK)
-            		.entity("Archivo subido correctamente")
+            		.entity(UsuarioDAO.getFotoEnBase64(correo))
             		.build();
 	}  	
 	
