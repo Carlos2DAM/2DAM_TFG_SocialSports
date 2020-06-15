@@ -161,11 +161,13 @@ public class LoginActivity extends AppCompatActivity {
                 }else{
                     Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_datos_incorrectos), getApplicationContext());
                     limpiarCajas();
+                    loadingProgressBar.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
+                loadingProgressBar.setVisibility(View.GONE);
                 t.printStackTrace();
             }
         });
@@ -187,15 +189,18 @@ public class LoginActivity extends AppCompatActivity {
                     cargarAplicacionUsuario();
                 } else if (code == 409) {
                     Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_usuario_existe), getApplicationContext());
+                    loadingProgressBar.setVisibility(View.GONE);
                     limpiarCajas();
                 } else {
                     usuario = null;
+                    loadingProgressBar.setVisibility(View.GONE);
                     Funcionalidades.mostrarMensaje(getResources().getString(R.string.login_error_nuevo_usuario), getApplicationContext());
                 }
             }
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
+                loadingProgressBar.setVisibility(View.GONE);
                 Log.e("ONFAILURE", t.getMessage());
             }
         });

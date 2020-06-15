@@ -65,14 +65,12 @@ public class UserConfigBanned extends Fragment {
             }
         });
         listViewBloqueados = getActivity().findViewById(R.id.listUserConfigBanned);
-        //mostrarListaBloqueados(LoginActivity.usuario.getListaBloqueados());
         obtenerListaBloqueados(LoginActivity.usuario.getEmailUsuario());
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        //mostrarListaBloqueados(LoginActivity.usuario.getListaBloqueados());
         obtenerListaBloqueados(LoginActivity.usuario.getEmailUsuario());
     }
 
@@ -102,6 +100,7 @@ public class UserConfigBanned extends Fragment {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()) {
                     LoginActivity.usuario.getListaBloqueados().remove(usuarioSeleccionado);
+                    mostrarListaBloqueados(LoginActivity.usuario.getListaBloqueados());
                 }
             }
             @Override
@@ -112,10 +111,6 @@ public class UserConfigBanned extends Fragment {
     }
 
     private void agregarAmigo() {
-        /*if (LoginActivity.usuario.getListaBloqueados().contains(usuarioSeleccionado))
-            LoginActivity.usuario.getListaBloqueados().remove(usuarioSeleccionado);
-        LoginActivity.usuario.getListaAmigos().add(usuarioSeleccionado);*/
-
         RETROFIT retrofit = new RETROFIT();
         retrofit.getAPIService().agregarAmigo("Bearer " + LoginActivity.token,
                 LoginActivity.usuario.getEmailUsuario(),
@@ -126,6 +121,7 @@ public class UserConfigBanned extends Fragment {
                         if(response.isSuccessful()){
                             LoginActivity.usuario.getListaBloqueados().remove(usuarioSeleccionado);
                             LoginActivity.usuario.getListaAmigos().add(usuarioSeleccionado);
+                            mostrarListaBloqueados(LoginActivity.usuario.getListaBloqueados());
                         }
                     }
 

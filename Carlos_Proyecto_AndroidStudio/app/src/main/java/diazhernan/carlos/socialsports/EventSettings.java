@@ -64,9 +64,11 @@ public class EventSettings extends AppCompatActivity {
                     Funcionalidades.showSelectedFragment(R.id.containerEventSettings, getSupportFragmentManager(), eventSettingsSettings);
                 }
                 if (tab.getText().toString().equals(getResources().getString(R.string.tab_event_settings_participants))) {
+                    eventSettingsParticipants = new EventSettingsParticipants();
                     Funcionalidades.showSelectedFragment(R.id.containerEventSettings, getSupportFragmentManager(), eventSettingsParticipants);
                 }
                 if (tab.getText().toString().equals(getResources().getString(R.string.tab_event_settings_requests))) {
+                    eventSettingsRequests = new EventSettingsRequests();
                     Funcionalidades.showSelectedFragment(R.id.containerEventSettings, getSupportFragmentManager(), eventSettingsRequests);
                 }
             }
@@ -78,7 +80,7 @@ public class EventSettings extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                onTabSelected(tab);
             }
         });
 
@@ -211,19 +213,20 @@ public class EventSettings extends AppCompatActivity {
     }
 
     private void eliminarSolicitud() {
-        if (Funcionalidades.eresSolicitante(Funcionalidades.eventoSeleccionado))
-            Funcionalidades.eliminarSolicitante(Funcionalidades.eventoSeleccionado,LoginActivity.usuario);
-        else if (Funcionalidades.eresParticipante(Funcionalidades.eventoSeleccionado))
-            Funcionalidades.eliminarParticipante(Funcionalidades.eventoSeleccionado,LoginActivity.usuario);
+        if (Funcionalidades.eresSolicitante(Funcionalidades.eventoSeleccionado)) {
+            Funcionalidades.eliminarSolicitante(Funcionalidades.eventoSeleccionado, LoginActivity.usuario);
+            tabLayout.getTabAt(2).select();
+        }
+        else if (Funcionalidades.eresParticipante(Funcionalidades.eventoSeleccionado)) {
+            Funcionalidades.eliminarParticipante(Funcionalidades.eventoSeleccionado, LoginActivity.usuario);
+            tabLayout.getTabAt(1).select();
+        }
         toolbar.inflateMenu(R.menu.event_subscribe_menu);
+
         Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_request_removed),this);
     }
 
     private void eliminarEvento() {
-        /*Funcionalidades.eliminarEvento(Funcionalidades.eventoSeleccionado.getIdEvento());
-        Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_event_removed),this);
-        MainActivity.listaEventos.remove(Funcionalidades.eventoSeleccionado); //TODO eliminar fila provisional
-        finish();*/
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
         service.eliminarEvento("Bearer " + LoginActivity.token, Funcionalidades.eventoSeleccionado.getIdEvento()).enqueue(new Callback<ResponseBody>() {
