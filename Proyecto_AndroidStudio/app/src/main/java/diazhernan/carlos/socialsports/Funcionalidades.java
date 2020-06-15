@@ -179,21 +179,6 @@ public class Funcionalidades extends AppCompatActivity {
         return (int) (((new Date().getTime() - fecha.getTime()) / 86400000) / 365);
     }
 
-////////////////////////------------------------------------------------------------------------------------------------------
-
-    public static boolean guardarEvento(Evento evento) {
-        //TODO Insertar un nuevo evento en la BBDD.
-        //insertarEvento(evento);
-        return true;
-    }
-
-    public static boolean enviarInvitaciones(Evento evento, ArrayList<String> listaInvitados) {
-        //TODO Añadir al evento los participantes cuyos emails coinciden con la lista de emails "listaInvitados".
-        // Devolverá true o false si pudo realizar la operacion o no.
-        //return serverInvitarAmigos(evento.listaInvitados);
-        return true;
-    }
-
     public static boolean estasBaneado(Evento ev,Context c) {
         if(ev.getListaDescartados() != null) {
             for (Usuario usuario : ev.getListaDescartados()) {
@@ -203,16 +188,9 @@ public class Funcionalidades extends AppCompatActivity {
                 }
             }
         }
-        //TODO Consultar si nuestro usuario se encuentra en la lista de descartados del evento.
-        /**
-         *  if (serverIsUsuarioDescartado(evento, LoginActivity.usuario.getEmailUsuario())) {
-         *      ev.getListaDescartados().add(LoginActivity.usuario);
-         *      return true;
-         *  }
-         */
         return false;
     }
-
+    /*
     public static ArrayList<Evento> buscarEventosFiltrados(Usuario usuario, FiltroDeEvento filtro) {
 
         ArrayList<Evento> listaFiltrada = eventosFuturosVacantes();
@@ -252,117 +230,7 @@ public class Funcionalidades extends AppCompatActivity {
         listaFiltrada = eventosPendientes(listaFiltrada);
 
         return listaFiltrada;
-    }
-
-    public static ArrayList<Evento> eventosFuturosVacantes() {
-        /**  TODO Obtener todos los eventos que aún no han finalizado (evento.finalizado = 0) y que
-         *        aún no están llenos (evento.maxParticipantes < evento.listaParticipantes.size()).
-         *        No puede devolver NULL, como mínimo inicializada a new ArrayList<Evento>()
-         */
-        // return serverEventosFuturosVacantes();
-        return new ArrayList<>();   //TODO Borrar esta línea provisional.
-    }
-
-    public static ArrayList<Evento> eventosNoCumploRequisitoEdadMinima(int edad) {
-        // TODO Obtener los eventos en los que el usuarios ¡¡¡NO!!! cumple la edad mínima.
-        //  where (evento.requisito.edadMinima > edad)
-        //  No puede devolver NULL, como mínimo inicializada a new ArrayList<Evento>()
-        // return serverEventosNoEdadMin(edad);
-        return new ArrayList<>();   //TODO Borrar esta línea provisional.
-    }
-
-    public static ArrayList<Evento> eventosNoCumploRequisitoEdadMaxima(int edad) {
-        /** TODO Obtener los eventos en los que el usuarios ¡¡¡NO!!! cumple la edad máxima
-         *       (Cuidado, si la edad máxima es -1, no se requiere edad maxima en el evento).
-         *       where (evento.requisito.edadMaxima != -1) and (evento.requisito.edadMaxima < edad)
-         *       No puede devolver NULL, como mínimo inicializada a new ArrayList<Evento>()
-         */
-        // return serverEventosNoEdadMax(edad);
-        return new ArrayList<>();   //TODO Borrar esta línea provisional.
-    }
-
-    public static ArrayList<Evento> eventosNoCumploRequisitoDeGenero(String genero) {
-        /** TODO Obtener los eventos en los que el usuarios ¡¡¡NO!!! cumple el requisito de Género
-         *       (Cuidado, si el evento tiene a NULL el requisito, es que no se necesita requisito)
-         *       where (evento.requisito.genero != null) and (evento.requisito.genero != genero)
-         *       No puede devolver NULL, como mínimo inicializada a new ArrayList<Evento>()
-         */
-        // return serverEventosNoGenero(genero);
-        return new ArrayList<>();   //TODO Borrar esta línea provisional.
-    }
-
-    public static ArrayList<Evento> eventosNoCumploRequisitoReputacion(float reputacion) {
-        // TODO Obtener los eventos en los que el usuarios tiene una reputación MENOR que la requerida por el evento.
-        //  where (evento.requisito.reputacion > reputacion)
-        //  No puede devolver NULL, como mínimo inicializada a new ArrayList<Evento>()
-        // return serverEventosNoReputacion(reputacion);
-        return new ArrayList<>();   //TODO Borrar esta línea provisional.
-    }
-
-    public static ArrayList<Evento> filtrarPorDeporte(String deporte) {
-        //  TODO Obtener una lista de eventos, filtrando por el deporte del evento.
-        //   No puede devolver NULL, como mínimo inicializada a new ArrayList<Evento>()
-        // return serverFiltrarDeporte(deporte);
-        return new ArrayList<>();   //TODO Borrar esta línea provisional.
-    }
-
-    public static ArrayList<Evento> filtrarPorLocalidad(String localidad) {
-        //  TODO Obtener una lista de eventos, filtrando por la localidad del evento.
-        //   No puede devolver NULL, como mínimo inicializada a new ArrayList<Evento>()
-        // return serverFiltrarLocalidad(localidad);
-        return new ArrayList<>();   //TODO Borrar esta línea provisional.
-    }
-
-    public static ArrayList<Evento> filtrarPorFecha(Date Fecha) {
-        //  TODO Obtener una lista de eventos, filtrando por la Fecha del evento.
-        //   No puede devolver NULL, como mínimo inicializada a new ArrayList<Evento>()
-        // return serverFiltrarFecha(Fecha);
-        return new ArrayList<>();   //TODO Borrar esta línea provisional.
-    }
-
-    public static ArrayList<Evento> filtrarPorHora(String Hora) {
-        //  TODO Obtener una lista de eventos, filtrando por la Hora del evento.
-        //   No puede devolver NULL, como mínimo inicializada a new ArrayList<Evento>()
-        // return serverFiltrarHora(Hora);
-        return new ArrayList<>();   //TODO Borrar esta línea provisional.
-    }
-
-    public static ArrayList<Evento> filtrarPorReputacion(float Reputacion) {
-        //  TODO Obtener una lista de eventos, filtrando por la Reputación del organizador (Reputación como organizador).
-        //   No puede devolver NULL, como mínimo inicializada a new ArrayList<Evento>()
-        // return serverFiltrarReputacion(Reputacion);
-        return new ArrayList<>();   //TODO Borrar esta línea provisional.
-    }
-
-    public static ArrayList<Evento> filtrarPorReserva(boolean Reserva) {
-        //  TODO Obtener una lista de eventos, filtrandolos por el estado de la reserva.
-        //   No puede devolver NULL, como mínimo inicializada a new ArrayList<Evento>()
-        // return serverFiltrarReserva(Reserva);
-        return new ArrayList<>();   //TODO Borrar esta línea provisional.
-    }
-
-    public static boolean actualizarNacimientoUsuario(String email, Date fecha) {
-        // TODO Busca al usuario cuyo email paso por parámetro, y modifica su fecha de nacimiento.
-        //  Devuelve true o false como resultado de la operación.
-        //return serverActualizarNacimiento(email, fecha);
-        return true;    //TODO Borrar esta línea provisional.
-    }
-
-    public static boolean actualizarPasswordUsuario(String email, String password) {
-        // TODO Busca al usuario cuyo email paso por parámetro, y modifica su password.
-        //  Devuelve true o false como resultado de la operación.
-        //return serverActualizarPassword(email, password);
-        return true;    //TODO Borrar esta línea provisional.
-    }
-
-    public static boolean actualizarFotoUsuario(String email, String foto) {
-        // TODO Busca al usuario cuyo email paso por parámetro, y modifica su foto.
-        //  Devuelve true o false como resultado de la operación.
-        //return serverActualizarFoto(email, foto);
-        return true;    //TODO Borrar esta línea provisional.
-    }
-
-//------------------------------------------CONTINUACION------------------------------------------------------------------------
+    }*/
 
     public static void actualizarTerminarEvento(String idEvento, boolean terminado) {
         RETROFIT retrofit = new RETROFIT();
@@ -377,41 +245,6 @@ public class Funcionalidades extends AppCompatActivity {
 
             }
         });
-    }
-
-    public static ArrayList<Evento> obtenerEventosPendientes(String email) {
-        /**  TODO Obtener de la BBDD los eventos NO TERMINADOS en los que el usuario sea el organizador o
-         *        participante o solicitante.
-         */
-        //return serverEventosPendientes(email);
-
-        //return eventosPendientes(serverEventosPendientes(email));
-        return new ArrayList<>();   //TODO Borrar esta línea provisional.
-    }
-
-    public static ArrayList<Evento> obtenerEventosFinalizados(String email) {
-        /**  TODO Obtener de la BBDD los eventos TERMINADOS hace menos de un mes en los que el usuario
-         *        sea el organizador o participante. (pero no solicitante).
-         */
-        //return serverEventosFinalizados(email);
-        return new ArrayList<>();   //TODO Borrar esta línea provisional.
-    }
-
-    public static boolean usuarioHaPuntuadoEvento(String email, String idEvento) {
-        //TODO comprobar en la base de datos si el evento ya ha sido puntuado por ese usuario.
-        //return serverUsuarioPuntuadoEvento(email,idEvento)
-        return false;
-    }
-
-    public static void enviarPuntuacionParticipante(PuntuacionParticipante puntuacionP) {
-        //TODO insertar en la TablaPuntuacionesParticipantes la puntuacion enviada por un usuario a
-        // otro en un evento.
-
-    }
-
-    public static void enviarPuntuacionEvento(PuntuacionEvento puntuacionE) {
-        //TODO insertar en la TablaPuntuacionesEventos la puntuacion de usuario a un evento.
-        //serverPuntuarParticipante(puntuacionE);
     }
 
     public static void bloquearUsuarioPermanentemente(Usuario usuario) {
@@ -432,8 +265,6 @@ public class Funcionalidades extends AppCompatActivity {
 
             }
         });
-        //TODO insertar un usuarioBloqueado en la lista de Bloqueados de otro Usuario.
-        //serverBloquearUsuario(emailBloqueado, emailUsuario);
     }
 
     public static boolean usuarioBloqueadoPermanentemente(String emailUsuario, String emailOrganizador, Context c) {
@@ -745,15 +576,6 @@ public class Funcionalidades extends AppCompatActivity {
         });
     }
 
-    public static Usuario buscarUsuario(ArrayList<Usuario> lista, String email) {
-        for (Usuario usuario: lista) {
-            if (usuario.getEmailUsuario().equals(email))
-                return usuario;
-        }
-
-        return null;
-    }
-
     public static void insertarSolicitante(Evento evento,Usuario usuario) {
         if (!evento.getListaSolicitantes().contains(usuario)) {
             evento.getListaSolicitantes().add(usuario);
@@ -798,11 +620,6 @@ public class Funcionalidades extends AppCompatActivity {
             });
     }
 
-    public static void eliminarEvento(String idEvento) {
-        //TODO eliminar completamente el evento de la BBDD.
-        //serverEliminarEvento(evento.getIdEvento());
-    }
-
     public static void bloquearUsuarioAlEvento(Evento evento,Usuario usuario) {
         if (!evento.getListaDescartados().contains(usuario)) {
             evento.getListaDescartados().add(usuario);
@@ -822,17 +639,5 @@ public class Funcionalidades extends AppCompatActivity {
                 }
             });
         }
-    }
-
-    public static int calcularReputacionParticipante(String email) {
-        // TODO Calcular la reputación de la tablaPuntuacionesParticipantes. Si nadie nos ha puntuado aún, se devuelve un 4.
-        // return serverCalcularReputacionParticipante(email);
-        return 4;
-    }
-
-    public static int calcularReputacionOrganizador(String email) {
-        // TODO Calcular la reputación de la tablaPuntuacionesEventos. Si nadie nos ha puntuado aún, se devuelve un 4.
-        // return serverCalcularReputacionOrganizador(email);
-        return 4;
     }
 }

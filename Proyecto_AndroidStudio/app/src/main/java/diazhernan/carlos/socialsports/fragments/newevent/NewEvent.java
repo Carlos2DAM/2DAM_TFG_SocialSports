@@ -206,29 +206,6 @@ public class NewEvent extends Fragment {
     }
 
     private void crearEvento() {
-        /*if (Funcionalidades.guardarEvento(eventoCreado)) {
-            Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_evento_creado),getContext());
-            if (Funcionalidades.enviarInvitaciones(eventoCreado,newEventInvite.getListaInvitarAmigos())) {
-                for (Usuario usuario: LoginActivity.usuario.getListaAmigos()) {
-                    if (newEventInvite.getListaInvitarAmigos().contains(usuario.getEmailUsuario()))
-                        eventoCreado.getListaParticipantes().add(usuario);
-                }
-            }
-            MainActivity.listaEventos.add(eventoCreado);  // TODO borrar codigo provisional
-            newEventDescription = new NewEventDescription();
-            newEventSpecify = new NewEventSpecify();
-            newEventRequirements = new NewEventRequirements();
-            newEventInvite = new NewEventInvite();
-            eventoCreado = null;
-            Funcionalidades.showSelectedFragment(R.id.newEventContainer, getActivity().getSupportFragmentManager(), newEventSpecify);
-            Funcionalidades.showSelectedFragment(R.id.newEventContainer, getActivity().getSupportFragmentManager(), newEventRequirements);
-            Funcionalidades.showSelectedFragment(R.id.newEventContainer, getActivity().getSupportFragmentManager(), newEventInvite);
-            tabLayout.getTabAt(0).select();
-        }
-        else
-            Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_error_evento_creado),getContext());*/
-
-        //INACABADO
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
 
