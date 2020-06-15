@@ -365,8 +365,6 @@ public class Funcionalidades extends AppCompatActivity {
 //------------------------------------------CONTINUACION------------------------------------------------------------------------
 
     public static void actualizarTerminarEvento(String idEvento, boolean terminado) {
-        //TODO Actualiza en la BBDD el atributo "terminado" del evento.
-        //serverActualizarTerminado(idEvento, terminado)
         RETROFIT retrofit = new RETROFIT();
         retrofit.getAPIService().actualizarTerminarEvento("Bearer " + LoginActivity.token, idEvento, terminado).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -452,8 +450,6 @@ public class Funcionalidades extends AppCompatActivity {
     public static void eliminarAmigo(Usuario usuario) {
         if (LoginActivity.usuario.getListaAmigos().contains(usuario))
             LoginActivity.usuario.getListaAmigos().remove(usuario);
-        //TODO elimina un usuario de la lista de amigos del Usuario actual.
-        //serverEliminarAmigo(emailUsuario, emailEliminado);
 
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
@@ -489,8 +485,6 @@ public class Funcionalidades extends AppCompatActivity {
 
             }
         });
-        //TODO eliminar un usuario de la lista de personas bloqueadas del Usuario actual.
-        //serverEliminarBloqueado(emailEliminado, emailUsuario);
     }
 
     public static void insertarAmigo(Usuario usuario) {
@@ -514,13 +508,9 @@ public class Funcionalidades extends AppCompatActivity {
                         t.printStackTrace();
                     }
                 });
-        //TODO insertar un usuario en la lista de amigos del Usuario actual.
-        //serverInsertarAmigo(emailInsertado, emailUsuario);
     }
 
     public static void actualizarFechaEvento(String idEvento, Date fecha) {
-        //TODO Actualiza en la BBDD la fecha del evento.
-        //serverActualizarFechaEvento(idEvento, fecha)
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
         service.actualizarFechaEvento("Bearer " + LoginActivity.token, idEvento, dateToString2(fecha)).enqueue(new Callback<ResponseBody>() {
@@ -537,8 +527,6 @@ public class Funcionalidades extends AppCompatActivity {
     }
 
     public static void actualizarHoraEvento(String idEvento, String hora) {
-        //TODO Actualiza en la BBDD la hora del evento.
-        //serverActualizarHoraEvento(idEvento, hora)
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
         service.actualizarHoraEvento("Bearer " + LoginActivity.token, idEvento, hora).enqueue(new Callback<ResponseBody>() {
@@ -555,8 +543,6 @@ public class Funcionalidades extends AppCompatActivity {
     }
 
     public static void actualizarDireccionEvento(String idEvento, String direccion) {
-        //TODO Actualiza en la BBDD la dirección del evento.
-        //serverActualizarDireccionEvento(idEvento, direccion)
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
         service.actualizarDireccionEvento("Bearer " + LoginActivity.token, idEvento, direccion).enqueue(new Callback<ResponseBody>() {
@@ -573,8 +559,6 @@ public class Funcionalidades extends AppCompatActivity {
     }
 
     public static void actualizarMaxParticipantesEvento(String idEvento, int maxParticipants) {
-        //TODO Actualiza en la BBDD el máximo de participantes permitidos en el evento.
-        //serverActualizarMaxParticipantes(idEvento, maxParticipants)
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
         service.actualizarMaxParticipantesEvento("Bearer " + LoginActivity.token, idEvento, maxParticipants).enqueue(new Callback<ResponseBody>() {
@@ -591,8 +575,11 @@ public class Funcionalidades extends AppCompatActivity {
     }
 
     public static void eliminarParticipante(Evento evento, Usuario usuario) {
-        if (evento.getListaParticipantes().contains(usuario)) {
-            evento.getListaParticipantes().remove(usuario);
+        for (int i = 0; i < evento.getListaParticipantes().size(); i++) {
+            if (evento.getListaParticipantes().get(i).getEmailUsuario().equals(usuario.getEmailUsuario())) {
+                evento.getListaParticipantes().remove(i);
+                break;
+            }
         }
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
@@ -608,8 +595,6 @@ public class Funcionalidades extends AppCompatActivity {
 
             }
         });
-        //TODO eliminar un usuario de la lista de participantes del evento.
-        //serverEliminarParticipante(evento.getIdEvento(), usuario.getEmailUsuario());
     }
 
     public static void insertarParticipante(Evento evento,Usuario usuario) {
@@ -617,27 +602,22 @@ public class Funcionalidades extends AppCompatActivity {
             evento.getListaParticipantes().add(usuario);
             evento.getListaSolicitantes().remove(usuario);
         }
+        RETROFIT retrofit = new RETROFIT();
+        APIService service = retrofit.getAPIService();
+        service.insertarParticipante("Bearer " + LoginActivity.token, evento.getIdEvento(), usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-            //TODO insertar un usuario en la lista de participantes del evento.
-            //serverInsertarParticipante(evento.getIdEvento(), usuario.getEmailUsuario());
-            RETROFIT retrofit = new RETROFIT();
-            APIService service = retrofit.getAPIService();
-            service.insertarParticipante("Bearer " + LoginActivity.token, evento.getIdEvento(), usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            }
 
-                }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                }
-            });
+            }
+        });
     }
 
     public static void actualizarReservaEvento(String idEvento, boolean reserva) {
-        //TODO Actualiza en la BBDD el estado de reserva de instalaciones para el evento.
-        //serverActualizarReservaEvento(idEvento, reserva)
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
         service.actualizarReserva("Bearer " + LoginActivity.token, idEvento, reserva).enqueue(new Callback<ResponseBody>() {
@@ -654,8 +634,6 @@ public class Funcionalidades extends AppCompatActivity {
     }
 
     public static void actualizarCosteEvento(String idEvento, float coste) {
-        //TODO Actualiza en la BBDD el coste del evento.
-        //serverActualizarCosteEvento(idEvento, coste)
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
         service.actualizarCoste("Bearer " + LoginActivity.token, idEvento, coste).enqueue(new Callback<ResponseBody>() {
@@ -672,8 +650,6 @@ public class Funcionalidades extends AppCompatActivity {
     }
 
     public static void actualizarPrecioEvento(String idEvento, float precio) {
-        //TODO Actualiza en la BBDD el precio individual que tendrá que pagar cada participante del evento.
-        //serverActualizarPrecioEvento(idEvento, precio)
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
         service.actualizarPrecio("Bearer " + LoginActivity.token, idEvento, precio).enqueue(new Callback<ResponseBody>() {
@@ -690,8 +666,6 @@ public class Funcionalidades extends AppCompatActivity {
     }
 
     public static void actualizarComentariosEvento(String idEvento, String comment) {
-        //TODO Actualiza en la BBDD los comentarios del evento.
-        //serverActualizarComentariosEvento(idEvento, comment)
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
         service.actualizarComentarios("Bearer " + LoginActivity.token, idEvento, comment).enqueue(new Callback<ResponseBody>() {
@@ -708,8 +682,6 @@ public class Funcionalidades extends AppCompatActivity {
     }
 
     public static void actualizarEdadMinEvento(String idEvento, int edad) {
-        //TODO Actualiza en la BBDD el requisito de edad mínima para acceder al evento.
-        //serverActualizarEdadMinEvento(idEvento, edad)
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
         service.actualizarEdadMinima("Bearer " + LoginActivity.token, idEvento, edad).enqueue(new Callback<ResponseBody>() {
@@ -726,8 +698,6 @@ public class Funcionalidades extends AppCompatActivity {
     }
 
     public static void actualizarEdadMaxEvento(String idEvento, int edad) {
-        //TODO Actualiza en la BBDD el requisito de edad máxima para acceder al evento.
-        //serverActualizarEdadMaxEvento(idEvento, edad)
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
         service.actualizarEdadMaxima("Bearer " + LoginActivity.token, idEvento, edad).enqueue(new Callback<ResponseBody>() {
@@ -744,8 +714,6 @@ public class Funcionalidades extends AppCompatActivity {
     }
 
     public static void actualizarGeneroEvento(String idEvento, String genero) {
-        //TODO Actualiza en la BBDD el requisito de genero para acceder al evento.
-        //serverActualizarGeneroEvento(idEvento, genero)
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
         service.actualizarGenero("Bearer " + LoginActivity.token, idEvento, genero).enqueue(new Callback<ResponseBody>() {
@@ -762,8 +730,6 @@ public class Funcionalidades extends AppCompatActivity {
     }
 
     public static void actualizarReputacionEvento(String idEvento, float reputacion) {
-        //TODO Actualiza en la BBDD el requisito de reputacion necesario para acceder al evento.
-        //serverActualizarReputacionEvento(idEvento, reputacion)
         RETROFIT retrofit = new RETROFIT();
         APIService service = retrofit.getAPIService();
         service.actualizarReputacion("Bearer " + LoginActivity.token, idEvento, reputacion).enqueue(new Callback<ResponseBody>() {
@@ -777,6 +743,15 @@ public class Funcionalidades extends AppCompatActivity {
 
             }
         });
+    }
+
+    public static Usuario buscarUsuario(ArrayList<Usuario> lista, String email) {
+        for (Usuario usuario: lista) {
+            if (usuario.getEmailUsuario().equals(email))
+                return usuario;
+        }
+
+        return null;
     }
 
     public static void insertarSolicitante(Evento evento,Usuario usuario) {
@@ -798,18 +773,16 @@ public class Funcionalidades extends AppCompatActivity {
 
             }
         });
-        //TODO insertar usuario de la lista de solicitantes del evento.
-        //serverInsertarSolicitante(evento.getIdEvento(), usuario.getEmailUsuario());
 
     }
 
     public static void eliminarSolicitante(Evento evento,Usuario usuario) {
-        if (evento.getListaSolicitantes().contains(usuario)) {
-            evento.getListaSolicitantes().remove(usuario);
+        for (int i = 0; i < evento.getListaSolicitantes().size(); i++) {
+            if (evento.getListaSolicitantes().get(i).getEmailUsuario().equals(usuario.getEmailUsuario())) {
+                evento.getListaSolicitantes().remove(i);
+                break;
+            }
         }
-
-            //TODO eliminar usuario de la lista de solicitantes del evento.
-            //serverEliminarSolicitante(evento.getIdEvento(), usuario.getEmailUsuario());
             RETROFIT retrofit = new RETROFIT();
             APIService service = retrofit.getAPIService();
             service.eliminarSolicitante("Bearer " + LoginActivity.token, evento.getIdEvento(), usuario.getEmailUsuario()).enqueue(new Callback<ResponseBody>() {
@@ -848,8 +821,6 @@ public class Funcionalidades extends AppCompatActivity {
 
                 }
             });
-            //TODO insertar un usuario en la lista de descartados del evento.
-            //serverBloquearParticipante(evento.getIdEvento(), usuario.getEmailUsuario());
         }
     }
 

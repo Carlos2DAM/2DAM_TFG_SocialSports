@@ -54,18 +54,20 @@ public class Home extends Fragment {
     }
 
     private int imagenAdecuada(String titulo) {
-        if (titulo.toLowerCase().contains("futbol") || titulo.toLowerCase().contains("fútbol") ||
-                titulo.toLowerCase().contains("soccer"))
-            return R.drawable.futbol2;
-        if (titulo.toLowerCase().contains("ciclismo") || titulo.toLowerCase().contains("bici") ||
-                titulo.toLowerCase().contains("bicicleta"))
-            return R.drawable.ciclismo;
-        if (titulo.toLowerCase().contains("correr") || titulo.toLowerCase().contains("runnin") ||
-                titulo.toLowerCase().contains("run"))
-            return R.drawable.runin2;
-        if (titulo.toLowerCase().contains("tenis") || titulo.toLowerCase().contains("tennis") ||
-                titulo.toLowerCase().contains("raqueta"))
-            return R.drawable.tenis;
+        if (titulo != null) {
+            if (titulo.toLowerCase().contains("futbol") || titulo.toLowerCase().contains("fútbol") ||
+                    titulo.toLowerCase().contains("soccer"))
+                return R.drawable.futbol2;
+            if (titulo.toLowerCase().contains("ciclismo") || titulo.toLowerCase().contains("bici") ||
+                    titulo.toLowerCase().contains("bicicleta"))
+                return R.drawable.ciclismo;
+            if (titulo.toLowerCase().contains("correr") || titulo.toLowerCase().contains("runnin") ||
+                    titulo.toLowerCase().contains("run"))
+                return R.drawable.runin2;
+            if (titulo.toLowerCase().contains("tenis") || titulo.toLowerCase().contains("tennis") ||
+                    titulo.toLowerCase().contains("raqueta"))
+                return R.drawable.tenis;
+        }
         return R.drawable.defaultsport;
     }
 
