@@ -143,71 +143,34 @@ public class UserConfig extends Fragment {
         String nombreOld = LoginActivity.usuario.getNombreUsuario();
         if (!nombreNew.equals(nombreOld)) {
             actualizarNombreUsuarioBBDD(email,nombreNew);
-            /*if (Funcionalidades.actualizarNombreUsuario(email,nombreNew))
-                LoginActivity.usuario.setNombreUsuario(nombreNew);
-            else {
-                Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
-                return;
-            }*/
         }
 
         String apellidosNew = userConfigSettings.getApellido().toUpperCase();
         String apellidosOld = LoginActivity.usuario.getApellidosUsuario();
         if (!apellidosNew.equals(apellidosOld)) {
             actualizarApellidosUsuarioBBDD(email,apellidosNew);
-            /*if (Funcionalidades.actualizarApellidosUsuario(email,apellidosNew))
-                LoginActivity.usuario.setApellidosUsuario(apellidosNew);
-            else {
-                Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
-                return;
-            }*/
         }
 
         String direccionNew = userConfigSettings.getDireccion();
         String direccionOld = LoginActivity.usuario.getDireccionUsuario();
         if (!direccionNew.equals(direccionOld)) {
             actualizarDireccionUsuarioBBDD(email,direccionNew);
-            /*if (Funcionalidades.actualizarDireccionUsuario(email,direccionNew))
-                LoginActivity.usuario.setDireccionUsuario(direccionNew);
-            else {
-                Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
-                return;
-            }
-            */
         }
 
         String generoNew = userConfigSettings.getGenero();
         String generoOld = LoginActivity.usuario.getGeneroUsuario();
         if (!generoNew.isEmpty() && !generoNew.equals(generoOld)) {
             actualizarGeneroUsuarioBBDD(email,generoNew);
-            /*if (Funcionalidades.actualizarGeneroUsuario(email,generoNew))
-                LoginActivity.usuario.setGeneroUsuario(generoNew);
-            else {
-                Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
-                return;
-            }*/
         }
 
         if (!passwordNew.isEmpty()) {
             actualizarPasswordUsuarioBBDD(email,passwordNew);
-            /*if (Funcionalidades.actualizarPasswordUsuario(email,passwordNew))
-                LoginActivity.usuario.setPasswordUsuario(passwordNew);
-            else {
-                Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
-                return;
-            }*/
         }
 
         Date fechaNew = userConfigSettings.getBirthdate();
         Date fechaOld = LoginActivity.usuario.getFechaNacimientoUsuario();
         if (fechaNew != null && fechaNew != fechaOld) {
             actualizarFechaNacimientoUsuarioBBDD(email,Funcionalidades.dateToString2(fechaNew));
-            /*if (Funcionalidades.actualizarNacimientoUsuario(email,fechaNew))
-                LoginActivity.usuario.setFechaNacimientoUsuario(fechaNew);
-            else {
-                Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_cambios_no_guardados), getContext());
-                return;
-            }*/
         }
 
         //TODO cargar foto de perfil.
@@ -229,12 +192,6 @@ public class UserConfig extends Fragment {
 
     private void eliminarCuentaDelUsuario() {
         eliminararUsuarioBBDD(LoginActivity.usuario);
-        /*if (Funcionalidades.eliminarUsuario(LoginActivity.usuario)) {
-            Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_usuario_eliminado),getContext());
-            logout();
-        }
-        else
-            Funcionalidades.mostrarMensaje(getActivity().getResources().getString(R.string.mensaje_usuario_no_eliminado),getContext());*/
     }
 
 //------------- FUNCIONES PARA CONECTAR CON LA BBDD DEL SERVIDOR -------------------------------------------------------------------------------------

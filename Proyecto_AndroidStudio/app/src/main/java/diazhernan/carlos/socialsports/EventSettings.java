@@ -234,7 +234,7 @@ public class EventSettings extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){
                     Funcionalidades.mostrarMensaje(getResources().getString(R.string.mensaje_event_removed),getApplicationContext());
-                    MainActivity.listaEventos.remove(Funcionalidades.eventoSeleccionado);
+                    //MainActivity.listaEventos.remove(Funcionalidades.eventoSeleccionado);
                 }
             }
 

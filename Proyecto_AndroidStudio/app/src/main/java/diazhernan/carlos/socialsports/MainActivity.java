@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     private SearchEvent searchEvent;
     private MyEvents myEvents;
     private UserConfig userConfig;
-    public static ArrayList<Evento> listaEventos;  // TODO borrar, codigo provisional
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

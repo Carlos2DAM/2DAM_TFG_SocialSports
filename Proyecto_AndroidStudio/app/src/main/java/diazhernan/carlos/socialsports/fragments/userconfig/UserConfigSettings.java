@@ -78,7 +78,6 @@ public class UserConfigSettings extends Fragment {
         radioMale = getActivity().findViewById(R.id.radioUserConfigMale);
         radioFemale = getActivity().findViewById(R.id.radioUserConfigFemale);
         image = getActivity().findViewById(R.id.imageUserConfig);
-        //TODO permitir cargar una imagen de perfil
 
         image.setOnClickListener(new View.OnClickListener() {
             @Override
