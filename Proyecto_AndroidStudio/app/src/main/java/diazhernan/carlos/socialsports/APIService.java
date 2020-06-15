@@ -6,6 +6,8 @@ import diazhernan.carlos.socialsports.Clases.Evento;
 import diazhernan.carlos.socialsports.Clases.PuntuacionEvento;
 import diazhernan.carlos.socialsports.Clases.PuntuacionParticipante;
 import diazhernan.carlos.socialsports.Clases.Usuario;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -14,8 +16,10 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -179,4 +183,8 @@ public interface APIService {
 
     @POST("eventos/insertarpuntuacion")
     Call<ResponseBody> insertarPuntuacionEvento(@Header("Authorization") String authHeader, @Body PuntuacionEvento puntuacion);
+
+    @Multipart
+    @POST("imagenes/upload/{correo}")
+    Call<ResponseBody> subirImagen(@Header("Authorization") String authHeader, @Part MultipartBody.Part filePart, @Part("filename") RequestBody name, @Path("correo") String correo);
 }
